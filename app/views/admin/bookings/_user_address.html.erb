@@ -1,0 +1,41 @@
+<%= a.hidden_field :name %>
+<div class="form-group">
+	<%= a.label :country_id %>
+	<%= a.select :country_id, Country.order('name asc').collect { |c| [c.name, c.id] }, {prompt: 'Please Select'}, :class => "form-control country" %>
+</div>
+<div id="address_details" style="display: none;">
+	<div class="form-group">
+		<%= a.label :phone %> (<span id="country_phone_code"></span>) 
+		<%= a.text_field :phone, :class => "form-control" %>
+	</div>
+	<div class="form-group">
+		<%= a.label :address1 %>
+		<%= a.text_field :address1, :class => "form-control" %>
+	</div>
+	<div class="form-group">
+		<%= a.label :address2 %>
+		<%= a.text_field :address2, :class => "form-control" %>
+	</div>
+	<div class="form-group">
+		<%= a.label :city %>
+		<%= a.text_field :city, :class => "form-control" %>
+	</div>
+	<div class="form-group">
+		<%= a.label :post_code %>
+		<%= a.text_field :post_code, :class => "form-control" %>
+	</div>
+<% 
+	states = []
+	style = ' style="display: none;"'
+	if @user_address && @user_address.country
+		if @user_address.country.states.count > 0
+			states = @user_address.country.states.order('name asc').collect { |c| [c.name, c.id] } 
+			style = ''
+		end
+	end
+%>
+	<div id="states_div" class="form-group"<%= style %>>
+		<%= a.label :state_id %>
+		<%= a.select :state_id, states, {prompt: 'Please Select'}, :class => "form-control state-select" %>
+	</div>
+</div>

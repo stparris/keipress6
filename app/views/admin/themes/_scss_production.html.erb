@@ -1,0 +1,16 @@
+<div class="tabbed-header">
+  <h3><%= @theme.name %> Production SCSS</h3>
+</div>
+<div id="message" class="alert alert-success" role="alert" style="display:none;">
+</div>
+<%= form_for([:admin, @theme],:html => {remote: true, :role => 'form', :class => "formFor"}) do |f| %>
+  <div class="form-group edit-scss" style="border:solid 3px #e6e6e6;">
+    <%= f.text_area :new_scss_production, value: @theme.scss_production, :class => "form-control" %>
+  </div>
+  <hr />
+	<%= button_tag(type: 'submit', class:"btn  btn-outline-secondary btn-med") do %>
+    <i class="icon-ok"></i>
+    Save
+  <% end %>
+<% end %>
+

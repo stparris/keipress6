@@ -1,0 +1,2 @@
+class AdminMailTemplate < MailTemplate
+end

@@ -1,0 +1,2 @@
+module RentalBookingInstructionsHelper
+end

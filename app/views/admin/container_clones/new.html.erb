@@ -1,0 +1,19 @@
+<div class="row">
+	<div class="col-md-9">
+		<div class="page-header">
+		  <h1>New Clone of <%= @container.name %> Container</h1>
+		</div>
+		<%= form_for([:admin, ContainerClone.new],:html => {:role => 'form', :class => "formFor"}) do |f| %>
+			<%= render partial: 'form', locals: {f:f} %>
+			<hr />
+			<%= button_tag(type: 'submit', class:"btn  btn-outline-secondary btn-med") do %>
+				<i class="icon-ok"></i>
+				Create
+			<% end %>
+			&nbsp;&nbsp;
+			<%= link_to admin_containers_path do %>
+				<button type="button" class="btn  btn-outline-secondary btn-med btn-right"><i class="icon-cancel"></i> Cancel</button>
+			<% end %>
+		<% end %>
+	</div>
+</div>

@@ -1,0 +1,75 @@
+<div class="tabbed-header">
+  <h3><%= @theme.name %> Colors</h3>
+</div>
+<table class="table table-striped table-bordered">
+	<thead>
+		<tr>
+			<th>Color</th>
+			<th>SCSS Name/Color Hex</th>
+			<th>Edit</th>
+			<th>Remove</th>
+			<th>Palette</th>
+		</tr>
+	</thead>
+	<tbody id="theme_colors">
+		<%= render partial: 'admin/theme_colors/theme_colors' %>
+	</tbody>
+</table>
+<button type="button" class="btn btn-outline-secondary btn-med" data-toggle="modal" data-target="#palette_modal">
+  <i class="icon-plus"></i> New Theme Color
+</button>
+
+<div id="palette_modal" class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Color Palettes</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      	<p>Click to add to theme</p>
+
+<% Palette.all.each do |palette| %>
+	<% i = 0 %>
+      	
+				<table class="table table-striped table-bordered">
+					<thead>
+						<tr>
+							<th><%= link_to raw(palette.name), admin_palette_path(palette) %></th>
+						</tr>
+					</thead>
+					<tbody>
+		        <tr>
+		          <td>
+  <% palette.palette_colors.each do |color| %>
+  							<%= form_for([:admin, ThemeColor.new],:html => {remote: true, :role => 'form', :class => "formFor"}) do |f| %>
+									<%= f.hidden_field :theme_id, value: @theme.id %>
+									<%= f.hidden_field :palette_color_id, value: color.id %>
+									<%= f.hidden_field :name, value: color.name %>
+									<%= f.hidden_field :value, value: color.value %>
+		  					<div style="text-align:center;margin:2px;width:100px;border:solid 1px #000;float:left;padding:10px;background-color:#<%= color.value %>;">
+
+			<%= button_tag(type: 'submit', class:"btn",style:"color:##{i < 9 ? '000' : 'fff'};background-color:##{color.value}",title:"#{color.name} ##{color.value}") do %>
+										<%= color.value %>
+									<% end %>
+								<% end %>
+		  					</div>
+  	<% i += 1 %>
+  <% end %>       	
+    						<div style="clear:left;"></div>
+    					</td>
+		        </tr>
+<% end %>
+					</tbody>
+				</table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+

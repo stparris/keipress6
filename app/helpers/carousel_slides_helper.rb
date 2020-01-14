@@ -1,0 +1,2 @@
+module CarouselSlidesHelper
+end

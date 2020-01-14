@@ -1,0 +1,33 @@
+<div class="row">
+	<div class="col-md-12">
+		<div class="page-header">
+		  <h1>Payment Methods</h1>
+		</div>
+		<table class="table table-striped table-bordered">
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>Name</th>
+					<th></th>
+					<th></th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+<% @payment_methods.each do |payment_method| %>
+        <tr>
+        	<td><%= link_to payment_method.id, admin_payment_method_path(payment_method) %></td>
+          <td><%= link_to raw(payment_method.name), admin_payment_method_path(payment_method) %></td>
+          <td><%= link_to raw('<i class="icon-zoom-in"></i>'), admin_payment_method_path(payment_method) %></td>
+          <td><%= link_to raw('<i class="icon-pencil"></i>'), edit_admin_payment_method_path(payment_method) %></td>
+          <td><%= link_to raw('<i class="icon-trash"></i>'), admin_payment_method_path(payment_method), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+<% end %>
+				<%= raw('<tr><td colspan="5">No items for this list</td></tr>') unless @payment_methods.count > 0 %>
+			</tbody>
+		</table>
+		<%= link_to new_admin_payment_method_path do %>
+			<button type="button" class="btn  btn-outline-secondary btn-med"><i class="icon-plus"></i> New Payment Method</button>
+		<% end %>
+	</div>
+</div>

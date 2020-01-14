@@ -1,0 +1,26 @@
+<div class="row">
+
+	<div class="col-md-9">
+		<div class="page-header">
+			<h1><%= @user.full_name %></h1>
+		</div>	
+		<%= object_table(@user) %>
+		<%= link_to edit_admin_user_path(@user) do %>
+			<button type="submit" class="btn  btn-outline-secondary"><i class="icon-pencil"></i> Edit</button>
+		<% end %>
+		&nbsp;&nbsp;<%= link_to admin_user_path(@user), method: :delete, data: { confirm: "Delete user and all records associated with it?" } do %>
+			<button type="submit" class="btn btn-danger"><i class="icon-trash"></i> Delete</button>
+		<% end %>
+	</div>
+	<div class="col-md-3">
+		<%= operations_menu(@user) %>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-9">
+		<%= render partial: 'admin/user_addresses/index' %>
+	</div>
+	<div class="col-md-3">
+		&nbsp;
+	</div>
+</div>

@@ -1,0 +1,36 @@
+<div class="row">
+	<div class="col-md-9">
+		<div class="page-header">
+			<h1><%= @rental.name %></h1>
+		</div>	
+		<%= object_table(@rental) %>
+		<%= link_to edit_admin_rental_path(@rental) do %>
+			<button type="submit" class="btn  btn-outline-secondary"><i class="icon-pencil"></i> Edit</button>
+		<% end %>
+		&nbsp;&nbsp;<%= link_to admin_rental_path(@rental), method: :delete, data: { confirm: "Delete rental?" } do %>
+			<button type="submit" class="btn btn-danger"><i class="icon-trash"></i> Delete</button>
+		<% end %>
+	</div>
+	<div class="col-md-3">
+		<%= operations_menu(@rental) %>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+		<hr />
+		<h3>Rental Booking Instructions</h3>
+		<div id="rental_booking_instructions">
+			<%= render partial: '/admin/rental_booking_instructions/index' %>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+		<hr />
+		<div id="rental_payment_methods">
+			<%= render partial: '/admin/rental_payment_methods/index' %>
+		</div>
+	</div>
+</div>

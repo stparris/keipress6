@@ -1,0 +1,37 @@
+<% if @mail_server.errors.any? %>
+<div id="error_explanation">
+  <div class="alert alert-danger">
+    <%= pluralize(@mail_server.errors.count, "error") %> prohibited this mail server from being saved:
+  </div>
+  <ul>
+  <% @mail_server.errors.full_messages.each do |msg| %>
+    <li><%= msg %></li>
+  <% end %>
+  </ul>
+</div>
+<% end %>
+
+<%= f.hidden_field :site_id, value: @site.id %>
+<%= f.hidden_field :active, value: "true" %>
+
+<div class="form-group">
+  <%= f.label :name %>
+  <%= f.text_field :name, :class => "form-control" %>
+</div>
+
+<div class="form-group form-bar">
+  <%= f.label :config, 'Configure with JSON with keys for server-side variables (e.g. "password_key":"password")' %>
+  <div class="form-control-border">
+    <%= f.text_area :config, :class => "form-control codemirror-json" %>
+  </div>
+</div>
+
+<div class="form-group">
+  <%= f.label :active %>
+  <%= f.select :active, {'Yes'=>'true','No'=>'false'}, {}, :class => "form-control" %>
+</div>
+
+
+
+
+

@@ -1,0 +1,12 @@
+<% if navigation_item && navigation_item.navigation_type == 'page' && navigation_item.page %>	
+	<% active = ''; active = ' active' if navigation_item.page == @page %>		
+			<li class="<%= navigation_item.css_classes %><%= active %>">
+				<%= link_to sanitize(navigation_item.label), "/#{navigation_item.page.nice_url}" %>
+<% elsif navigation_item.navigation_type == 'link' && navigation_item.link %>	
+			<li class="<%= navigation_item.css_classes %>">
+				<%= link_to sanitize(navigation_item.label), navigation_item.link %>
+<% elsif navigation_item.navigation_type == 'other' && navigation_item.link %>	
+			<li class="<%= navigation_item.css_classes %>">
+				<%= link_to sanitize(navigation_item.label), '#' %>
+<% end %>
+			</li>

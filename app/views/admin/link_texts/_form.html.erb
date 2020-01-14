@@ -1,0 +1,36 @@
+<%= link.hidden_field :site_id, value: @site.id %>
+<%  unless @list_group_item && @list_group_item.item_type == 'plain_text' %>
+<div class="form-group">
+  <label for="link_text_text_link_text"><%= link.label :link %></label>
+  <div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="inputGroup-sizing-default">
+        http://&nbsp;&nbsp;<%= link.radio_button :http_https, 'http', checked: link_text.link =~ /https/ ? false : true %>
+      </span>
+      <span class="input-group-text" id="inputGroup-sizing-default">
+        https://&nbsp;&nbsp;<%= link.radio_button :http_https, 'https', checked: link_text.link =~ /https/ ? true : false %>
+      </span>
+    </div>
+    <%= link.text_field :link, value: link_text.link_stub, :class => "form-control" %>
+  </div>
+</div>  
+
+<div class="form-group">
+  <%= link.label :new_window %>
+  <%= link.select :new_window, {'No'=>'false','yes'=>'true'}, {}, :class => "form-control" %>
+</div>
+<div class="form-group">
+  <%= link.label :test_text %> (Optional: Can be used to test the external text.)
+  <%= link.text_field :test_text, :class => "form-control" %>
+</div>
+<% end %>
+<div class="form-group">
+  <%= link.label :body %> (Optional)
+  <%= link.text_area :body, 'data-provider': :summernote, :class => "form-control" %>
+</div>
+
+
+
+
+
+

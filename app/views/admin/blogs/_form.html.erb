@@ -1,0 +1,28 @@
+<% if @blog.errors.any? %>
+<div id="error_explanation">
+  <div class="alert alert-danger">
+		<%= pluralize(@blog.errors.count, "error") %> prohibited this page from being saved:
+	</div>
+  <ul>
+  <% @blog.errors.full_messages.each do |msg| %>
+    <li><%= msg %></li>
+  <% end %>
+  </ul>
+</div>
+<% end %>
+<%= f.hidden_field :site_id, value: @site.id %>
+<%= f.hidden_field :published, value: true %>
+
+<div class="form-group">
+  <%= f.label :name %>
+  <%= f.text_field :name, :class => "form-control" %>
+</div>
+<div class="form-group">
+  <label for="content_item_css"><%= f.label :css_classes, "CSS space separated class names" %></label>
+  <%= f.text_field :css_classes, :class => "form-control" %>
+</div>  
+<div class="form-group"> 
+  <label for="content_css">Owned by</label>
+  <%= f.select :admin_id, Admin.where("id in (select admin_id from admins_sites where site_id = ?)",@site.id).order('first_name asc,last_name asc').collect  { |c| [c.full_name, c.id] }, { }, :class => "form-control" %>
+</div>
+

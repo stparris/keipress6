@@ -1,0 +1,1 @@
+json.array! @content_items, partial: 'blog_posts/blog_post', as: :blog_post

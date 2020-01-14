@@ -1,0 +1,35 @@
+<div class="row">
+	<div class="col-md-12">
+		<div class="page-header">
+		  <h1>Articles</h1>
+		</div>
+		<table id="article_index" class="table table-striped table-bordered">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>CSS</th>
+					<th>Published</th>
+					<th></th>
+					<th></th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+<% @articles.order('name asc').each do |article| %>
+        <tr>
+          <td><%= link_to article.name, admin_article_path(article) %></td>
+          <td><%= link_to article.css_classes ? article.css_classes : "N/A", admin_article_path(article) %></td>
+          <td><%= link_to raw(article.published ? '<i class="icon-ok"></i>' : '<i class="icon-cancel"></i>'), admin_article_path(article) %></td>
+          <td><%= link_to raw('<i class="icon-zoom-in"></i>'), admin_article_path(article) %></td>
+          <td><%= link_to raw('<i class="icon-pencil"></i>'), edit_admin_article_path(article) %></td>
+          <td><%= link_to raw('<i class="icon-trash"></i>'), admin_article_path(article), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+<% end %>
+				<%= raw('<tr><td colspan="5">No content has been defined.</td></tr>') if @articles.count == 0 %>
+			</tbody>
+		</table>
+		<%= link_to new_admin_article_path do %>
+			<button type="button" class="btn  btn-outline-secondary btn-med"><i class="icon-plus"></i> New Article</button>
+		<% end %>
+	</div>
+</div>

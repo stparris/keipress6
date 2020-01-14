@@ -1,0 +1,68 @@
+<% if @admin_obj %>
+   	<%= form_for([:admin, AdminsSite.new], :html => {:role => 'form', remote: true}) do |f| %>
+    	<div class="form-group">
+        <label>Assign Site</label><br />
+					<%= collection_select :admins_site, :site_obj_id, Site.where("id not in (select site_id from admins_sites where admin_id = ?)", @admin_obj.id), :id, :name, options = {prompt: 'Please select...'}, html_options = {class: 'form-control'} %>
+      </div>
+      <%= f.hidden_field :admin_obj_id, value: @admin_obj.id %>
+      <hr />
+			<%= button_tag(type: 'submit', class:"btn btn-outline-secondary btn-med") do %>
+        <i class="icon-ok"></i>
+        Assign
+      <% end %>
+    <% end %>
+    <br/>		
+		<table class="table table-striped table-bordered">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+		<% @admin_obj.sites.each do |site| %>
+				<tr>
+          <td><%= raw(site.name) %></td>
+          <td><%= link_to raw('<i class="icon-trash"></i>'), admin_admins_site_path(1,admin_obj_id: @admin_obj.id, site_obj_id: site.id), remote: true, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+		<% end %>
+				<%= raw('<tr><td colspan="2">No sites for this admin</td></tr>') unless @admin_obj.sites.count > 0 %>
+			</tbody>
+		</table>
+
+<% else %>
+   	<%= form_for([:admin, AdminsSite.new], :html => {:role => 'form', remote: true}) do |f| %>
+    	<div class="form-group">
+        <label>Assign Site</label><br />
+					<%= collection_select :admins_site, :admin_id, Admin.where("id not in (select admin_id from admins_sites where site_id = ?)", @site.id), :id, :full_name, options = {prompt: 'Please select...'}, html_options = {class: 'form-control'} %>
+      </div>
+      <%= f.hidden_field :site_id, value: @site.id %>
+      <hr />
+			<%= button_tag(type: 'submit', class:"btn btn-outline-secondary btn-med") do %>
+        <i class="icon-ok"></i>
+        Assign
+      <% end %>
+    <% end %>
+    <br/>		
+		<table class="table table-striped table-bordered">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+<% @site.admins.each do |admin| %>
+				<tr>
+          <td><%= raw(admin.full_name) %></td>
+          <td><%= link_to raw('<i class="icon-trash"></i>'), admin_admins_site_path(1,admin_id: @admin_obj.id, site_id: site.id), remote: true, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+<% end %>
+				<%= raw('<tr><td colspan="2">No admins for this list</td></tr>') unless @site.admins.count > 0 %>
+			</tbody>
+		</table>
+
+<% end %>
+
+
+

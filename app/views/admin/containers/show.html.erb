@@ -1,0 +1,21 @@
+<div class="row">
+	<div class="col-md-9">
+		<div class="page-header">
+			<h1><%= @container.name %></h1>
+		</div>	
+		<%= object_table(@container) %>
+		<%= link_to edit_admin_container_path(@container) do %>
+			<button type="submit" class="btn  btn-outline-secondary"><i class="icon-pencil"></i> Edit</button>
+		<% end %>
+		&nbsp;&nbsp;<%= link_to admin_container_path(@container), method: :delete, data: { confirm: "Delete container?" } do %>
+			<button type="submit" class="btn btn-danger"><i class="icon-trash"></i> Delete</button>
+		<% end %>
+	</div>
+	<div class="col-md-3">
+		<%= operations_menu(@container,@page ? [@page] : []) %>
+	</div>
+</div>
+<% if @container.rows_flag %> 
+<hr/>
+<%= render partial: 'admin/container_rows/index'  %>
+<% end %>

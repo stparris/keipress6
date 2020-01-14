@@ -1,0 +1,21 @@
+<div class="row">
+	<div class="col-md-9">
+		<div class="page-header">
+		  <h1>Edit <%= @palette_color %></h1>
+		</div>
+		<%= form_for([:admin, @palette_color],:html => {:role => 'form', :class => "formFor"}) do |f| %>
+			<%= render partial: 'form', locals: {f:f} %>
+			<hr />
+			<%= button_tag(type: 'submit', class:"btn  btn-outline-secondary btn-med") do %>
+				<i class="icon-ok"></i>
+				Save
+			<% end %>
+			<%= link_to(raw('<button type="button" class="btn  btn-outline-secondary btn-med btn-right">
+				<i class="icon-cancel"></i>
+		   	 	Cancel</button>'), admin_palette_color_path(@palette_color)) %>
+		<% end %>
+	</div>
+	<div class="col-md-3">
+		<%= operations_menu(@palette_color) %>
+	</div>
+</div>

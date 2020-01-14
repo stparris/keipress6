@@ -1,0 +1,35 @@
+<div class="bs-help">
+	<p>Use Bootstrap CSS classes plus your own to set the look and behavior of the navigation item.</p> 
+	<p>Classes nav-item and dropdown are automatically included.</p>
+</div>
+<label for="container_row_css_classes"><%= f.label :css_classes %></label>
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="basic-addon1">nav-item dropdown</span>
+  </div>
+  <%= f.text_field :css_classes, value: @navigation_item.css_classes ? @navigation_item.added_css_classes : '', :class => "form-control" %>
+</div>
+<h3>New Dropdown Menu</h3>
+<%= fields_for @dropdown do |dropdown| %>
+	<%= dropdown.hidden_field :site_id %>
+  <%= dropdown.hidden_field :nav_type, value: @navigation_item.navigation.nav_type %>
+	<div class="form-group">
+		<%= dropdown.label :name %>
+		<%= dropdown.text_field :name, :class => "form-control" %>
+	</div>
+	<div class="bs-help">
+		<p>Use Bootstrap CSS classes plus your own to set the look and behavior of the dropdown menu.</p> 
+		<p>Classes dropdown-menu is automatically included.</p>
+	</div>	
+ 	<div class="form-group">
+    <label for="link_text_link"><%= dropdown.label :css_classes %></label>
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="inputGroup-sizing-default">
+          dropdown-menu
+        </span>
+      </div>
+      <%= dropdown.text_field :css_classes, value: @dropdown.css_classes ? @dropdown.added_css_classes : '', :class => "form-control" %>
+    </div>
+  </div>  
+<% end %>

@@ -1,0 +1,17 @@
+<div class="row">
+	<div class="col-md-9">
+		<div class="page-header">
+			<h1><%= @theme_color.name %></h1>
+		</div>	
+		<%= object_table(@theme_color) %>
+		<%= link_to edit_admin_admin_path(@theme_color) do %>
+			<button type="submit" class="btn  btn-outline-secondary"><i class="icon-pencil"></i> Edit</button>
+		<% end %>
+		&nbsp;&nbsp;<%= link_to admin_theme_color_path(@theme_color), method: :delete, data: { confirm: "Delete theme_color?" } do %>
+			<button type="submit" class="btn btn-danger"><i class="icon-trash"></i> Delete</button>
+		<% end %>
+	</div>
+	<div class="col-md-3">
+		<%= operations_menu(@theme_color) %>
+	</div>
+</div>

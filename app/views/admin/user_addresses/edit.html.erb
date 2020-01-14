@@ -1,0 +1,21 @@
+<div class="row">
+	<div class="col-md-9">
+		<div class="page-header">
+		  <h1>Edit <%= "#{@user_address.user.full_name} - #{@user_address.name} address" %></h1>
+		</div>
+		<%= form_for([:admin, @user_address],:html => {:role => 'form', :class => "formFor"}) do |f| %>
+			<%= render partial: 'form', locals: {f:f} %>
+			<hr />
+			<%= button_tag(type: 'submit', class:"btn  btn-outline-secondary btn-med") do %>
+				<i class="icon-ok"></i>
+				Save
+			<% end %>
+			<%= link_to(raw('<button type="button" class="btn  btn-outline-secondary btn-med btn-right">
+				<i class="icon-cancel"></i>
+		   	 	Cancel</button>'), admin_user_address_path(@user_address)) %>
+		<% end %>
+	</div>
+	<div class="col-md-3">
+		<%= operations_menu(@user_address,[@user_address.user]) %>
+	</div>
+</div>

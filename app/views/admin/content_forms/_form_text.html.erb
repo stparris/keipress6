@@ -1,0 +1,11 @@
+<%= f.hidden_field :text_html_flag, value: 1 %>
+<div id="content_select">
+  <div class="form-group">
+    <label for="content_item_css"><%= f.label :css_classes, "CSS space separated class names" %></label>
+    <%= f.text_field :css_classes, :class => "form-control" %>
+  </div>  
+  <div class="form-group"> 
+    <%= f.label :body %>
+		<%= f.text_area :body, 'data-provider': :summernote, :class => "form-control" %>
+	</div>
+</div>

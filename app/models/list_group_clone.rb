@@ -1,0 +1,3 @@
+class ListGroupClone < ListGroup
+
+end

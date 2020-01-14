@@ -1,0 +1,171 @@
+<%
+sub_navs = []
+
+def sub_nav(sub_controller, obj = nil)
+	nav = {}
+	nav['controller'] = sub_controller
+	if obj && sub_controller == 'container_rows'
+		nav['name'] = "Row #{obj.position}"
+		nav['id'] = obj.id		
+	elsif obj && sub_controller == 'row_columns'
+		nav['name'] = "Col #{obj.position}"
+		nav['id'] = obj.id		
+	elsif obj
+		nav['name'] = obj.name
+		nav['id'] = obj.id
+	else
+		nav['name'] = sub_controller.split(/_/).map(&:capitalize).join(' ')
+	end	
+	nav['active'] = controller_name == sub_controller ? 'active' : 'inactive'
+	return nav
+end
+
+if admin_subs.include?(controller_name) && @admin.role == 1 && !@site
+	admin_subs.each do |sub_controller|
+		sub_navs << sub_nav(sub_controller)
+	end
+end
+
+if @site && @site.persisted? && site_subs.include?(controller_name)
+	site_subs.each do |sub_controller|
+		if sub_controller == 'sites'
+			sub_navs << sub_nav(sub_controller) unless @admin.sites.count == 1
+			site_nav = sub_nav(sub_controller,@site)
+			site_nav['name'] = @site.name 
+			sub_navs << site_nav
+		else
+			sub_navs << sub_nav(sub_controller) 
+		end
+	end
+end
+
+if page_subs.include?(controller_name)
+	sub_navs << sub_nav(controller_name)
+	if @page && @page.persisted? 
+		sub_navs << sub_nav(controller_name,@page)
+	end
+end
+
+if container_subs.include?(controller_name)
+	sub_navs << sub_nav('containers')
+	if controller_name == 'containers' && @container && @container.persisted?
+		sub_navs << sub_nav('containers',@container)
+	end
+	if controller_name == 'container_clones' && @container && @container.persisted?
+		sub_navs << sub_nav('containers',@container)
+	end
+	if controller_name == 'container_rows' && @container_row 
+		sub_navs << sub_nav('containers',@container_row.container)
+		sub_navs << sub_nav('container_rows',@container_row) if @container_row.persisted?
+	end
+	if controller_name == 'row_columns' && @row_column 
+		sub_navs << sub_nav('containers',@row_column.container_row.container)
+		sub_navs << sub_nav('container_rows',@row_column.container_row)
+		sub_navs << sub_nav('row_columns',@row_column) if @row_column.persisted?
+	end	
+end
+
+if navigation_list_subs.include?(controller_name)
+	navigations = sub_nav('navigations')
+	navigations['active'] = 'active' if controller_name =~ /navigation/
+	dropdowns = sub_nav('dropdowns')
+	dropdowns['active'] = 'active' if controller_name =~ /dropdown/
+	list_groups = sub_nav('list_groups')
+	list_groups['active'] = 'active' if controller_name =~ /list_group/
+	sub_navs << navigations
+	sub_navs << dropdowns
+	sub_navs << list_groups
+end
+
+if content_subs.include?(controller_name)
+	categories = sub_nav('categories')
+	categories['active'] = 'active' if controller_name =~ /categor/
+	content_groups = sub_nav('content_groups')
+	content_groups['active'] = 'active' if controller_name =~ /content_groups|content_group_items/
+	content_group_text_items = sub_nav('content_group_text_items')
+	articles = sub_nav('articles')
+	articles['active'] = 'active' if controller_name =~ /article/
+	blogs = sub_nav('blogs')
+	blogs['active'] = 'active' if controller_name =~ /blog/
+	sub_navs << categories
+	sub_navs << content_groups
+	sub_navs << content_group_text_items
+	sub_navs << articles
+	sub_navs << blogs
+end
+
+if media_subs.include?(controller_name)
+	images = sub_nav('images')
+	images['active'] = 'active' if controller_name =~ /images|image_uploads|image_crops|image_watermarks/
+	image_groups = sub_nav('image_groups')
+	image_groups['active'] = 'active' if controller_name =~ /image_group/
+	carousels = sub_nav('carousels')
+	carousels['active'] = 'active' if controller_name =~ /carousel/
+	# songs = sub_nav('songs')
+	# songs['active'] = 'active' if controller_name =~ /song/
+	# videos = sub_nav('videos')
+	# videos['active'] = 'active' if controller_name =~ /video/
+	sub_navs << images
+	sub_navs << image_groups
+	sub_navs << carousels
+	# sub_navs << songs
+	# sub_navs << videos    
+end
+
+if people_subs.include?(controller_name)
+	sub_navs << sub_nav('admins')
+	sub_navs << sub_nav('users')
+end
+
+if booking_subs.include?(controller_name)
+	sub_navs << sub_nav('calendars')
+	sub_navs << sub_nav('bookings')
+	if controller_name == 'rental_booking_instructions'
+		sub_nav = sub_nav('rentals')
+		sub_nav['active'] = 'active'
+		sub_navs << sub_nav
+	else 
+		sub_navs << sub_nav('rentals')
+	end
+end
+
+if design_subs.include?(controller_name)
+	themes = sub_nav('themes')
+	palettes = sub_nav('palettes')
+	fonts = {}
+	fonts['controller'] = 'designers'
+	fonts['name'] = 'Fonts'
+	fonts['params'] = '?design_type=fonts'
+	fonts['active'] = request.fullpath =~ /fonts/ ? 'active' : 'inactive'
+	icons = {}
+	icons['controller'] = 'designers'
+	icons['name'] = 'Icons'
+	icons['params'] = '?design_type=icons'
+	icons['active'] = request.fullpath =~ /icons/ ? 'active' : 'inactive'
+	sub_navs << themes
+	sub_navs << palettes
+	sub_navs << fonts
+	sub_navs << icons
+end	
+%>
+
+<nav class="navbar navbar-expand-sm navbar-light bg-light navbar-fixed-top" role="navigation">
+	<!-- Brand and toggle get grouped for better mobile display -->
+	<div class="navbar-header">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-sub" aria-controls="navbar-sub" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+	</div>
+  <!-- Collect the nav links, forms, and other content for toggling -->
+	<div class="collapse navbar-collapse" id="navbar-sub">
+		<ul class="navbar-nav mr-auto">
+<% sub_navs.each do |sub_nav| %>
+	<% params = sub_nav['params'] ? "#{sub_nav['params']}" : "" %>
+	<% id_str = sub_nav['id'] ? "/#{sub_nav['id']}" : "" %>
+			<li class="nav-item <%= sub_nav['active'] %>">
+				<%= link_to sub_nav['name'], "/admin/#{sub_nav['controller']}#{id_str}#{params}", :class => 'nav-link' %>
+			</li>
+<% end %>
+		</ul>
+	</div><!-- /.navbar-collapse -->
+</nav>

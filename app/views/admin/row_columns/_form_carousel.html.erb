@@ -1,0 +1,4 @@
+<div id="carousel_select" class="form-group">
+	<%= f.label :carousel_id %>
+	<%= f.select :carousel_id, Carousel.where(site_id: @site.id).order('name asc').collect { |c| [c.name, c.id] }, {prompt: 'Please Select'}, :class => "form-control" %>
+</div>

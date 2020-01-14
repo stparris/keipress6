@@ -1,0 +1,71 @@
+<% if @admin_obj.errors.any? %>
+<div id="error_explanation">
+	<div class="alert alert-danger">
+	  <%= pluralize(@admin_obj.errors.count, "error") %> prohibited this page from being saved:
+  </div>
+  <ul>
+  <% @admin_obj.errors.full_messages.each do |msg| %>
+    <li><%= msg %></li>
+  <% end %>
+  </ul>
+</div>
+<% end %>
+<div class="form-group">
+	<%= f.label :email %>
+	<%= f.email_field :email, :class => "form-control" %>
+</div>
+<div class="form-group">
+	<%= f.label :prefix %>
+	<%= f.text_field :prefix, :class => "form-control" %>
+</div>
+<div class="form-group">
+	<%= f.label :first_name %>
+	<%= f.text_field :first_name, :class => "form-control" %>
+</div>
+<div class="form-group">
+	<%= f.label :middle_name %>
+	<%= f.text_field :middle_name, :class => "form-control" %>
+</div>
+<div class="form-group">
+	<%= f.label :last_name %>
+	<%= f.text_field :last_name, :class => "form-control" %>
+</div>
+<div class="form-group">
+	<%= f.label :suffix %>
+	<%= f.text_field :suffix, :class => "form-control" %>
+</div>
+<div class="form-group">
+	<%= f.label :title %>
+	<%= f.text_field :title, :class => "form-control" %>
+</div>
+<div class="form-group">
+	<%= f.label :phone %>
+	<%= f.text_field :phone, :class => "form-control" %>
+</div>
+<div class="form-group">
+	<%= f.label :bio %>
+	<%= f.text_area :bio, 'data-provider': :summernote, :class => "form-control" %>
+</div>
+<div class="form-group">
+	<%= f.label :new_password %>
+	<%= f.password_field :new_password, :class => "form-control" %>
+</div>
+<div class="form-group">
+	<%= f.label :new_password_confirmation %>
+	<%= f.password_field :new_password_confirmation, :class => "form-control" %>
+</div>
+<div class="form-group">
+	<%= f.label :status %>
+	<%= f.select :status,{'Active'=>'1','Inactive'=>'2'}, {}, :class => "form-control" %>
+</div>
+<% if @admin.role == 1 %>
+<div class="form-group">
+	<%= f.label :role %>
+	<%= f.select :role,{'Super Admin'=>'1','Site Admin'=>'2','Content Admin'=>'3'}, {}, :class => "form-control" %>
+</div>
+<% elsif @admin.role == 2 %>
+<div class="form-group">
+	<%= f.select :role,{'Site Admin'=>'2','Content Admin'=>'3'}, {}, :class => "form-control" %>
+</div>
+<% end %>
+

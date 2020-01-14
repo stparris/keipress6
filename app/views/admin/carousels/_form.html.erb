@@ -1,0 +1,66 @@
+<% if @carousel.errors.any? %>
+<div id="error_explanation">
+  <div class="alert alert-danger">
+		<%= pluralize(@carousel.errors.count, "error") %> prohibited this page from being saved:
+	</div>
+  <ul>
+  <% @carousel.errors.full_messages.each do |msg| %>
+    <li><%= msg %></li>
+  <% end %>
+  </ul>
+</div>
+<% end %>
+<p><%= link_to raw('See the Bootstrap Carousel page for detailed information. <i class="icon-right-hand"></i>') , "https://getbootstrap.com/docs/4.0/components/carousel/", target: 'navbar_help' %></p> 
+<%= f.hidden_field :site_id, value: @site.id %>
+
+<div class="form-group">
+  <%= f.label :name %>
+  <%= f.text_field :name, :class => "form-control" %>
+</div>
+<div class="form-group">
+  <%= f.label :description %>
+  <%= f.text_field :description, :class => "form-control" %>
+</div>
+<div id="navigation_bar_select" class="form-group">
+  <div class="form-group">
+    <label for="carousel_row_css_classes">
+      <%= f.label :css_classes, "CSS space separated class names" %>
+    </label>
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="inputGroup-sizing-default">carousel slide</span>
+      </div>
+      <%= f.text_field :css_classes, value: @carousel.css_classes ? @carousel.added_css_classes : '', :class => "form-control" %>
+    </div>
+  </div>    
+</div>
+
+<div class="form-group">
+  <%= f.label :with_controls %>
+  <%= f.select :with_controls, {'No'=>'false','yes'=>'true'}, {}, :class => "form-control" %>
+</div>
+<div class="form-group">
+  <%= f.label :with_indicators %>
+  <%= f.select :with_indicators, {'No'=>'false','yes'=>'true'}, {}, :class => "form-control" %>
+</div>
+<div class="form-group">
+  <%= f.label :with_captions %>
+  <%= f.select :with_captions, {'No'=>'false','yes'=>'true'}, {}, :class => "form-control" %>
+</div>
+<div class="form-group">
+  <%= f.label :with_pause %>
+  <%= f.select :with_pause, {'No'=>'false','yes'=>'true'}, {}, :class => "form-control" %>
+</div>
+<div class="form-group">
+  <%= f.label :with_ride %>
+  <%= f.select :with_ride, {'No'=>'false','yes'=>'true'}, {}, :class => "form-control" %>
+</div>
+<div class="form-group">
+  <%= f.label :interval %> (milliseconds)
+  <%= f.text_field :interval, :class => "form-control" %>
+</div>
+<div class="form-group">
+  <%= f.label "Max width for large displays" %>
+  <%= f.select :image_variant, image_width_options("1920"), {}, :class => "form-control" %>
+</div>
+

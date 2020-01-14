@@ -1,0 +1,3 @@
+class ImageOptimization < Image
+  
+end

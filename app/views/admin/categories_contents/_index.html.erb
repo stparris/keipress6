@@ -1,0 +1,39 @@
+<div class="row">
+	<div class="col-md-12">
+<% if controller_name == 'categories' %>		
+		<h5>Assigned Articles</h5>
+		<div class="badges">
+	<% Content.where("type = 'Article' and site_id = ? and id in (select content_id from categories_contents where category_id = ?)", @site.id, @category.id).each do |article| %>
+			<%= link_to article_admin_category_path(@category, article_id: article.id), remote: true, method: 'patch' do %>
+				<span class="badge badge-secondary"><%= raw("#{article.name} <icon class=\"icon-cancel\"></icon>") %></span>
+			<% end %>
+	<% end %>
+		</div>
+		<h5>Unassigned Articles</h5>
+		<div class="badges">
+	<% Content.where("type = 'Article' and id not in (select content_id from categories_contents where category_id = ?)", @category.id).each do |article| %>
+			<%= link_to article_admin_category_path(@category, article_id: article.id), remote: true, method: 'patch' do %>
+				<span class="badge badge-secondary"><%= raw("#{article.name} <icon class=\"icon-plus\"></icon>") %></span>
+			<% end %>
+	<% end %>
+		</div>
+<% else %>
+		<h5>Assigned Categories</h5>
+		<div class="badges">
+	<% Category.where("id in (select category_id from categories_contents where content_id = ?)", @article.id).each do |category| %>
+			<%= link_to category_admin_article_path(@article, category_id: category.id), remote: true, method: 'patch' do %>
+				<span class="badge badge-secondary"><%= raw("#{category.name} <icon class=\"icon-cancel\"></icon>") %></span>
+			<% end %>
+	<% end %>
+		</div>
+		<h5>Unassigned Categories</h5>
+		<div class="badges">
+	<% Category.where("site_id = ? and id not in (select category_id from categories_contents where content_id = ?)", @site.id, @article.id).each do |category| %>
+			<%= link_to category_admin_article_path(@article, category_id: category.id), remote: true, method: 'patch' do %>
+				<span class="badge badge-secondary"><%= raw("#{category.name} <icon class=\"icon-plus\"></icon>") %></span>
+			<% end %>
+	<% end %>	
+		</div>
+<% end %>
+	</div>
+</div>

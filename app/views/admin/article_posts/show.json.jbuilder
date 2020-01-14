@@ -1,0 +1,1 @@
+json.partial! "article_posts/article_post", article_post: @content_item

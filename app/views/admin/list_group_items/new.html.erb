@@ -1,0 +1,54 @@
+<div class="row">
+	<div class="col-md-9">
+		<div class="page-header">
+		  <h1>New List Group Item</h1>
+		</div>
+<% if @list_group_item.item_type %>
+		<%= form_for([:admin, @list_group_item],:html => {:role => 'form', :class => "formFor"}) do |f| %>
+			<%= render partial: 'form', locals: {f:f} %>
+			<hr />
+			<%= button_tag(type: 'submit', class:"btn  btn-outline-secondary btn-med") do %>
+				<i class="icon-ok"></i>
+				Create
+			<% end %>
+			<%= link_to(raw('<button type="button" class="btn  btn-outline-secondary btn-med btn-right">
+				<i class="icon-cancel"></i>
+		   	 	Cancel</button>'), new_admin_list_group_item_path(list_group_id: @list_group_item.list_group_id)) %>
+		<% end %>
+<% else %>
+		<div class="bs-help">
+			<h3>List Group Item types</h3>
+			<div><p><strong>Page link: </strong>Creates a list link item for a specific page such as Home, About, Blog, etc.</p>
+			<%= link_to new_admin_list_group_item_path(item_type: 'page_link',list_group_id: @list_group_item.list_group_id) do %>
+				<button type="button" class="btn  btn-outline-secondary btn-sm"><i class="icon-plus"></i> New Page Link Item</button>
+			<% end %>
+			</div>
+			<hr/>
+			<div><p><strong>Category link: </strong>Creates a list link item for a specific category.</p> 
+				<%= link_to new_admin_list_group_item_path(item_type: 'category_link',list_group_id: @list_group_item.list_group_id) do %>
+					<button type="button" class="btn  btn-outline-secondary btn-sm"><i class="icon-plus"></i> New Category Link Item</button>
+				<% end %>
+			</div>
+			<hr/>
+			<div><p><strong>External link: </strong>Creates a list item for an external link.</p> 
+				<%= link_to new_admin_list_group_item_path(item_type: 'external_link',list_group_id: @list_group_item.list_group_id) do %>
+					<button type="button" class="btn  btn-outline-secondary btn-sm"><i class="icon-plus"></i> New External Link Item</button>
+				<% end %>
+			</div>
+			<hr/>
+				<div><p><strong>Plain text: </strong>Creates a linkless text list item.</p> 
+				<%= link_to new_admin_list_group_item_path(item_type: 'plain_text',list_group_id: @list_group_item.list_group_id) do %>
+					<button type="button" class="btn  btn-outline-secondary btn-sm"><i class="icon-plus"></i> New Plain Text Item</button>
+				<% end %>
+			</div>
+			<hr/>
+			<%= link_to admin_list_group_path(@list_group_item.list_group) do %>
+				<button type="button" class="btn  btn-outline-secondary btn-med btn-right"><i class="icon-cancel"></i> Cancel</button>
+			<% end %>
+		</div>
+<% end %>
+	</div>
+	<div class="col-md-3">
+		<%= operations_menu(@list_group_item,[@list_group_item.list_group]) %>
+	</div>
+</div>

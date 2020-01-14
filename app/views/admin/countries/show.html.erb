@@ -1,0 +1,17 @@
+<div class="row">
+	<div class="col-md-9">
+		<div class="page-header">
+			<h1><%= @countrie.name %></h1>
+		</div>	
+		<%= object_table(@countrie) %>
+		<%= link_to edit_admin_countrie_path(@countrie) do %>
+			<button type="submit" class="btn  btn-outline-secondary"><i class="icon-pencil"></i> Edit</button>
+		<% end %>
+		&nbsp;&nbsp;<%= link_to admin_countrie_path(@countrie), method: :delete, data: { confirm: "Delete countrie?" } do %>
+			<button type="submit" class="btn btn-danger"><i class="icon-trash"></i> Delete</button>
+		<% end %>
+	</div>
+	<div class="col-md-3">
+		<%= operations_menu(@countrie) %>
+	</div>
+</div>

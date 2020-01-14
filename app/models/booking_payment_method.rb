@@ -1,0 +1,2 @@
+class BookingPaymentMethod < ApplicationRecord
+end

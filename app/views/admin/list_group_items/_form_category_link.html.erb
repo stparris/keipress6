@@ -1,0 +1,16 @@
+<div class="bs-help">
+	<p>Use Bootstrap CSS classes plus your own to set the look and behavior of the list_group item.</p> 
+	<p>Class list-group-item is automatically included.</p>
+</div>
+<label for="container_row_css_classes"><%= f.label :css_classes %></label>
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="basic-addon1">list-group-item</span>
+  </div>
+  <%= f.text_field :css_classes, value: @list_group_item.css_classes ? @list_group_item.added_css_classes : '', :class => "form-control" %>
+</div>
+
+<div class="form-bar">
+	<%= f.label :category_id %>
+	<%= f.select :category_id, Category.where("site_id = ?", @site.id).order('name asc').collect { |c| [c.name, c.id] }, {prompt: 'Please Select'}, :class => "form-control" %>
+</div>

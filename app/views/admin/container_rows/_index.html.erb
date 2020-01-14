@@ -1,0 +1,67 @@
+<div class="row">
+	<div class="col-md-12">
+		<div class="page-header">
+		  <h2>Rows</h2>
+		</div>
+		<table class="table table-striped table-bordered">
+			<thead>
+				<tr>
+					<th>Position</th>
+					<th>Row</th>
+					<th>CSS</th>
+					<th>Columns/CSS</th>
+					<th>Columns/Content</th>
+					<th></th>
+					<th></th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody id="container_rows" data-sort-items-url="<%= sort_admin_container_rows_url %>">
+<% @container_rows.each do |container_row| %>
+				<tr class="container_row" id="container_row_<%= container_row.id %>">
+					<td><span class="handle"><i class="icon-up-hand"></i></span></td>		
+          <td><%= link_to "Row #{container_row.position}", admin_container_row_path(container_row) %></td>
+          <td><%= link_to raw(container_row.css_classes), admin_container_row_path(container_row) %></td>
+  <%
+		i = 1
+	  column_css = ""
+  	content_type = ""
+  	content = ""
+  	link = ""
+  	container_row.row_columns.each do |col|
+  		content_type = col.content_type
+  		column_css += link_to raw("#{i}.) #{col.css_classes} <icon class=\"icon-pencil\"></icon>"), edit_admin_row_column_url(col), target: "column_#{col.id}"
+  		content += "#{i}.) "
+  		case col.content_type
+  		when 'carousel'
+   			content += link_to raw("#{col.carousel.name} <icon class=\"icon-right-hand\"></icon>"), admin_carousel_url(col.carousel), target: "#{content_type}?#{rand(4)}"
+  		when /image_group|image_grid/
+   			content += link_to raw("#{col.image_group.name} <icon class=\"icon-right-hand\"></icon>"), admin_image_group_url(col.image_group), target: "#{content_type}?#{rand(4)}"
+  		when 'list_group'
+   			content += link_to raw("#{col.list_group.name} <icon class=\"icon-right-hand\"></icon>"), admin_list_group_url(col.list_group), target: "#{content_type}?#{rand(4)}"
+   		when 'content_group'
+   			content += link_to raw("#{col.content.name} <icon class=\"icon-right-hand\"></icon>"), admin_content_group_url(col.content), target: "#{content_type}?#{rand(4)}"
+  		else 
+  			content = "#{col.inspect}"
+  		end
+  		column_css += "<br/>"
+  		content += "<br/>"
+  		i += 1
+  	end
+  %>
+  				<td><%= raw(column_css) %></td>
+  				<td><%= link_to raw(content), link, target: "#{content_type}?#{rand(4)}" %></td>
+          <td><%= link_to raw('<i class="icon-zoom-in"></i>'), admin_container_row_path(container_row) %></td>
+          <td><%= link_to raw('<i class="icon-pencil"></i>'), edit_admin_container_row_path(container_row) %></td>
+          <td><%= link_to raw('<i class="icon-trash"></i>'), admin_container_row_path(container_row), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+<% end %>
+				<%= raw('<tr><td colspan="6">No items for this list</td></tr>') unless @container_rows.count > 0 %>
+			</tbody>
+		</table>
+		<%= link_to new_admin_container_row_path(container_id: @container.id) do %>
+			<button type="button" class="btn  btn-outline-secondary btn-med"><i class="icon-plus"></i> New Row</button>
+		<% end %>
+	</div>
+</div>
+

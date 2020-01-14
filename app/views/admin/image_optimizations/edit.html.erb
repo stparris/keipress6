@@ -1,0 +1,32 @@
+<div class="row">
+	<div class="col-md-9">
+		<div class="page-header">
+			<h1><%= @image_optimization.name %></h1>
+		</div>	
+		<div class="image-original">
+			<%= image_tag url_for(@image_optimization.image), class: 'img-fluid' %>
+		</div>
+		<%= optimize_div(@image_optimization) %>
+		<%= form_for([:admin, @image_optimization],:html => {:role => 'form', :class => "formFor"}) do |f| %>
+			<hr />
+			<div class="form-group">
+				<%= f.label :max_width %>
+				<%= f.select :max_width, image_width_options(@image_optimization.max_width), {}, :class => "form-control" %>
+			</div>
+			<div class="form-group">
+				<%= f.label :quality %>
+				<%= f.select :quality, {'Maximum 100'=>'100','High 80'=>'80','Medium 65'=>'65','Low 30'=>'30'}, {}, :class => "form-control" %>
+			</div>			
+			<%= button_tag(type: 'submit', class:"btn  btn-outline-secondary btn-med") do %>
+				<icon class="icon-ok"></icon>
+				Optimize
+			<% end %>
+			<%= link_to(raw('<button type="button" class="btn  btn-outline-secondary btn-med btn-right">
+				<i class="icon-cancel"></i>
+		   	 	Cancel</button>'), admin_image_path(@image_optimization)) %>
+		<% end %>
+	</div>
+	<div class="col-md-3">
+		<%= operations_menu(@image_optimization.becomes(Image)) %>
+	</div>
+</div>

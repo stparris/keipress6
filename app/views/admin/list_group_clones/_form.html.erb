@@ -1,0 +1,31 @@
+<% if @list_group_clone.errors.any? %>
+<div id="error_explanation">
+  <div class="alert alert-danger">
+		<%= pluralize(@list_group_clone.errors.count, "error") %> prohibited this page from being saved:
+	</div>
+  <ul>
+  <% @list_group_clone.errors.full_messages.each do |msg| %>
+    <li><%= msg %></li>
+  <% end %>
+  </ul>
+</div>
+<% end %>
+
+<%= f.hidden_field :site_id, value: @site.id %>
+
+<div class="form-group">
+  <%= f.label :name %>
+  <div class="input-group mb-3">
+  <%= hidden_field_tag :list_group_id, @list_group.id %>
+  <%= f.text_field :name, value: "Clone of #{@list_group.clear_group}", :class => "form-control" %>
+    <div class="input-group-append">
+      <span class="input-group-text" id="inputGroup-sizing-default">Group</span>
+    </div>    
+  </div>
+</div>
+<div class="form-group">
+  <%= f.label :css_classes %>
+  <%= f.text_field :css_classes, value: @list_group.css_classes, :class => "form-control" %>
+</div>
+
+

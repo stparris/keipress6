@@ -1,0 +1,55 @@
+<% if @booking_error %>
+	$("#booking_error").html("<%= escape_javascript(@booking_error) %>");
+	$('html, body').animate({
+	  scrollTop: $('#booking_error').offset().top
+	}, 500);
+<% else %>
+	$("#payment_card_errors").html("<%= escape_javascript(@message) %>");
+	$("#cardErrorModal").modal();
+	$("#submit_booking_btn icon").removeClass('animate-spin');
+	$("#submit_booking_btn icon").removeClass('icon-spin3');
+	$("#submit_booking_btn icon").addClass('icon-ok');
+	$("#submit_booking_btn").attr("disabled",false);
+
+	<% if @errors['brand'] %>
+		$("#payment_card_brand_error").show();
+		$("#payment_card_brand").addClass('input-error');	
+	<% end %>
+	<% if @errors['first_name'] %>
+		$("#payment_card_first_name").addClass('input-error');
+	  $("#payment_card_first_name_error").show();
+	<% end %>
+
+	<% if @errors['last_name'] %>
+		$("#payment_card_last_name").addClass('input-error');
+	  $("#payment_card_last_name_error").show();
+	<% end %>
+
+	<% if @errors['card_number'] %>
+		$("#payment_card_card_number").addClass('input-error');
+	  $("#payment_card_card_number_error").show();
+	<% end %>
+
+	<% if @errors['expiration'] %>
+		$("#payment_card_expiration_month").addClass('input-error');
+		$("#payment_card_expiration_month_error").show();
+	<% end %>
+
+	<% if @errors['expiration'] %>
+		$("#payment_card_expiration_year").addClass('input-error');
+		$("#payment_card_expiration_year_error").show();
+	<% end %>
+
+	<% if @errors['validation'] %>
+		$("#payment_card_card_verification").addClass('input-error');
+	  $("#payment_card_card_verification_error").show();
+	<% end %>
+
+	$('html, body').animate({
+	  scrollTop: $('#payment_card_top').offset().top
+	}, 100);
+<% end %>
+/**
+This transaction cannot be processed. Please enter a valid credit card number and type.. This transaction cannot be processed. Please enter a valid credit card expiration date.
+
+*/

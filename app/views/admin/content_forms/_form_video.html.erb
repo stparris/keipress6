@@ -1,0 +1,22 @@
+<div id="content_select">
+  <div class="form-group">
+    <label for="content_item_css"><%= f.label :css_classes, "CSS space separated class names" %></label>
+    <%= f.text_field :css_classes, :class => "form-control" %>
+  </div>  
+  <div class="form-group"> 
+    <%= f.label :video %>
+    <%= f.select :video, Video.where(site_id: @site.id).order('name asc').collect { |c| [c.name, c.id] }, {prompt: 'Please Select'}, :class => "form-control" %>
+  </div>
+</div>
+<div class="form-group">
+  <%= f.label :include_caption %>
+  <%= f.select :include_caption, {'No'=>'false','yes'=>'true'}, {}, :class => "form-control" %>
+</div>
+<div class="form-group">
+  <%= f.label :include_copyright %>
+  <%= f.select :include_copyright, {'No'=>'false','yes'=>'true'}, {}, :class => "form-control" %>
+</div>
+<div class="form-group">
+  <%= f.label :include_description %>
+  <%= f.select :include_description, {'No'=>'false','yes'=>'true'}, {}, :class => "form-control" %>
+</div>

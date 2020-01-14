@@ -1,0 +1,10 @@
+<div class="row">
+	<div class="col-md-12">
+		<div class="page-header">
+			<h1>Not Found, Error 404</h1>
+		</div>	
+		<p>The page you are looking for no longer exists.</p>
+		<%= raw("<p>#{@error.message}</p>") if @error.message %>
+		<p>Return to the site's home page by clicking here: <%= link_to 'Return Home.', admin_site_url(@site.id) %></p>
+	</div>
+</div>

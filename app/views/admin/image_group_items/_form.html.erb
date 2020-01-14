@@ -1,0 +1,34 @@
+<% if @image_group_item.errors.any? %>
+<div id="error_explanation">
+  <div class="alert alert-danger">
+		<%= pluralize(@image_group_item.errors.count, "error") %> prohibited this page from being saved:
+	</div>
+  <ul>
+  <% @image_group_item.errors.full_messages.each do |msg| %>
+    <li><%= msg %></li>
+  <% end %>
+  </ul>
+</div>
+<% end %>
+<%= f.hidden_field :image_group_id %>
+<div class="form-group">
+	<%= f.label :css_classes %>
+	<%= f.text_field :css_classes, :class => "form-control" %>
+</div>
+<div class="form-group">
+  <%= f.label :include_caption %>
+  <%= f.select :include_caption, {'No'=>'false','Yes'=>'true'}, {}, :class => "form-control" %>
+</div>
+<div class="form-group">
+  <%= f.label :include_copyright %>
+  <%= f.select :include_copyright, {'No'=>'false','Yes'=>'true'}, {}, :class => "form-control" %>
+</div>
+<div class="form-group">
+  <%= f.label :include_description %>
+  <%= f.select :include_description, {'No'=>'false','Yes'=>'true'}, {}, :class => "form-control" %>
+</div>
+<div class="form-group">
+  <%= f.label :image_id %>
+  <%= f.hidden_field :image_id, id: "hidden_image_field" %>
+  <p>Selected: <span id="image_text"><%= @image_group_item.image ? @image_group_item.image.name : "not selected" %></span></p>
+</div>

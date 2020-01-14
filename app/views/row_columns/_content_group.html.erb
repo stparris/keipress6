@@ -1,0 +1,9 @@
+<%= raw("<div class=\"#{content_group.css_classes}\">") if content_group.css_classes =~ /\S+/ %> 
+<% content_group.content_group_items.each do |content_item| %>
+	<% if @page.assignment =~ /booking-\S{2}-rental/ && content_item.body =~ /BOOKING_FORM/ %>
+		<%= render partial: 'rental_bookings/new', locals: {content_item: content_item} %>
+	<% else %>
+		<%= render partial: 'content_items/show', locals: {content_item: content_item} %>
+	<% end %>
+<% end %>
+<%= raw("</div>") if content_group.css_classes =~ /\S+/  %> 

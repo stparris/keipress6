@@ -1,0 +1,60 @@
+<%= form_for([:admin, theme_color]) do |f| %>
+<%= hidden_field_tag :auth_token, form_authenticity_token, id: "auth_token_#{theme_color.id}" %>
+<td>
+	<div id="theme_color_color_<%= theme_color.id %>" class="theme-color" style="background-color:#<%= theme_color.value %>;">
+		&nbsp;
+	</div>
+</td>
+<td>
+
+  <div id="theme_color_copy_<%= theme_color.id %>" class="input-group input-group-sm mb-3">
+    <input id="theme_color_text_<%= theme_color.id %>" type="text" class="form-control color-tooltip" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="$<%= theme_color.name %>: #<%= theme_color.value %>;" data-toggle="tooltip" data-placement="top" title="Copied to clipboard" readonly>
+     <span class="input-group-btn">
+    <button id="theme_color_<%= theme_color.id %>" class="btn btn-default color-theme" type="button" data-toggle="tooltip" data-placement="top" title="Copy">
+      <icon class="icon-docs"></icon>
+    </button>
+  </span>
+  </div>	
+  <div id="theme_color_form_<%= theme_color.id %>" class="form-row" style="display:none;">
+    <div class="col">
+			<div class="input-group mb-3">
+				<div class="input-group-prepend">
+			  	<span class="input-group-text" id="inputGroup-sizing-default">$</span>
+			  </div>      
+		    <%= f.text_field :name, id: "theme_color_name_#{theme_color.id}", :class => "form-control form-control-sm", disabled: true %>
+    	</div>
+    </div>
+    <div class="col">
+			<div class="input-group mb-3">
+				<div class="input-group-prepend">
+			  	<span class="input-group-text" id="inputGroup-sizing-default">#</span>
+			  </div>    
+	      <%= f.text_field :value, id: "theme_color_value_#{theme_color.id}", :class => "form-control form-control-sm", maxlength: 6  %>
+  			</div>  
+  		</div>
+    </div>
+  </div>
+</td>
+<td>
+<%= button_tag(type: 'button', id: "theme_color_edit_#{theme_color.id}", class: "btn btn-sm edit_theme_color") do %>
+		<i class="icon-pencil"></i>
+<% end %>
+<%= button_tag(type: 'button', id: "theme_color_save_#{theme_color.id}", class: "btn btn-sm save_theme_color", style: "display:none;") do %>
+	<i class="icon-ok"></i>
+<% end %>
+&nbsp;&nbsp;
+<%= button_tag(type: 'button', id: "theme_color_cancel_#{theme_color.id}", class: "btn btn-sm cancel_theme_color", style: "display:none;") do %>
+		<i class="icon-cancel"></i>
+<% end %>
+</td>
+<td>
+	<%= link_to admin_theme_color_path(theme_color), method: :delete, remote: true, data: { confirm: 'Are you sure?' } do %>
+		<button class="btn btn-sm"><i class="icon-trash"></i></button>
+	<% end %>
+</td>
+<td><%= theme_color.palette_color.palette.name %></td>
+<% end %>
+
+
+
+

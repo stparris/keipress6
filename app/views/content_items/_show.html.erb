@@ -1,0 +1,18 @@
+<%= raw("<div class=\"#{content_item.css_classes}\">") if content_item.css_classes =~ /\S+/  %>
+<% if content_item.content_type == 'image_carousel' %>
+	<%= render partial: 'application/image_carousel', locals: {image_carousel: image_carousel} %>
+<% elsif content_item.content_type == 'image' %>
+	<%= src_sets(content_item.image) %>
+<% elsif content_item.content_type == 'list_group' %>
+	<%= render partial: "application/list_group", locals: {list_group: content_item.list_group} %>
+<% elsif content_item.content_type == 'image_group' %>
+	<%-# render partial: "application/image_#{}", locals: {image_carousel: image_group} %>
+<% elsif content_item.content_type == 'medium' %>
+
+<% elsif content_item.content_type == 'link_text' %>
+
+<% end %>
+
+<%= raw(process_macros(content_item.body)) if content_item.body %>
+
+<%= raw("</div>") if content_item.css_classes =~ /\S+/  %>

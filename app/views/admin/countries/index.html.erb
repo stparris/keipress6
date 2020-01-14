@@ -1,0 +1,33 @@
+<div class="row">
+	<div class="col-md-12">
+		<div class="page-header">
+		  <h1>Countries</h1>
+		</div>
+		<table class="table table-striped table-bordered">
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>Name</th>
+					<th></th>
+					<th></th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+<% @countries.each do |countrie| %>
+        <tr>
+        	<td><%= link_to countrie.id, admin_countrie_path(countrie) %></td>
+          <td><%= link_to raw(countrie.name), admin_countrie_path(countrie) %></td>
+          <td><%= link_to raw('<i class="icon-zoom-in"></i>'), admin_countrie_path(countrie) %></td>
+          <td><%= link_to raw('<i class="icon-pencil"></i>'), edit_admin_countrie_path(countrie) %></td>
+          <td><%= link_to raw('<i class="icon-trash"></i>'), admin_countrie_path(countrie), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+<% end %>
+				<%= raw('<tr><td colspan="5">No items for this list</td></tr>') unless @countries.count > 0 %>
+			</tbody>
+		</table>
+		<%= link_to new_admin_countrie_path do %>
+			<button type="button" class="btn  btn-outline-secondary btn-med"><i class="icon-plus"></i> New Countrie</button>
+		<% end %>
+	</div>
+</div>

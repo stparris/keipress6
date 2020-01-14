@@ -1,0 +1,11 @@
+<div id="image_group_select" class="form-group">
+	<%= f.label :image_group_id %>
+	<%= f.select :image_group_id, ImageGroup.where(site_id: @site.id).order('name asc').collect { |c| [c.name, c.id] }, {prompt: 'Please Select'}, :class => "form-control" %>
+</div>
+<label for="grid_image_height"><%= f.label :grid_image_height %> (default: 250px, min: 100px, max: 500px)</label>
+<div class="input-group mb-3">
+  <%= f.number_field :grid_image_height, min: 100, max: 500, :class => "form-control" %>
+  <div class="input-group-append">
+    <span class="input-group-text" id="basic-addon1">px</span>
+  </div>
+</div>

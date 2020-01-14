@@ -1,0 +1,29 @@
+<% if navigation.nav_type == 'navbar' %>
+
+<nav class="<%= navigation.main_css_classes %>">
+<% if navigation.brand %>
+  <a class="navbar-brand" href="/"><%= raw(navigation.brand) %></a>
+<% end %>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar<%= navigation.id %>" aria-controls="navbar<%= navigation.id %>" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="<%= navigation.list_css_classes %>" id="navbar<%= navigation.id %>">
+    <ul class="navbar-nav">
+<% navigation.navigation_items.order(position: 'asc').each do |navigation_item| %>
+      <%= render partial: 'layouts/navigation_item', locals: { navigation_item: navigation_item } %>
+<% end %>
+    </ul>
+<% if navigation.form =~ /\S+/ %>
+    <%= raw(navigation.form) %>
+<% end %>
+  </div>
+</nav>
+
+<% elsif navigation.nav_type == 'nav' %>
+<ul class="<%= navigation.main_css_classes %>">
+  <% navigation.navigation_items.each do |navigation_item| %>
+  <%= render partial: 'layouts/navigation_item', locals: { navigation_item: navigation_item } %>
+  <% end %>
+</ul>  
+
+<% end %>

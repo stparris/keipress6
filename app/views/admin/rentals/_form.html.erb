@@ -1,0 +1,81 @@
+<% if @rental.errors.any? %>
+<div id="error_explanation">
+  <div class="alert alert-danger">
+		<%= pluralize(@rental.errors.count, "error") %> prohibited this page from being saved:
+	</div>
+  <ul>
+  <% @rental.errors.full_messages.each do |msg| %>
+    <li><%= msg %></li>
+  <% end %>
+  </ul>
+</div>
+<% end %>
+<div class="form-group">
+	<%= f.label :name %>
+	<%= f.text_field :name, :class => "form-control" %>
+</div>
+<%= f.hidden_field :site_id, value: @site.id %>
+<div class="form-group">
+	<%= f.label :calendar_id %>
+	<%= f.select :calendar_id, Calendar.where(site_id: @site.id).order('name asc').collect { |c| [c.name, c.id] }, {prompt: 'Please Select'}, :class => "form-control" %>
+</div>
+<div class="form-group">
+	<%= f.label :min_days %>
+	<%= f.number_field :min_days, min: 1, :class => "form-control" %>
+</div>
+<div class="form-group">
+	<%= f.label :min_guests %>
+	<%= f.number_field :min_guests, min: 1, :class => "form-control" %>
+</div>
+<div class="form-group">
+	<%= f.label :max_guests %>
+	<%= f.number_field :max_guests, min: 1, :class => "form-control" %>
+</div>
+<div class="form-group">
+	<%= f.label :currency %>
+	<%= f.select :currency, Rental.currencies , {prompt: 'Please select'}, :class => "form-control" %>
+</div>
+<div class="form-group">
+	<%= f.label :regular_dates %> - Comma separated date ranges: yyyy/mm/dd-yyyy/mm/dd, yyyy/mm/...
+	<%= f.text_field :regular_dates, :class => "form-control" %>
+</div>
+<div class="form-group">
+	<%= f.label :discount_dates %> - Comma separated date ranges: yyyy/mm/dd-yyyy/mm/dd, yyyy/mm/...
+	<%= f.text_field :discount_dates, :class => "form-control" %>
+</div>
+<div class="form-group">
+	<%= f.label :regular_rate %>
+	<%= f.number_field :regular_rate, min: 1, :class => "form-control" %>
+</div>
+<div class="form-group">
+	<%= f.label :discount_rate %>
+	<%= f.number_field :discount_rate, min: 1, :class => "form-control" %>
+</div>
+<div class="form-group">
+	<%= f.label :extras_rate %>
+	<%= f.number_field :extras_rate, min: 1, :class => "form-control" %>
+</div>
+<div class="form-group">
+	<%= f.label :extras_discount_rate %>
+	<%= f.number_field :extras_discount_rate, min: 1, :class => "form-control" %>
+</div>
+<div class="form-group">
+	<%= f.label :tax_rate %>
+	<%= f.text_field :tax_rate, :class => "form-control" %>
+</div>
+<div class="form-group">
+	<%= f.label :other_fees %>
+	<%= f.number_field :other_fees, min: 0, :class => "form-control" %>
+</div>
+<div class="form-group">
+	<%= f.label :deposit_percent %> (decimal)
+	<%= f.text_field :deposit_percent, :class => "form-control" %>
+</div>
+<div class="form-group">
+	<%= f.label :deposit_days %>
+	<%= f.number_field :deposit_days, min: 0, :class => "form-control" %>
+</div>
+<div class="form-group">
+	<%= f.label :description %>
+	<%= f.text_area :description, :class => "form-control" %>
+</div>

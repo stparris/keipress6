@@ -1,0 +1,30 @@
+<div class="row">
+	<div class="col-md-9">
+		<div class="page-header">
+		  <h1>Edit <%= @container.name %></h1>
+		</div>
+		<%= form_for([:admin, @container],:html => {:role => 'form', :class => "formFor"}) do |f| %>
+			<%= render partial: 'form', locals: {f:f} %>
+			<hr />
+			<%= button_tag(type: 'submit', class:"btn  btn-outline-secondary btn-med") do %>
+				<i class="icon-ok"></i>
+				Save
+			<% end %>
+<% if @page %>
+			<%= link_to(raw('<button type="button" class="btn  btn-outline-secondary btn-med btn-right">
+				<i class="icon-cancel"></i>
+		   	 	Cancel</button>'), admin_page_path(@page)) %>
+<% else %>
+			<%= link_to(raw('<button type="button" class="btn btn-outline-secondary btn-med btn-right">
+				<i class="icon-cancel"></i>
+		   	 	Cancel</button>'), admin_container_path(@container)) %>
+<% end %>		
+		<% end %>
+	</div>
+	<div class="col-md-3">
+		<%= operations_menu(@container,@page ? [@page] : []) %>
+	</div>
+</div>
+<% if @container.container_type == 'image' %>
+<%= render partial: 'admin/images/image_select', locals: {selected_id:  @container.image ? @container.image.id : nil} if @container.container_type == 'image' %>
+<% end %>

@@ -1,0 +1,38 @@
+<div class="row">
+	<div class="col-md-12">
+<% if controller_name == 'categories' %>		
+		<h5>Assigned Media</h5>
+		<div class="badges">
+	<% Medium.where("site_id = ? and id in (select medium_id from categories_media where category_id = ?)", @site.id, @category.id).each do |medium| %>
+			<%= link_to medium_admin_category_path(@category, medium_id: medium.id), remote: true, method: 'patch' do %>
+				<span class="badge badge-secondary"><%= raw("#{medium.name} <icon class=\"icon-cancel\"></icon>") %></span>
+			<% end %>
+	<% end %>
+		</div>
+		<h5>Unassigned Media</h5>
+		<div class="badges">
+	<% Medium.where("site_id = ? and id not in (select medium_id from categories_media where category_id = ?)", @site.id, @category.id).each do |medium| %>
+			<%= link_to medium_admin_category_path(@category, medium_id: medium.id), remote: true, method: 'patch' do %>
+				<span class="badge badge-secondary"><%= raw("#{medium.name} <icon class=\"icon-plus\"></icon>") %></span>
+			<% end %>
+	<% end %>
+		</div>
+<% else %>
+		<h5>Categories</h5>
+		<div class="badges">
+	<% Category.where("site_id = ? and id in (select category_id from categories_media where medium_id = ?)", @site.id, @medium.id).each do |category| %>
+			<%= link_to category_admin_medium_path(@medium, medium_id: medium.id), remote: true, method: 'patch' do %>
+				<span class="badge badge-secondary"><%= raw("#{category.name} <icon class=\"icon-cancel\"></icon>") %></span>
+			<% end %>
+	<% end %>
+		</div>
+		<div class="badges">
+	<% Category.where("site_id = ? and id not in (select category_id from categories_media where medium_id = ?)", @site.id, @medium.id).each do |category| %>
+			<%= link_to category_admin_medium_path(@medium, medium_id: medium.id), remote: true, method: 'patch' do %>
+				<span class="badge badge-secondary"><%= raw("#{category.name} <icon class=\"icon-plus\"></icon>") %></span>
+			<% end %>
+	<% end %>	
+		</div>
+<% end %>
+	</div>
+</div>

@@ -1,0 +1,138 @@
+@font-face {
+  font-family: 'feltpen';
+  src: font-url('feltpen.ttf');
+}
+
+.font-feltpen {
+	font-family:feltpen;
+	color:#000;
+	h1 {
+		font-style:normal;
+    font-weight:900;
+	}
+	h2 {
+		font-style:italic;
+    font-weight:900;
+	}
+	h3 {
+		font-style:normal;
+    font-weight:400;
+	}
+	h4 {
+		font-style:italic;
+    font-weight:400;
+	}
+	p {
+		font-family:feltpen;
+		font-size:1.25em;
+		font-weight:500;
+	}
+}
+
+@font-face {
+  font-family: 'HiLo-Deco';
+  src: font-url('HiLo-Deco.ttf');
+}
+
+@font-face {
+  font-family: 'HiLo-Deco 2';
+  src: font-url('HiLo-Deco.ttf');
+}
+
+.font-hilo-deco {
+	font-family:HiLo-Deco;
+	color:#000;
+	h2 {
+		font-style:italic;
+	}
+	p {
+		font-family:HiLo-Deco;
+		font-size:1.25em;
+		font-weight:500;
+	}
+}
+
+@font-face {
+  font-family: 'OpenSansLight';
+  font-style: normal;
+  src:font-url('OpenSans-Light.ttf');
+}
+@font-face {
+  font-family: 'OpenSansLight';
+  font-style: italic;
+  src:font-url('OpenSans-LightItalic.ttf');
+}
+
+/* normal */
+@font-face {
+  font-family: 'OpenSans';
+  font-style: normal;
+  src:font-url('OpenSans-Regular.ttf');
+}
+@font-face {
+  font-family: 'OpenSans';
+  font-style: italic;
+  src:font-url('OpenSans-Italic.ttf');
+}
+
+/* simi bold */
+@font-face {
+  font-family: 'OpenSansSemibold';
+  font-style: normal;
+  src:font-url('OpenSans-Semibold.ttf');
+}
+@font-face {
+  font-family: 'OpenSansSemiBold';
+  font-style: italic;
+  src:font-url('OpenSans-SemiboldItalic.ttf');
+}
+
+/* bold */
+@font-face {
+  font-family: 'OpenSansBold';
+  font-style: normal;
+  src:font-url('OpenSans-Bold.ttf');
+}
+@font-face {
+  font-family: 'OpenSansBold';
+  font-style: italic;
+  src:font-url('OpenSans-BoldItalic.ttf');
+}
+
+/* extra bold */
+@font-face {
+  font-family: 'OpenSansExtraBold';
+  font-style: normal;
+  src:font-url('OpenSans-ExtraBold.ttf');
+}
+@font-face {
+  font-family: 'OpenSansExtraBold';
+  font-style: italic;
+  src:font-url('OpenSans-ExtraBoldItalic.ttf');
+}
+
+.font-open-sans-light {
+  font-family:'OpenSansLight';
+  color:#000;
+  h2 {
+    font-style:italic;
+  }
+  p {
+    font-family:OpenSansLight;
+    font-size:1em;
+    font-weight:400;
+  }
+}
+
+.font-open-sans {
+  font-family:'OpenSans';
+  color:#000;
+  h2 {
+    font-style:italic;
+  }
+  p {
+    font-family:OpenSans;
+    font-size:1em;
+    font-weight:400;
+  }
+}

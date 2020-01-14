@@ -1,0 +1,33 @@
+<div class="row">
+	<div class="col-md-9">
+		<div class="page-header">
+		  <h1>New <%= @content_item.content_type.gsub(/_/,' ').capitalize if @content_item.content_type %> Post</h1>
+		</div>
+
+<% if @content_item.content_type %>
+		<%= form_for([:admin, @content_item],:html => {:role => 'form', :class => "formFor"}) do |f| %>
+			<%= render partial: 'form', locals: {f:f} %>
+			<hr />
+			<%= button_tag(type: 'submit', class:"btn  btn-outline-secondary btn-sm") do %>
+				<i class="icon-ok"></i>
+				Create
+			<% end %>
+			&nbsp;&nbsp;
+			<%= link_to admin_blog_path(@content_item.blog) do %>
+				<button type="button" class="btn  btn-outline-secondary btn-sm" style="float:right;"><i class="icon-cancel"></i> Cancel</button>
+			<% end %>
+		<% end %>
+<% else %>
+		<div class="bs-help">
+			<h3>Post types</h3>
+			<%= render partial: "admin/content_forms/content_types", locals: {obj_class: 'blog_post',content_obj: @content_item.blog} %>
+			<hr/>
+		<%= link_to admin_blog_path(@content_item.blog) do %>
+			<button type="button" class="btn  btn-outline-secondary btn-med btn-right"><i class="icon-cancel"></i> Cancel</button>
+		<% end %>
+<% end %>
+	</div>
+	<div class="col-md-3">
+		<%= operations_menu(@content_item,[@content_item.blog]) %>
+	</div>
+</div>

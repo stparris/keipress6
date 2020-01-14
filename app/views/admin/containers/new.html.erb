@@ -1,0 +1,112 @@
+<div class="row">
+	<div class="col-md-9">
+		<div class="page-header">
+		  <h1>New <%= @container.container_type.gsub(/_/,' ').capitalize if @container.container_type %> Container</h1>
+		</div>
+
+<% if @container.container_type %>
+		<%= form_for([:admin, @container],:html => {:role => 'form', :class => "formFor"}) do |f| %>
+			<%= render partial: 'form', locals: {f:f} %>
+			<hr />
+			<%= button_tag(type: 'submit', class:"btn  btn-outline-secondary btn-med") do %>
+				<i class="icon-ok"></i>
+				Create
+			<% end %>
+			&nbsp;&nbsp;
+			<%= link_to new_admin_container_path do %>
+				<button type="button" class="btn  btn-outline-secondary btn-med btn-right"><i class="icon-cancel"></i> Cancel</button>
+			<% end %>
+		<% end %>
+	<% if @container.container_type == 'image' %>
+		<%= render partial: 'admin/images/image_select', locals: {selected_id:  @container.image ? @container.image.id : nil} %>
+	<% end %>	
+
+<% else %>
+		<div class="bs-help">
+			<h3>Container types</h3>
+			<div><strong>Grid Container: </strong>Creates a container for content with rows and columns. 
+				<ul><li>   
+				<%= link_to raw('See the Bootstrap Grid page for detailed information. <i class="icon-right-hand"></i>'), "https://getbootstrap.com/docs/4.0/layout/grid/", target: 'grid_help' %> 
+				</li></ul> 
+				<%= link_to new_admin_container_path(container_type: 'grid') do %>
+					<button type="button" class="btn  btn-outline-secondary btn-med"><i class="icon-plus"></i> New Grid Container</button>
+				<% end %>
+		 	</div>
+			<hr/>			
+			<div><strong>Navbar: </strong>Creates a container to hold a single navigation bar.
+				<ul><li>  
+				<%= link_to raw('See the Bootstrap Navbar page for detailed CSS information, as well as branding and forms. <i class="icon-right-hand"></i>') , "https://getbootstrap.com/docs/4.0/components/navbar/", target: 'navbar_help' %> 
+				</li></ul>
+				<%= link_to new_admin_container_path(container_type: 'navbar') do %>
+					<button type="button" class="btn  btn-outline-secondary btn-med"><i class="icon-plus"></i> New Navbar Container</button>
+				<% end %>
+			</div>
+			<hr/>	
+			<!-- Disabled until use case -->
+			<div style="display:none;"><strong>Nav: </strong>Similar to navbar, creates a container for a single unordered list (ul) of items with 'nav' class attributes. 
+				<ul><li>   
+				<%= link_to raw('See the Bootstrap Navs page for detailed information. <i class="icon-right-hand"></i>'), "https://getbootstrap.com/docs/4.0/components/navs/", target: 'navs_help' %> 
+				</li></ul> 
+				<%= link_to new_admin_container_path(container_type: 'nav') do %>
+					<button type="button" class="btn  btn-outline-secondary btn-med"><i class="icon-plus"></i> New Nav Container</button>
+				<% end %>
+		 	</div>
+			<div><strong>Video: </strong> 
+				<ul><li>   
+					Adds video with player to the container.
+				</li></ul> 
+				<%= link_to new_admin_container_path(container_type: 'video') do %>
+					<button type="button" class="btn  btn-outline-secondary btn-med"><i class="icon-plus"></i> New Video Container</button>
+				<% end %>
+		 	</div>
+		 	<hr/>			 	
+			<div><strong>Image: </strong> 
+				<ul><li>   
+					Fills the container with a responsive image.
+				</li></ul> 
+				<%= link_to new_admin_container_path(container_type: 'image') do %>
+					<button type="button" class="btn  btn-outline-secondary btn-med"><i class="icon-plus"></i> New Image Container</button>
+				<% end %>
+		 	</div>
+		 	<hr/>			 	
+			<div><strong>Carousel: </strong> 
+				<ul><li>   
+				<%= link_to raw('See the Bootstrap Carousel page for detailed information. <i class="icon-right-hand"></i>'), "https://getbootstrap.com/docs/4.0/components/carousel/", target: 'carousel' %> 
+				</li></ul> 
+				<%= link_to new_admin_container_path(container_type: 'carousel') do %>
+					<button type="button" class="btn  btn-outline-secondary btn-med"><i class="icon-plus"></i> New Carousel Container</button>
+				<% end %>
+		 	</div>
+		 	<hr/>		
+			<div><strong>Jumbotron: </strong>
+				<ul><li>   
+				<%= link_to raw('See the Bootstrap Jumbotron page for detailed information. <i class="icon-right-hand"></i>'), "https://getbootstrap.com/docs/4.0/components/jumbotron/", target: 'jumbotron' %> 
+				</li></ul> 
+				<%= link_to new_admin_container_path(container_type: 'jumbotron') do %>
+					<button type="button" class="btn  btn-outline-secondary btn-med"><i class="icon-plus"></i> New Jumbotron Container</button>
+				<% end %>
+		 	</div>
+		 	<hr/>	
+			<div><strong>Container: </strong>Creates a gridless container for content without rows and columns. 
+				<br/><br/>
+				<%= link_to new_admin_container_path(container_type: 'content') do %>
+					<button type="button" class="btn  btn-outline-secondary btn-med"><i class="icon-plus"></i> New Container</button>
+				<% end %>
+		 	</div>
+		</div>	
+	 	<hr/>	
+	<% if @page %>
+		<%= link_to admin_page_path(@page) do %>
+			<button type="button" class="btn  btn-outline-secondary btn-med btn-right"><i class="icon-cancel"></i> Cancel</button>
+		<% end %>
+	<% else %>
+		<%= link_to admin_containers_path do %>
+			<button type="button" class="btn  btn-outline-secondary btn-med btn-right"><i class="icon-cancel"></i> Cancel</button>
+		<% end %>
+	<% end %>
+<% end %>
+	</div>
+	<div class="col-md-3">
+		<%= operations_menu(@container,@page ? [@page] : []  ) %>
+	</div>
+</div>

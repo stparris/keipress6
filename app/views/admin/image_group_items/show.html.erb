@@ -1,0 +1,17 @@
+<div class="row">
+	<div class="col-md-9">
+		<div class="page-header">
+			<h1><%= @image_group_item.image.name %></h1>
+		</div>	
+		<%= object_table(@image_group_item) %>
+		<%= link_to edit_admin_image_group_item_path(@image_group_item) do %>
+			<button type="submit" class="btn  btn-outline-secondary"><i class="icon-pencil"></i> Edit</button>
+		<% end %>
+		&nbsp;&nbsp;<%= link_to admin_image_group_item_path(@image_group_item), method: :delete, data: { confirm: "Delete image_group_item?" } do %>
+			<button type="submit" class="btn btn-danger"><i class="icon-trash"></i> Delete</button>
+		<% end %>
+	</div>
+	<div class="col-md-3">
+		<%= operations_menu(@image_group_item,[@image_group_item.image_group]) %>
+	</div>
+</div>

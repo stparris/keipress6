@@ -1,0 +1,45 @@
+<div class="row">
+	<div class="col-md-9">
+		<div class="page-header">
+		  <h1>New Booking</h1>
+		</div>
+<% if @booking.rental && @user.email =~ /\S+/ %>	
+		<%= form_for([:admin, @booking],:html => {:role => 'form', :class => "formFor"}) do |f| %>
+			<%= render partial: 'form_new', locals: {f:f} %>
+			<hr />
+			<%= button_tag(type: 'submit', class:"btn  btn-outline-secondary btn-med") do %>
+				<i class="icon-ok"></i>
+				Create
+			<% end %>
+			<%= link_to(raw('<button type="button" class="btn  btn-outline-secondary btn-med btn-right">
+				<i class="icon-cancel"></i>
+		   	 	Cancel</button>'), new_admin_booking_path) %>
+		<% end %>
+<% else %>
+		<%= form_for([:admin, Booking.new], :html => {:role => 'form', :class => "formFor"}) do |f| %>
+			<%= f.hidden_field :site_id, value: @site.id %>
+			<%= f.hidden_field :check_email, value: 1 %>
+			<div class="form-group">
+				<%= f.label :rental_id %>
+				<%= f.select :rental_id, Rental.where(site_id: @site.id).order('name asc').collect { |r| [r.name, r.id] }, {}, :class => "form-control" %>
+			</div>
+			<%= fields_for User.new do |u| %>
+			<div class="form-group">
+				<%= u.label :email %>
+				<%= u.email_field :email, :class => "form-control" %>
+			</div>
+			<% end %>
+			<%= button_tag(type: 'submit', class:"btn  btn-outline-secondary btn-med") do %>
+				<i class="icon-ok"></i>
+				Submit
+			<% end %>
+			<%= link_to(raw('<button type="button" class="btn  btn-outline-secondary btn-med btn-right">
+				<i class="icon-cancel"></i>
+		   	 	Cancel</button>'), admin_bookings_path) %>
+		<% end %><!-- end form -->
+<% end %>
+	</div>
+	<div class="col-md-3">
+		<%= operations_menu(@booking,[]) %>
+	</div>
+</div>

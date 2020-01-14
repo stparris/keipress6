@@ -1,0 +1,8 @@
+<div class="form-group">
+  <%= f.label :css_classes %>
+  <%= f.text_field :css_classes, :class => "form-control" %>
+</div>    
+<div class="form-group">
+	<%= f.label :carousel_id %>
+	<%= f.select :carousel_id, Carousel.where(site_id: @site.id).order('name asc').collect  { |c| [c.name, c.id] }, {prompt: 'Please Select'}, :class => "form-control" %>
+</div>

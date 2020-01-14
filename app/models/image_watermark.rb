@@ -1,0 +1,2 @@
+class ImageWatermark < Image
+end

@@ -1,0 +1,2 @@
+module RentalPaymentMethodsHelper
+end

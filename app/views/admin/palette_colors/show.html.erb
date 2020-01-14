@@ -1,0 +1,17 @@
+<div class="row">
+	<div class="col-md-9">
+		<div class="page-header">
+			<h1><%= @palette_color.name %></h1>
+		</div>	
+		<%= object_table(@palette_color) %>
+		<%= link_to edit_admin_admin_path(@palette_color) do %>
+			<button type="submit" class="btn  btn-outline-secondary"><i class="icon-pencil"></i> Edit</button>
+		<% end %>
+		&nbsp;&nbsp;<%= link_to admin_palette_color_path(@palette_color), method: :delete, data: { confirm: "Delete palette_color?" } do %>
+			<button type="submit" class="btn btn-danger"><i class="icon-trash"></i> Delete</button>
+		<% end %>
+	</div>
+	<div class="col-md-3">
+		<%= operations_menu(@palette_color) %>
+	</div>
+</div>

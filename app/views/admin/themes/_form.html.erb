@@ -1,0 +1,21 @@
+<% if @theme.errors.any? %>
+<div id="error_explanation">
+  <div class="alert alert-danger">
+		<%= pluralize(@theme.errors.count, "error") %> prohibited this page from being saved:
+	</div>
+  <ul>
+  <% @theme.errors.full_messages.each do |msg| %>
+    <li><%= msg %></li>
+  <% end %>
+  </ul>
+</div>
+<% end %>
+<%= f.hidden_field :site_id, value: @site.id %>
+<div class="form-group">
+	<%= f.label :name %>
+	<%= f.text_field :name, :class => "form-control" %>
+</div>
+<div class="form-group">
+	<%= f.label :css_class %>
+	<%= f.text_field :css_class, :class => "form-control" %>
+</div>

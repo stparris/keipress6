@@ -1,0 +1,21 @@
+<% if @content_item.errors.any? %>
+<div id="error_explanation">
+  <div class="alert alert-danger">
+		<%= pluralize(@content_item.errors.count, "error") %> prohibited this page from being saved:
+	</div>
+  <ul>
+  <% @content_item.errors.full_messages.each do |msg| %>
+    <li><%= msg %></li>
+  <% end %>
+  </ul>
+</div>
+<% end %>
+<%= f.hidden_field :admin_id, value: @admin.id %>
+<%= f.hidden_field :content_type %>
+<%= f.hidden_field :content_id %>
+<div class="form-group">
+	<%= f.label :name %>
+	<%= f.text_field :name, :class => "form-control" %>
+</div>
+
+<%= render partial: "admin/content_forms/form_#{@content_item.content_type}", locals: {f:f} %>

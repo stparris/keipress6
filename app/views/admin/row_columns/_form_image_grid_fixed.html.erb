@@ -1,0 +1,13 @@
+<div id="image_group_select" class="form-group">
+	<%= f.label :image_group_id %>
+	<%= f.select :image_group_id, ImageGroup.where(site_id: @site.id).order('name asc').collect { |c| [c.name, c.id] }, {prompt: 'Please Select'}, :class => "form-control" %>
+</div>
+<div class="form-group">
+	<%= f.label :grid_columns %>
+	<%= f.select :grid_columns, {'2'=>'2','3'=>'3','4'=>'4'}, {}, :class => "form-control" %>
+</div>
+<div class="form-group">
+	<%= f.label :grid_break_point %>
+	<%= f.select :grid_break_point, {'None'=>'none','xs extra small'=>'xs','sm small'=>'sm','md medium'=>'md','lg large'=>'lg','xl extra large'=>'xl'}, {}, :class => "form-control" %>
+</div>
+

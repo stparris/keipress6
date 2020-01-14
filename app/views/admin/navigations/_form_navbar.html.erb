@@ -1,0 +1,30 @@
+<div class="bs-help">
+	<p>Use Bootstrap CSS classes plus your own to set the look and behavior of the navigation bar.</p> 
+	<p>Class navbar and collapse navbar-collapse are automatically included.</p>
+</div>
+<label for="container_row_css_classes"><%= f.label :main_css_classes %></label>
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="basic-addon1">navbar</span>
+  </div>
+  <%= f.text_field :main_css_classes, value: @navigation.main_css_classes ? @navigation.added_main_css_classes : '', :class => "form-control" %>
+</div>
+<label for="container_row_css_classes"><%= f.label :list_css_classes %></label>
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="basic-addon1">collapse navbar-collapse</span>
+  </div>
+  <%= f.text_field :list_css_classes, value: @navigation.list_css_classes ? @navigation.added_list_css_classes : '', :class => "form-control" %>
+</div>
+<div class="form-group">
+  <%= f.label :brand %> (HTML) 
+  <div class="form-control-border">
+    <%= f.text_area :brand, :class => "form-control codemirror-html" %>
+  </div>
+</div>
+<div class="form-group">
+  <%= f.label :form %> (HTML) 
+  <div class="form-control-border">
+    <%= f.text_area :form, :class => "form-control codemirror-html" %>
+  </div>
+</div>

@@ -1,0 +1,31 @@
+<% if @payment_gateway.errors.any? %>
+<div id="error_explanation">
+  <div class="alert alert-danger">
+		<%= pluralize(@payment_gateway.errors.count, "error") %> prohibited this page from being saved:
+	</div>
+  <ul>
+  <% @payment_gateway.errors.full_messages.each do |msg| %>
+    <li><%= msg %></li>
+  <% end %>
+  </ul>
+</div>
+<% end %>
+<%= f.hidden_field :site_id, value: @site.id %>
+<div class="form-group">
+	<%= f.label :name %>
+	<%= f.text_field :name, :class => "form-control" %>
+</div>
+<div class="form-group">
+	<%= f.label :mode %>
+	<%= f.select :mode, {'Production'=>'production','Test'=>'test'},  {prompt:"Please select"}, :class => "form-control" %>
+</div>
+<div class="form-group">
+	<%= f.label :gateway_type %>
+	<%= f.select :gateway_type, PaymentGateway.gateway_types,  {prompt:"Please select"}, :class => "form-control" %>
+</div>
+<div class="form-group">
+	<%= f.label :config, 'Configure with JSON using keys for server-side variables (e.g. "password_key":"password")'  %>
+	<div class="form-control-border">
+		<%= f.text_area :config, :class => "form-control codemirror-json" %>
+	</div>
+</div>

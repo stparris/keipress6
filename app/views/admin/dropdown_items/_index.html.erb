@@ -1,0 +1,49 @@
+<div class="row">
+	<div class="col-md-12">
+	  <h2>Dropdown Items</h2>
+		<table class="table table-striped table-bordered">
+			<thead>
+				<tr>
+					<th>Position</th>
+					<th>Name</th>
+					<th>Type</th>
+					<th></th>
+					<th></th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody id="dropdown_items" data-sort-items-url="<%= sort_admin_dropdown_items_url %>">
+<% @dropdown_items.order('position asc').each do |dropdown_item| %>
+        <tr class="dropdown_items" id="dropdown_item_<%= dropdown_item.id %>">
+        	<td><span class="handle"><i class="icon-up-hand"></i></span></td>	
+          <td><%= link_to raw(dropdown_item.name), admin_dropdown_item_path(dropdown_item) %></td>
+          <td><%= link_to dropdown_item.item_type.capitalize.sub(/_/,' '), admin_dropdown_item_path(dropdown_item) %></td>
+          <td><%= link_to raw('<i class="icon-zoom-in"></i>'), admin_dropdown_item_path(dropdown_item) %></td>
+          <td><%= link_to raw('<i class="icon-pencil"></i>'), edit_admin_dropdown_item_path(dropdown_item) %></td>
+          <td><%= link_to raw('<i class="icon-trash"></i>'), admin_dropdown_item_path(dropdown_item), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+<% end %>
+				<%= raw('<tr><td colspan="6">No items for this list</td></tr>') unless @dropdown_items.count > 0 %>
+			</tbody>
+		</table>
+		<%= link_to new_admin_dropdown_item_path(dropdown_id: @dropdown.id) do %>
+			<button type="button" class="btn  btn-outline-secondary btn-med"><i class="icon-plus"></i> New Dropdown Item</button>
+		<% end %>
+	</div>
+</div>
+
+<script>
+jQuery(function() {
+  var post_url;
+  if ($('#dropdown_items')) {
+    post_url = $('#dropdown_items').data('sort-items-url');
+    return $('#dropdown_items').sortable({
+      axis: 'y',
+      handle: '.handle',
+      update: function() {
+        return $.post(post_url, $(this).sortable('serialize'));
+      }
+    });
+  }
+});
+</script>

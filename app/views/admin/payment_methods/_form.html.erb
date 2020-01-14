@@ -1,0 +1,45 @@
+<% if @payment_method.errors.any? %>
+<div id="error_explanation">
+  <div class="alert alert-danger">
+		<%= pluralize(@payment_method.errors.count, "error") %> prohibited this page from being saved:
+	</div>
+  <ul>
+  <% @payment_method.errors.full_messages.each do |msg| %>
+    <li><%= msg %></li>
+  <% end %>
+  </ul>
+</div>
+<% end %>
+<%= f.hidden_field :site_id, value: @site.id %>
+<div class="form-group">
+	<%= f.label :name %>
+	<%= f.text_field :name, :class => "form-control" %>
+</div>
+<div class="form-group">
+	<%= f.label :locale %>
+	<%= f.select :locale, Site.locales, {prompt: "Please select"}, :class => "form-control" %>
+</div>
+<div class="form-group">
+	<%= f.label :payment_type_id %>
+	<%= f.select :payment_type_id, PaymentType.where(site_id: @site.id).order('name asc').collect { |c| [c.name, c.id] }, {prompt: 'Please Select'}, :class => "form-control" %>
+</div>
+<div class="form-group">
+	<%= f.label :active %>
+	<%= f.select :active, {'Yes'=>'true','No'=>'false'}, {}, :class => "form-control" %>
+</div>
+<div class="form-group">
+	<%= f.label :instructions %>
+	<%= f.text_area :instructions, 'data-provider': :summernote, :class => "form-control" %>
+</div>
+<div class="form-group">
+	<%= f.label :summary_page_html %>
+	<%= f.text_area :summary_page_html, 'data-provider': :summernote, :class => "form-control" %>
+</div>
+<div class="form-group">
+	<%= f.label :user_mail_template_id %>
+	<%= f.select :user_mail_template_id, MailTemplate.where(site_id: @site.id, recipient_type: 'user').collect { |c| [c.name, c.id] }, {prompt: 'Optional'}, :class => "form-control" %>
+</div>
+<div class="form-group">
+	<%= f.label :admin_mail_template_id %>
+	<%= f.select :admin_mail_template_id, MailTemplate.where(site_id: @site.id, recipient_type: 'admin').collect { |c| [c.name, c.id] }, {prompt: 'Optional'}, :class => "form-control" %>
+</div>

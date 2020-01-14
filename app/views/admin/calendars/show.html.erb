@@ -1,0 +1,38 @@
+<div class="row">
+	<div class="col-md-9">
+		<div class="page-header">
+			<h1><%= @calendar.name %></h1>
+		</div>	
+		<%= object_table(@calendar) %>
+		<%= link_to edit_admin_calendar_path(@calendar) do %>
+			<button type="submit" class="btn btn-outline-secondary"><i class="icon-pencil"></i> Edit</button>
+		<% end %>
+		&nbsp;&nbsp;<%= link_to import_admin_calendar_path(@calendar), remote: true, id: "import_btn" do %>
+			<button type="submit" class="btn btn-primary"><icon class="icon-download"></icon> Import</button>
+		<% end %>
+		&nbsp;&nbsp;<%= link_to admin_calendar_path(@calendar), method: :delete, data: { confirm: "Delete calendar?" } do %>
+			<button type="submit" class="btn btn-danger"><i class="icon-trash"></i> Delete</button>
+		<% end %>
+	</div>
+	<div class="col-md-3">
+		<%= operations_menu(@calendar) %>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-12">
+		<hr/>
+		<div id="calendar_loading" style="display:none;">
+			<h3>Importing iCalendar</h3>
+			<div class="activity-indicator">
+				<icon class="icon-spin1 animate-spin"></icon>
+			</div>
+		</div>
+		<div id="calendar">
+<% if @calendar.icalendar =~ /^BEGIN:VCALENDAR/%>
+			<%= render partial: 'calendar' %>
+<% else %>
+			<h3>Import Calendar</h3>
+<% end %>		
+		</div>
+	</div>
+</div>

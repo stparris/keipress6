@@ -1,0 +1,33 @@
+<div class="row">
+	<div class="col-md-12">
+		<div class="page-header">
+		  <h1>Booking Transactions</h1>
+		</div>
+		<table class="table table-striped table-bordered">
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>Name</th>
+					<th></th>
+					<th></th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+<% @booking_transactions.each do |booking_transaction| %>
+        <tr>
+        	<td><%= link_to booking_transaction.id, admin_booking_transaction_path(booking_transaction) %></td>
+          <td><%= link_to raw(booking_transaction.name), admin_booking_transaction_path(booking_transaction) %></td>
+          <td><%= link_to raw('<i class="icon-zoom-in"></i>'), admin_booking_transaction_path(booking_transaction) %></td>
+          <td><%= link_to raw('<i class="icon-pencil"></i>'), edit_admin_booking_transaction_path(booking_transaction) %></td>
+          <td><%= link_to raw('<i class="icon-trash"></i>'), admin_booking_transaction_path(booking_transaction), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+<% end %>
+				<%= raw('<tr><td colspan="5">No items for this list</td></tr>') unless @booking_transactions.count > 0 %>
+			</tbody>
+		</table>
+		<%= link_to new_admin_booking_transaction_path do %>
+			<button type="button" class="btn  btn-outline-secondary btn-med"><i class="icon-plus"></i> New Booking Transaction</button>
+		<% end %>
+	</div>
+</div>

@@ -1,0 +1,17 @@
+<div class="row">
+	<div class="col-md-9">
+		<div class="page-header">
+			<h1><%= @rental_booking_instruction.name %></h1>
+		</div>	
+		<%= object_table(@rental_booking_instruction) %>
+		<%= link_to edit_admin_rental_booking_instruction_path(@rental_booking_instruction) do %>
+			<button type="submit" class="btn  btn-outline-secondary"><i class="icon-pencil"></i> Edit</button>
+		<% end %>
+		&nbsp;&nbsp;<%= link_to admin_rental_booking_instruction_path(@rental_booking_instruction), method: :delete, data: { confirm: "Delete rental_booking_instruction?" } do %>
+			<button type="submit" class="btn btn-danger"><i class="icon-trash"></i> Delete</button>
+		<% end %>
+	</div>
+	<div class="col-md-3">
+		<%= operations_menu(@rental_booking_instruction,[@rental_booking_instruction.rental]) %>
+	</div>
+</div>

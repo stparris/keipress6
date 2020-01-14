@@ -1,0 +1,10 @@
+    <div class="tabbed-header">
+      <h3><%= @theme.name %> Properties</h3>
+    </div>
+		<%= object_table(@theme) %>
+		<%= link_to edit_admin_theme_path(@theme) do %>
+			<button type="submit" class="btn  btn-outline-secondary"><i class="icon-pencil"></i> Edit</button>
+		<% end %>
+		&nbsp;&nbsp;<%= link_to admin_theme_path(@theme), method: :delete, data: { confirm: "Delete theme?" } do %>
+			<button type="submit" class="btn btn-danger"><i class="icon-trash"></i> Delete</button>
+		<% end %>

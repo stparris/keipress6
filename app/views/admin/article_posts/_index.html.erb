@@ -1,0 +1,53 @@
+<div class="row">
+	<div class="col-md-12">
+		<div class="page-header">
+		  <h2>Article Posts</h2>
+		</div>
+		<table class="table table-striped table-bordered">
+			<thead>
+				<tr>
+					<th>Position</th>
+					<th>Name</th>
+					<th>Type</th>
+					<th>Content</th>
+					<th></th>
+					<th></th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody id="article_posts" data-sort-items-url="<%= sort_admin_article_posts_url %>">
+<% @article.article_posts.each do |article_post| %>
+        <tr class="article_posts" id="article_post_<%= article_post.id %>">
+        	<td><span class="handle"><i class="icon-up-hand"></i></span></td>	
+          <td><%= link_to article_post.name, admin_article_post_path(article_post) %></td>
+          <td><%= link_to article_post.content_type.gsub(/_/,' '), admin_article_post_path(article_post) %></td>
+          <td>
+  <% if article_post.content_type == 'medium' %>
+          	<%= raw(truncate_with_tags("article_post.body")) %>
+  <% elsif article_post.content_type == 'list_group' %>
+          	<%= article_post.list_group.name %>
+  <% elsif article_post.content_type == 'carousel' %>
+  					<%= image_tag(article_post.carousel.carousel_slides.first.image.image.variant(resize: "100x100")) %>
+  <% elsif article_post.content_type == 'image' %>
+  					<%= image_tag(article_post.image.image.variant(resize: "100x100")) %>
+  <% elsif article_post.content_type == 'image_group' %>
+  					<%= article_post.image_group.name %>
+  <% else %>
+  					<%= raw(truncate_with_tags(article_post.body)) %>
+  <% end %>
+          </td>
+          <td><%= link_to raw('<i class="icon-zoom-in"></i>'), admin_article_post_path(article_post) %></td>
+          <td><%= link_to raw('<i class="icon-pencil"></i>'), edit_admin_article_post_path(article_post) %></td>
+          <td><%= link_to raw('<i class="icon-trash"></i>'), admin_article_post_path(article_post), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+<% end %>
+				<%= raw('<tr><td colspan="5">No content has been defined.</td></tr>') if @article.article_posts.count == 0 %>
+			</tbody>
+		</table>
+		<%= link_to new_admin_article_post_path(content_id: @article.id) do %>
+			<button type="button" class="btn  btn-outline-secondary btn-med"><i class="icon-plus"></i> New Post</button>
+		<% end %>
+	</div>
+	<div class="col-md-2">&nbsp;</div>
+</div>
+

@@ -1,0 +1,8 @@
+<div class="tabbed-header">
+  <h3><%= @theme.name %> Classes</h3>
+</div>
+<p>These values can be copy-pasted to your SCSS spaces for use in your project. They otherwise have no impact.</p>
+<div style="border: solid 1px #e6e6e6;padding:2px;">
+  <%= text_area_tag :theme_css, theme_classes(@theme), :class => "form-control" %>
+</div>
+

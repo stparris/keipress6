@@ -1,0 +1,1 @@
+json.array! @content_items, partial: 'content_group_items/content_group_item', as: :content_group_item

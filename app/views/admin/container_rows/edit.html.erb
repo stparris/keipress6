@@ -1,0 +1,27 @@
+<div class="row">
+	<div class="col-md-9">
+		<div class="page-header">
+		  <h1>Edit Row <%= @container_row.position %></h1>
+		</div>
+		<%= form_for([:admin, @container_row],:html => {:role => 'form', :class => "formFor"}) do |f| %>
+			<%= render partial: 'form', locals: {f:f} %>
+			<hr />
+			<%= button_tag(type: 'submit', class:"btn  btn-outline-secondary btn-med") do %>
+				<i class="icon-ok"></i>
+				Save
+			<% end %>
+<% if @page %>
+			<%= link_to(raw('<button type="button" class="btn  btn-outline-secondary btn-med btn-right">
+				<i class="icon-cancel"></i>
+		   	 	Cancel</button>'), admin_page_path(@page)) %>
+<% else %>
+			<%= link_to(raw('<button type="button" class="btn  btn-outline-secondary btn-med btn-right">
+				<i class="icon-cancel"></i>
+		   	 	Cancel</button>'), admin_container_row_path(@container_row)) %>
+<% end %>		
+		<% end %>
+	</div>
+	<div class="col-md-3">
+		<%= operations_menu(@container_row,[@container_row.container]) %>
+	</div>
+</div>

@@ -1,0 +1,17 @@
+<div class="row">
+	<div class="col-md-9">
+		<div class="page-header">
+			<h1><%= @dropdown_item.name %></h1>
+		</div>	
+		<%= object_table(@dropdown_item) %>
+		<%= link_to edit_admin_dropdown_item_path(@dropdown_item) do %>
+			<button type="submit" class="btn  btn-outline-secondary"><i class="icon-pencil"></i> Edit</button>
+		<% end %>
+		&nbsp;&nbsp;<%= link_to admin_dropdown_item_path(@dropdown_item), method: :delete, data: { confirm: "Delete dropdown_item?" } do %>
+			<button type="submit" class="btn btn-danger"><i class="icon-trash"></i> Delete</button>
+		<% end %>
+	</div>
+	<div class="col-md-3">
+		<%= operations_menu(@dropdown_item,[@dropdown_item.dropdown]) %>
+	</div>
+</div>

@@ -1,0 +1,54 @@
+<% if @user.errors.any? %>
+<div id="error_explanation">
+  <div class="alert alert-danger">
+		<%= pluralize(@user.errors.count, "error") %> prohibited this page from being saved:
+	</div>
+  <ul>
+  <% @user.errors.full_messages.each do |msg| %>
+    <li><%= msg %></li>
+  <% end %>
+  </ul>
+</div>
+<% end %>
+<%= f.hidden_field :site_id, value: @site.id %>
+<div class="form-group">
+	<%= f.label :email %>
+	<%= f.text_field :email, :class => "form-control" %>
+</div>
+<div class="form-group">
+	<%= f.label :prefix %>
+	<%= f.text_field :prefix, :class => "form-control" %>
+</div>
+<div class="form-group">
+	<%= f.label :first_name %>
+	<%= f.text_field :first_name, :class => "form-control" %>
+</div>
+<div class="form-group">
+	<%= f.label :middle_name %>
+	<%= f.text_field :middle_name, :class => "form-control" %>
+</div>
+<div class="form-group">
+	<%= f.label :last_name %>
+	<%= f.text_field :last_name, :class => "form-control" %>
+</div>
+<div class="form-group">
+	<%= f.label :suffix %>
+	<%= f.text_field :suffix, :class => "form-control" %>
+</div>
+<div class="form-group">
+	<%= f.label :locale %>
+	<%= f.select :locale, Site.locales, {}, :class => "form-control" %>
+</div>
+<div class="form-group">
+	<%= f.label :new_password %>
+	<%= f.password_field :new_password, :class => "form-control" %>
+</div>
+<div class="form-group">
+	<%= f.label :new_password_confirmation %>
+	<%= f.password_field :new_password_confirmation, :class => "form-control" %>
+</div>
+<div class="form-group">
+	<%= f.label :marketing %>
+	<%= f.select :marketing, {'Yes'=>'yes','No'=>'no'}, {}, :class => "form-control" %>
+</div>
+

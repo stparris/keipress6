@@ -1,0 +1,43 @@
+<% if container.container_rows.any? %>
+	<% container.container_rows.each do |row| %>	
+		<% if row.row_columns.any? 
+			first_col = row.row_columns.first
+		%>	
+			<% if first_col.content_type =~ /image_grid_fixed/ %> 
+<%= render partial: "row_columns/image_grid_fixed", locals: { row: row, col: first_col } %>			
+			<% else %>
+<div class="<%= row.css_classes ? row.css_classes : 'row' %>">
+				<% row.row_columns.each do |col| %>
+	<div class="<%= col.css_classes ? col.css_classes : 'col' %>">
+					<% if col.content_type == 'content_group' %>
+						<% content_group = col.content %>
+		<%= render partial: "row_columns/#{col.content_type}", locals: { content_group: content_group } %>
+					<% elsif col.content_type == 'carousel' %>
+		<%= render partial: "row_columns/#{col.content_type}", locals: { carousel: col.carousel } %>
+					<% elsif col.content_type =~ /image_grid_masonry/ %>
+		<%= render partial: "row_columns/image_grid_masonry", locals: { col: col } %>
+					<% else %>
+		<%= render partial: "row_columns/#{col.content_type}", locals: { col: col } %>
+					<% end %>
+
+	</div>
+				<% end %>
+</div>			
+			<% end %>
+		<% else %>
+<div class="row">
+	<div class="col">
+		<p>Row <%= row.position %> for container <%= container.name %> doesn't have any columns defined</p>	
+	</div>
+</div>		
+		<% end %>
+	<% end %>
+<% else %>
+<div class="row">
+	<div class="col">
+		<p>Grid container <%= container.name %> doesn't have any rows defined</p>	
+	</div>
+</div>	
+<% end %>
+
+

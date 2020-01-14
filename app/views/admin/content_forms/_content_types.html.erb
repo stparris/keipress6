@@ -1,0 +1,71 @@
+<div><strong>Image <%= obj_class == 'content_group_item' ? 'Item' : 'Post' %>: </strong>Creates a post with a single image.
+	<ul>
+		<li>Assign an image. See <%= link_to raw('Images <icon class="icon-right-hand"></icon>'), admin_images_path %> 
+		</li>
+	</ul>
+	<%= link_to "/admin/#{obj_class}s/new?content_type=image&content_id=#{content_obj.id}" do %>
+		<button type="button" class="btn  btn-outline-secondary btn-sm"><i class="icon-plus"></i> New Image <%= obj_class == 'content_group_item' ? 'Item' : 'Post' %></button>
+	<% end %>
+	</div>
+	<hr/>	
+<div><strong>Carousel: </strong>Creates an image carousel post. 
+	<ul>
+		<li>Assign an existing carousel. See <%= link_to raw('Carousels <icon class="icon-right-hand"></icon>'), admin_carousels_path %> 
+		</li>
+		<li>   
+	<%= link_to link_to raw('See the Bootstrap Carousel page for detailed information. <i class="icon-right-hand"></i>">'), "https://getbootstrap.com/docs/4.0/components/carousel/", target: 'carousel_help' %> 
+		</li>
+	</ul> 
+	<%= link_to "/admin/#{obj_class}s/new?content_type=carousel&content_id=#{content_obj.id}" do %>
+		<button type="button" class="btn  btn-outline-secondary btn-sm"><i class="icon-plus"></i> New Carousel <%= obj_class == 'content_group_item' ? 'Item' : 'Post' %></button>
+	<% end %>
+	</div>
+	<hr/>	
+<div><strong>Image Grid: </strong>Creates an image grid post from an image group. 
+	<ul>
+		<li>Assign an existing image group. See <%= link_to raw('Image Groups <icon class="icon-right-hand"></icon>'), admin_image_groups_path %> 
+		</li>
+	</ul>
+	<%= link_to "/admin/#{obj_class}s/new?content_type=image_grid&content_id=#{content_obj.id}" do %>
+		<button type="button" class="btn  btn-outline-secondary btn-sm"><i class="icon-plus"></i> New Image Grid <%= obj_class == 'content_group_item' ? 'Item' : 'Post' %></button>
+	<% end %>
+	</div>
+	<hr/>	
+<div><strong>Video <%= obj_class == 'content_group_item' ? 'Item' : 'Post' %>: </strong>Creates a post with a video.
+	<ul>
+		<li>Assign a video. See <%= link_to raw('Videos <icon class="icon-right-hand"></icon>'), admin_videos_path %> 
+		</li>
+	</ul>
+	<%= link_to "/admin/#{obj_class}s/new?content_type=video&content_id=#{content_obj.id}" do %>
+		<button type="button" class="btn  btn-outline-secondary btn-sm"><i class="icon-plus"></i> New Video <%= obj_class == 'content_group_item' ? 'Item' : 'Post' %></button>
+	<% end %>
+	</div>
+	<hr/>	
+<div><strong>List Group: </strong>Create a post from a list group. 
+	<ul>
+		<li>Assign a list group. See <%= link_to raw('List Groups <icon class="icon-right-hand"></icon>'), admin_list_groups_path %> 
+		</li>
+	</ul>
+	<%= link_to "/admin/#{obj_class}s/new?content_type=list_group&content_id=#{content_obj.id}" do %>
+		<button type="button" class="btn  btn-outline-secondary btn-sm"><i class="icon-plus"></i> New List Group <%= obj_class == 'content_group_item' ? 'Item' : 'Post' %></button>
+	<% end %>
+	</div>
+	<hr/>	
+<div style="display:none;"><strong>Link with Text: </strong>Specify a link with some text.  <br/>
+	<%= link_to "/admin/#{obj_class}s/new?content_type=link_text&content_id=#{content_obj.id}" do %>
+		<button type="button" class="btn  btn-outline-secondary btn-sm"><i class="icon-plus"></i> New Link Text <%= obj_class == 'content_group_item' ? 'Item' : 'Post' %></button>
+	<% end %>
+	</div>
+	<hr/>	
+<div><strong><%= obj_class == 'content_group_item' ? 'Item' : 'Post' %> with text: </strong>Creates free form text content.  <br/><br/>
+	<%= link_to "/admin/#{obj_class}s/new?content_type=text&content_id=#{content_obj.id}" do %>
+		<button type="button" class="btn  btn-outline-secondary btn-sm"><i class="icon-plus"></i> New Text <%= obj_class == 'content_group_item' ? 'Item' : 'Post' %></button>
+	<% end %>
+	</div>
+	<hr/>	
+<div><strong><%= obj_class == 'content_group_item' ? 'Item' : 'Post' %> with HTML: </strong>Creates free from HTML content. <br/><br/>
+	<%= link_to "/admin/#{obj_class}s/new?content_type=html&content_id=#{content_obj.id}" do %>
+		<button type="button" class="btn  btn-outline-secondary btn-sm"><i class="icon-plus"></i> New HTML <%= obj_class == 'content_group_item' ? 'Item' : 'Post' %></button>
+	<% end %>
+	</div>
+</div>

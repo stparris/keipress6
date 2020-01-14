@@ -1,0 +1,11 @@
+<div id="navs_help" class="bs-help">
+	<p>Use Bootstrap CSS classes plus your own to set the look and behavior of the dropdown.</p>
+	<p>Class nav automatically included.</p>
+</div>
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="basic-addon1">nav</span>
+  </div>
+  <%= f.text_field :css_classes, value: @dropdown.css_classes ? @dropdown.added_css_classes : '', :class => "form-control" %>
+</div>
+

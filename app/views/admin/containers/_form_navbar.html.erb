@@ -1,0 +1,13 @@
+<div id="navigation_bar_select" class="form-group">
+  <div class="form-group" style="display:none;">
+    <label for="container_row_css_classes"><%= f.label :css_classes, "CSS space separated class names" %></label>
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="inputGroup-sizing-default">navbar</span>
+      </div>
+      <%= f.text_field :css_classes, value: @container.css_classes ? @container.added_css_classes : '', :class => "form-control" %>
+    </div>
+  </div>    
+	<%= f.label :navigation_id %>
+	<%= f.select :navigation_id, Navigation.where(site_id: @site.id).order('name asc').collect { |c| [c.name, c.id] }, {prompt: 'Please Select'}, :class => "form-control" %>
+</div>

@@ -1,0 +1,1 @@
+json.partial! "content_group_items/content_group_item", content_group_item: @content_item

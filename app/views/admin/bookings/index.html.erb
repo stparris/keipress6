@@ -1,0 +1,50 @@
+<div class="row">
+	<div class="col-md-12">
+		<div class="page-header">
+		  <h1>Bookings</h1>
+		</div>
+		<table id="booking_index" class="table table-striped table-bordered">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>Name</th>
+					<th>Type</th>
+					<th>For</th>
+					<th>Start Date</th>
+					<th>End Date</th>
+					<th>Status</th>
+					<th>Updated</th>
+					<th>Created</th>
+				</tr>
+			</thead>
+			<tbody>
+<% @bookings.each do |booking| %>
+        <tr>
+        	<td><%= link_to booking.booking_number, admin_booking_path(booking) %></td>
+        	<td><%= link_to booking.name, admin_booking_path(booking) %></td>
+          <td>
+  <% if booking.event %>
+  
+  <% elsif booking.rental %>
+  				<%= link_to 'Rental', admin_booking_path(booking) %>
+  	<% currency = currency_icon(booking.rental.currency) %>
+  <% elsif booking.tour %>
+
+  <% end %>    
+  				</td>
+          <td><%= link_to booking.rental.name, admin_booking_path(booking) %></td>
+          <td><%= link_to booking.start_date.strftime("%Y-%m-%d"), admin_booking_path(booking) %></td>
+          <td><%= link_to booking.end_date.strftime("%Y-%m-%d"), admin_booking_path(booking) %></td>
+          <td><%= link_to booking.status.upcase.gsub(/_/,' '), admin_booking_path(booking) if booking.status %></td>
+          <td><%= link_to booking.updated_at.strftime("%Y-%m-%d"), admin_booking_path(booking) %></td>
+          <td><%= link_to booking.created_at.strftime("%Y-%m-%d"), admin_booking_path(booking) %></td>
+        </tr>
+<% end %>
+				<%= raw('<tr><td colspan="8">No bookings for this site.</td></tr>') unless @bookings.count > 0 %>
+			</tbody>
+		</table>
+		<%= link_to new_admin_booking_path do %>
+			<button type="button" class="btn  btn-outline-secondary btn-med" disabled><i class="icon-plus"></i> New Booking</button>
+		<% end %>
+	</div>
+</div>

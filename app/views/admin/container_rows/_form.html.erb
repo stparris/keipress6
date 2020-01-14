@@ -1,0 +1,24 @@
+<% if @container_row.errors.any? %>
+<div id="error_explanation">
+  <div class="alert alert-danger">
+		<%= pluralize(@container_row.errors.count, "error") %> prohibited this page from being saved:
+	</div>
+  <ul>
+  <% @container_row.errors.full_messages.each do |msg| %>
+    <li><%= msg %></li>
+  <% end %>
+  </ul>
+</div>
+<% end %>
+<%= f.hidden_field :container_id %>
+
+
+<div class="form-group">
+	<label for="container_row_css_classes"><%= f.label :css_classes, "CSS space separated class names (row automatically included)" %></label>
+	<div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="inputGroup-sizing-default">row</span>
+    </div>
+    <%= f.text_field :css_classes, value:  @container_row.css_classes ? @container_row.added_css_classes : '', :class => "form-control" %>
+  </div>
+</div>

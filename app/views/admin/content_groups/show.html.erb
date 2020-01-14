@@ -1,0 +1,19 @@
+<div class="row">
+	<div class="col-md-9">
+		<div class="page-header">
+			<h1><%= @content_group.name %></h1>
+		</div>	
+		<%= object_table(@content_group) %>
+		<%= link_to edit_admin_content_group_path(@content_group) do %>
+			<button type="submit" class="btn  btn-outline-secondary"><i class="icon-pencil"></i> Edit</button>
+		<% end %>
+		&nbsp;&nbsp;<%= link_to admin_content_group_path(@content_group), method: :delete, data: { confirm: "Delete content_group?" } do %>
+			<button type="submit" class="btn btn-danger"><i class="icon-trash"></i> Delete</button>
+		<% end %>
+	</div>
+	<div class="col-md-3">
+		<%= operations_menu(@content_group) %>
+	</div>
+</div>
+<hr/>
+<%= render partial: 'admin/content_group_items/index' %>

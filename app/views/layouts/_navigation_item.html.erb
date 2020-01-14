@@ -1,0 +1,18 @@
+<li class="<%= navigation_item.css_classes %>">
+<% if navigation_item && navigation_item.item_type == 'page_link' && navigation_item.page %>	
+	<% active = ''; active = ' active' if navigation_item.page == @page %>		
+	<%= link_to raw(navigation_item.label), "/#{navigation_item.page.nice_url}", :class => "nav-link#{active} " %>
+<% elsif navigation_item.item_type == 'category_link' && navigation_item.category %>	
+	<%= link_to raw(navigation_item.label), navigation_item.link, :class => 'nav-link' %>
+<% elsif navigation_item.item_type == 'external_link' %>	
+	<% if navigation_item.link_text.link_stub =~ /\S+/ %>
+	<% target = navigation_item.link_text.link_stub.sub(/\..*/,'').capitalize %>
+	<a class="nav-link" href="<%= navigation_item.link_text.link %>" <%= raw("target=\"#{target}\"") if navigation_item.link_text.new_window %>><%= raw(process_macros(navigation_item.label)) %></a>
+
+	<% else %>
+	<span class="nav-link"><%= raw(process_macros(navigation_item.label)) %></span>
+	<% end %>
+<% elsif navigation_item.item_type == 'dropdown' && navigation_item.dropdown %>	
+	<%= navigation_item.dropdown %>
+<% end %>
+</li>

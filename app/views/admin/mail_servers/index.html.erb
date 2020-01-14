@@ -1,0 +1,42 @@
+<div class="row">
+	<div class="col-md-12">
+		<div class="page-header">
+		  <h1><%= @site.name %> Mail Servers</h1>
+		</div>
+		<h5>Friendly reminder: Sensitive settings require ssh access to the server to sync variables such as passwords.</h5>
+		<table class="table table-striped table-bordered">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Active?</th>
+					<th></th>
+					<th></th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+<% @site.mail_servers.order('name asc').each do |mail_server| %>
+        <tr>
+          <td><%= link_to mail_server.name, admin_mail_server_path(mail_server) %></td>
+        	<td>
+  <% if mail_server.active == true %>      		
+        		<%= link_to raw('<i class="icon-ok"></i> active'), admin_mail_server_path(mail_server) %>
+  <% else %>
+  					<%= link_to raw('<i class="icon-cancel"></i> inactive'), admin_mail_server_path(mail_server) %>
+  <% end %>      	
+        	</td>
+          <td><%= link_to raw('<i class="icon-zoom-in"></i>'), admin_mail_server_path(mail_server) %></td>
+          <td><%= link_to raw('<i class="icon-pencil"></i>'), edit_admin_mail_server_path(mail_server) %></td>
+          <td><%= link_to raw('<i class="icon-trash"></i>'), admin_mail_server_path(mail_server), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+<% end %>
+				<%= raw('<tr><td colspan="5">No mail servers have been defined.</td></tr>') if @site.mail_servers.count == 0 %>
+			</tbody>
+		</table>
+
+		<%= link_to new_admin_mail_server_path do %>
+			<button type="button" class="btn  btn-outline-secondary btn-med">
+				<i class="icon-plus"></i> New Mail Server</button>
+		<% end %>
+	</div>
+</div>

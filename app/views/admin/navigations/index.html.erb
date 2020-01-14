@@ -1,0 +1,37 @@
+<div class="row">
+	<div class="col-md-12">
+		<div class="page-header">
+		  <h1>Navigations</h1>
+		</div>
+		<table id="navigation_index" class="table table-striped table-bordered">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>CSS Main</th>
+					<th>CSS List</th>
+					<th>Type</th>
+					<th></th>
+					<th></th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+<% @navigations.each do |navigation| %>
+        <tr>
+          <td><%= link_to navigation.name, admin_navigation_path(navigation) %></td>
+          <td><%= link_to navigation.main_css_classes, admin_navigation_path(navigation) %></td>
+          <td><%= link_to navigation.list_css_classes, admin_navigation_path(navigation) %></td>
+          <td><%= link_to navigation.nav_type, admin_navigation_path(navigation) %></td>
+          <td><%= link_to raw('<i class="icon-zoom-in"></i>'), admin_navigation_path(navigation) %></td>
+          <td><%= link_to raw('<i class="icon-pencil"></i>'), edit_admin_navigation_path(navigation) %></td>
+          <td><%= link_to raw('<i class="icon-trash"></i>'), admin_navigation_path(navigation), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+<% end %>
+				<%= raw('<tr><td colspan="6">No items for this naviation</td></tr>') unless @navigations.count > 0 %>
+			</tbody>
+		</table>
+		<%= link_to new_admin_navigation_path do %>
+			<button type="button" class="btn  btn-outline-secondary btn-med"><i class="icon-plus"></i> New Navigation</button>
+		<% end %>
+	</div>
+</div>

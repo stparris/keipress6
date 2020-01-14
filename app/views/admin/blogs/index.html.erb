@@ -1,0 +1,31 @@
+<div class="row">
+	<div class="col-md-12">
+		<div class="page-header">
+		  <h1>Blogs</h1>
+		</div>
+		<table class="table table-striped table-bordered">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th></th>
+					<th></th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+<% @blogs.order('name asc').each do |blog| %>
+        <tr>
+          <td><%= link_to raw(blog.name), admin_blog_path(blog) %></td>
+          <td><%= link_to raw('<i class="icon-zoom-in"></i>'), admin_blog_path(blog) %></td>
+          <td><%= link_to raw('<i class="icon-pencil"></i>'), edit_admin_blog_path(blog) %></td>
+          <td><%= link_to raw('<i class="icon-trash"></i>'), admin_blog_path(blog), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+<% end %>
+				<%= raw('<tr><td colspan="4">No content has been defined.</td></tr>') if @blogs.count == 0 %>
+			</tbody>
+		</table>
+		<%= link_to new_admin_blog_path do %>
+			<button type="button" class="btn  btn-outline-secondary btn-med"><i class="icon-plus"></i> New Blog</button>
+		<% end %>
+	</div>
+</div>

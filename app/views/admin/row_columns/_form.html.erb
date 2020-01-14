@@ -1,0 +1,25 @@
+<% if @row_column.errors.any? %>
+<div id="error_explanation">
+  <div class="alert alert-danger">
+		<%= pluralize(@row_column.errors.count, "error") %> prohibited this page from being saved:
+	</div>
+  <ul>
+  <% @row_column.errors.full_messages.each do |msg| %>
+    <li><%= msg %></li>
+  <% end %>
+  </ul>
+</div>
+<% end %>
+<%= f.hidden_field :container_row_id %>
+<%= f.hidden_field :content_type %>
+<div class="form-group">
+	<%= f.label :css_classes, 'CSS classes (Default: col)' %>
+	<%= f.text_field :css_classes, placeholder: 'Example: col col-xs, col-sm, col-3-med', :class => "form-control" %>
+</div>
+<% if @row_column.content_type =~ /image_grid_fixed/ %>
+  <%= render partial: "form_image_grid_fixed", locals: {f:f} %>
+<% elsif @row_column.content_type =~ /image_grid_masonry/ %>
+  <%= render partial: "form_image_grid_masonry", locals: {f:f} %>
+<% else %>
+  <%= render partial: "form_#{@row_column.content_type}", locals: {f:f} %>
+<% end %>

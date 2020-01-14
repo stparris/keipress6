@@ -1,0 +1,17 @@
+<div class="row">
+	<div class="col-md-9">
+		<div class="page-header">
+			<h1>Row <%= @row_column.container_row.position %> Column: <%= @row_column.position %></h1>
+		</div>	
+		<%= object_table(@row_column) %>
+		<%= link_to edit_admin_row_column_path(@row_column) do %>
+			<button type="submit" class="btn  btn-outline-secondary"><i class="icon-pencil"></i> Edit</button>
+		<% end %>
+		&nbsp;&nbsp;<%= link_to admin_row_column_path(@row_column), method: :delete, data: { confirm: "Delete column?" } do %>
+			<button type="submit" class="btn btn-danger"><i class="icon-trash"></i> Delete</button>
+		<% end %>
+	</div>
+	<div class="col-md-3">
+		<%= operations_menu(@row_column,[@row_column.container_row.container,@row_column.container_row]) %>
+	</div>
+</div>

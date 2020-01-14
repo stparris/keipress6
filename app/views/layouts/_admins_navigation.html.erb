@@ -1,0 +1,61 @@
+<% 
+active = {}
+active['sites'] = 'inactive'
+active['pages'] = 'inactive'
+active['contents'] = 'inactive'
+active['navigations'] = 'inactive'
+active['media'] = 'inactive'
+active['bookings'] = 'inactive'
+active['design'] = 'inactive'
+active['people'] = 'inactive'
+
+if admin_subs.include?(controller_name)
+	active['sites'] = 'active'
+elsif site_subs.include?(controller_name) 
+	active['sites'] = 'active'
+elsif page_subs.include?(controller_name) 
+	active['pages'] = 'active'
+elsif container_subs.include?(controller_name)
+	active['containers'] = 'active'
+elsif navigation_list_subs.include?(controller_name)
+	active['navigations'] = 'active'
+elsif content_subs.include?(controller_name) 
+	active['contents'] = 'active'
+elsif media_subs.include?(controller_name)
+	active['media'] = 'active'
+elsif people_subs.include?(controller_name) 	
+	active['people'] = 'active'
+elsif booking_subs.include?(controller_name) 	
+	active['bookings'] = 'active'
+elsif design_subs.include?(controller_name) 	
+	active['design'] = 'active'
+end
+%>
+
+
+<div class="navbar navbar-expand-sm navbar-dark bg-dark navbar-fixed-top" role="navigation">	
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-main" aria-controls="navbar-main"  aria-expanded="false" aria-label="Toggle navigation">
+   		<span class="navbar-toggler-icon"></span>
+ 		</button>
+ 		<div class="collapse navbar-collapse" id="navbar-main">
+			<ul class="navbar-nav mr-auto">
+
+<% if @admin %>
+				<li class="<%= active['sites'] %>"><%= link_to raw("<icon class=\"icon-cog\"></icon> Sites"), admin_sites_path, :class => 'nav-link', title: 'Configuration' %></li>
+	<% if @site %>
+				<li class="<%= active['pages'] %>"><%= link_to raw("<icon class=\"icon-doc\"></icon> Pages"), admin_pages_path, :class => 'nav-link', title: 'Pages' %></li>
+				<li class="<%= active['containers'] %>"><%= link_to raw("<icon class=\"icon-th-large\"></icon> Containers"), admin_containers_path, :class => 'nav-link', title: 'Containers' %></li>				
+				<li class="<%= active['navigations'] %>"><%= link_to raw("<icon class=\"icon-th-list\"></icon> Navs/lists"), admin_navigations_path, :class => 'nav-link', title: 'Navigations/lists' %></li>
+				<li class="<%= active['contents'] %>"><%= link_to raw("<icon class=\"icon-doc-text\"></icon> Content"), admin_content_groups_path, :class => 'nav-link', title: 'Content' %></li>
+				<li class="<%= active['media'] %>"><%= link_to raw("<icon class=\"icon-picture\"></icon> Media"), admin_images_path, :class => 'nav-link', title: 'Media' %></li>
+				<li class="<%= active['bookings'] %>"><%= link_to raw("<icon class=\"icon-calendar\"></icon> Bookings"), admin_calendars_path, :class => 'nav-link', title: 'Bookings' %></li>
+				<li class="<%= active['design'] %>"><%= link_to raw("<icon class=\"icon-palette\"></icon> Design"), admin_themes_path, :class => 'nav-link', title: 'Design' %></li>
+				<li class="<%= active['people'] %>"><%= link_to raw("<icon class=\"icon-users\"></icon> People"), admin_admins_path, :class => 'nav-link', title: 'People' %></li>
+	<% end %>
+<% else %>
+				<li class="nav-link"></li>
+<% end %>
+			</ul>
+	
+	</div>
+</div>

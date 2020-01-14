@@ -1,0 +1,117 @@
+<%
+	start_str = @booking.start_date.strftime("%Y-%m-%d") if @booking.start_date
+	end_str = @booking.end_date.strftime("%Y-%m-%d") if @booking.end_date
+	booked = "["
+	days = @booking.rental.calendar.parse
+	days.each_key do |day| 
+		days[day]['events'].each do |event|
+			next if @booking.uuid == event['uid']
+			if event['summary'] =~ /\S+/
+				booked += "'#{day}'," if event['summary'] =~ /\S+/
+				break
+			end
+		end
+	end
+	currency = @booking.rental.currency
+	currency_icon = currency =~ /Rp/ ? "<strong>#{currency}</strong>" : "<icon class=\"icon icon-#{currency}\"></icon>"
+%>
+
+<% if @booking.errors.any? %>
+<div id="error_explanation">
+  <div class="alert alert-danger">
+		<%= pluralize(@booking.errors.count, "error") %> prohibited this page from being saved:
+	</div>
+  <ul>
+  <% @booking.errors.full_messages.each do |msg| %>
+    <li><%= msg %></li>
+  <% end %>
+  </ul>
+</div>
+<% end %>
+<div id="booking_form">
+	<%= f.hidden_field :site_id, value: @site.id %>
+	<%= f.hidden_field :rental_id %>
+	<h3><%= @booking.rental.name %></h3>
+<% if @booking.persisted? %>
+	<div class="form-group">
+		<%= f.label :status %>
+		<%= f.select :status, Booking.statuses, {}, :class => "form-control" %>
+	</div>
+<% end %>
+	<div class="form-group">
+		<label>Select Check-in and Check-out dates</label>
+		<%= date_field_tag :date_range %>
+	</div>
+	<%= f.hidden_field :start_date %>
+	<%= f.hidden_field :end_date %>
+	<div id="select_guests" class="form-group" style="display:none;">
+		<%= f.label :guests %>
+		<%= f.select :guests, (@booking.rental.min_guests..@booking.rental.max_guests), {}, :class => "form-control" %>
+	</div>
+	<div id="booking_details" style="display:none;">
+		<table class="table table-striped table-bordered">
+			<thead>
+				<tr>
+					<th colspan="2">Booking Details</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><%= t('bookings.nights') %>:</td><td> <span id="booking_nights"></span></td>
+				</tr>
+				<tr>
+					<td><%= t('bookings.base_rate') %>:</td><td> <%= raw(currency_icon) %><span id="booking_base_rate"></span></td>
+				</tr>
+				<tr>
+					<td><%= t('bookings.extra_rate') %>:</td><td> <%= raw(currency_icon) %><span id="booking_extra_rate"></span></td>
+				</tr>
+				<tr>
+					<td><%= t('bookings.amount') %>:</td><td> <%= raw(currency_icon) %><span id="booking_amount"></span></td>
+				</tr>
+				<tr>
+					<td><%= t('bookings.tax') %>:</td><td> <%= raw(currency_icon) %><span id="booking_tax"></span></td>
+				</tr>
+				<tr>
+					<td><%= t('bookings.total') %>:</td><td> <%= raw(currency_icon) %><span id="booking_total"></span></td>
+				</tr>
+			</tbody>
+		</table>
+		<h4>User Info</h4>
+		<%= fields_for @user do |u| %>
+			<%= render partial: 'user', locals: {u: u} %>
+		<% end %>
+		<%= fields_for @user_address do |a| %>
+			<%= render partial: 'user_address', locals: {a: a} %>
+		<% end %>
+		<div class="form-group">
+			<%= f.label :details %>
+			<%= f.text_area :details, :class => "form-control" %>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="minStayModal" tabindex="-1" role="dialog" aria-labelledby="minStayModal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"><%= @booking.rental.min_days %> Night Minimum</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Check-out must be <%= @booking.rental.min_days %> nights after check-in.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<booked name="booked" id="booked" value="<%= raw(booked.sub(/,$/, ']')) %>" />
+<minStart name="min-start" id="minStart" value="<%= 2.days.from_now.strftime("%Y-%m-%d") %>" />
+<minDays name="min-days" id="minDays" value="<%= @booking.rental.min_days %>" />
+<% if @booking.start_date && @booking.end_date %>
+<defaultDate name="min-days" id="defaultDate" value="['<%= start_str %>>,'<%= end_str %>'] " />
+<% end %>
+

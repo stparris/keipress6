@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title><%= content_for?(:title) ? yield(:title) : "Kei Press Admin" %></title>
+		<meta name="description" content="<%= content_for?(:description) ? yield(:description) : "Prop 65 Clearinghouse" %>">
+		<%= favicon_link_tag sanitize("keipress_favicon.png") %>
+	  <%= csrf_meta_tags %>
+	  <%= csp_meta_tag %>
+	  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+	  <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+	  <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+	</head>
+	<body class="admin-layout">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="keipress-head">
+					<div class="keipress-logo">
+						<%= image_tag 'keipress_logo.png' %> Kei Press
+<% if @admin && @admin.role == 1 %>
+						<icon class="icon-globe-1" style="color: #99ddff;"></icon>	<%= link_to 'Sites', admin_sites_path %>
+<% end %>
+						<icon class="icon-sun-inv"></icon>
+						<%= @site ? link_to(@site.name,admin_site_path(@site)) : @admin ? 'Select Site' : 'Please Sign In' %>
+					</div>
+					<div class="keipress-sign-out">
+<% if @admin %>
+						<%= link_to raw("<icon class=\"icon-logout\"></icon><span> Sign out</span>"), "/admin/admin_sessions/1", method: :delete, 'data-toggle'=>'tooltip', title: 'Sign out' %>
+<% end %>
+					</div>
+				</div>
+			</div>
+		</div>
+		<%= render 'layouts/admins_navigation' %>
+		<%= render 'layouts/admins_sub_navigation' if @admin %>
+		<main id="main" role="main">
+			<%= render 'layouts/messages' if flash.count > 0 %>
+			<%= yield %>
+		</main>
+		<footer>
+			<div class="row" style="text-align:center;">
+				<div class="col-md-4">
+				</div>
+				<div class="col-md-4">
+					<%= image_tag 'keipress_logo.png' %> Kei Press <icon class="icon-copyright_by"></icon> <%= Time.now.year %>
+				</div>
+				<div class="col-md-4">
+				</div>
+			</div>
+		</footer>
+	</body>
+</html>
+

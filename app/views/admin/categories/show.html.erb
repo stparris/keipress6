@@ -1,0 +1,27 @@
+<div class="row">
+	<div class="col-md-9">
+		<div class="page-header">
+			<h1>Category <%= @category.name %></h1>
+		</div>	
+		<%= object_table(@category) %>
+		<%= link_to edit_admin_category_path(@category) do %>
+			<button type="submit" class="btn  btn-outline-secondary"><i class="icon-pencil"></i> Edit</button>
+		<% end %>
+		&nbsp;&nbsp;<%= link_to admin_category_path(@category), method: :delete, data: { confirm: "Delete category?" } do %>
+			<button type="submit" class="btn btn-danger"><i class="icon-trash"></i> Delete</button>
+		<% end %>
+	</div>
+	<div class="col-md-3">
+		<%= operations_menu(@category) %>
+	</div>
+</div>
+<hr/>
+<div id="articles">
+	<%= render partial: 'admin/categories_contents/index' %>
+</div>
+<div id="images">
+	<%= render partial: 'admin/categories_images/index' %>
+</div>
+<div id="media">
+<%= render partial: 'admin/categories_media/index' %>
+</div>

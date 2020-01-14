@@ -1,0 +1,18 @@
+<div class="tabbed-header">
+  <h3><%= @theme.name %> Workspace SCSS</h3>
+</div>
+<div id="message"></div>
+<%= form_for([:admin, @theme],:html => {remote: true, :role => 'form', :class => "formFor"}) do |f| %>
+    <div class="form-group edit-scss" style="border:solid 3px #e6e6e6;">
+      <%= f.text_area :new_scss_workspace, value: @theme.scss_workspace, :class => "form-control" %>
+    </div>
+    <hr />
+	<%= button_tag(type: 'submit', class:"btn  btn-outline-secondary btn-med flash-update") do %>
+      <i class="icon-ok"></i>
+      Save
+  <% end %>
+  &nbsp;&nbsp;<%= link_to sync_css_admin_theme_path(@theme) do %>
+    <button type="submit" class="btn btn-danger"><i class="icon-ok"></i> Apply Workspace SCSS to Production</button>
+  <% end %>      
+<% end %>
+

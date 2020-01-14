@@ -1,0 +1,30 @@
+<% if @content_group.errors.any? %>
+<div id="error_explanation">
+  <div class="alert alert-danger">
+		<%= pluralize(@content_group.errors.count, "error") %> prohibited this page from being saved:
+	</div>
+  <ul>
+  <% @content_group.errors.full_messages.each do |msg| %>
+    <li><%= msg %></li>
+  <% end %>
+  </ul>
+</div>
+<% end %>
+<%= f.hidden_field :site_id %>
+<%= f.hidden_field :admin_id, value: @admin.id %>
+<%= f.hidden_field :published, value: true %>
+
+<div class="form-group">
+  <%= f.label :name %>
+  <div class="input-group mb-3">
+  <%= f.text_field :name, value: @content_group ? @content_group.clear_group : '', :class => "form-control" %>
+    <div class="input-group-append">
+      <span class="input-group-text" id="inputGroup-sizing-default">Group</span>
+    </div>    
+  </div>
+ </div>
+<div class="form-group">
+  <%= f.label :css_classes %>
+  <%= f.text_field :css_classes, :class => "form-control" %>
+</div>
+

@@ -1,0 +1,48 @@
+<%= f.hidden_field :user_id %>
+<% if @user.user_addresses.count < 2 %>
+<%= f.hidden_field :name, value: 'default' %>
+<% else %>
+<div class="form-group">
+  <%= f.label :name %>
+  <%= f.text_field :name, :class => "form-control" %>
+</div>
+<% end %>
+<div class="form-group">
+  <%= f.label :address1 %>
+  <%= f.text_field :address1, :class => "form-control" %>
+</div>
+<div class="form-group">
+  <%= f.label :address2 %>
+  <%= f.text_field :address2, :class => "form-control" %>
+</div>
+<div class="form-group">
+  <%= f.label :city %>
+  <%= f.text_field :city, :class => "form-control" %>
+</div>
+<div class="form-group">
+  <%= f.label :post_code %>
+  <%= f.text_field :post_code, :class => "form-control" %>
+</div>
+<div class="form-group">
+  <%= f.label :phone %>
+  <%= f.text_field :phone, :class => "form-control" %>
+</div>
+<div class="form-group">
+  <%= f.label :alternative_phone %>
+  <%= f.text_field :alternative_phone, :class => "form-control" %>
+</div>
+<div class="form-group">
+  <%= f.label :country_id %>
+  <%= f.select :country_id, Country.order('name asc').collect { |c| [c.name, c.id] }, {prompt: 'Please Select'}, :class => "form-control country" %>
+</div>
+<% if @user_address.state %>
+<div id="states_div" class="form-group">
+  <%= f.label :state_id %>
+  <%= f.select :state_id, State.where(country_id: @user_address.country_id).collect { |s| [s.name, s.id] }, {prompt: 'Please Select'}, :class => "form-control state-select" %>
+</div>      
+<% else %>
+<div id="states_div" class="form-group" style="display:none;">
+  <%= f.label :state_id %>
+  <%= f.select :state_id, [], {prompt: 'Please Select'}, :class => "form-control state-select" %>
+</div>   
+<% end %>

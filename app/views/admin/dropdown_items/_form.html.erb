@@ -1,0 +1,27 @@
+<% if @dropdown_item.errors.any? %>
+<div id="error_explanation">
+  <div class="alert alert-danger">
+		<%= pluralize(@dropdown_item.errors.count, "error") %> prohibited this page from being saved:
+	</div>
+  <ul>
+  <% @dropdown_item.errors.full_messages.each do |msg| %>
+    <li><%= msg %></li>
+  <% end %>
+  </ul>
+</div>
+<% end %>
+<%= f.hidden_field :dropdown_id %>
+<%= f.hidden_field :item_type %>
+<div class="form-group">
+	<%= f.label :name %>
+	<%= f.text_field :name, :class => "form-control" %>
+</div>
+<div class="form-group">
+	<%= f.label :label %>
+	<%= f.text_field :label, :class => "form-control" %>
+</div>
+<%= render partial: "form_#{@dropdown_item.item_type}", locals: {f:f} %> 
+
+
+
+

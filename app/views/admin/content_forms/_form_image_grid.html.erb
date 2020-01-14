@@ -1,0 +1,10 @@
+<div id="content_select">
+  <div class="form-group">
+    <label for="content_item_css"><%= f.label :css_classes, "CSS space separated class names" %></label>
+    <%= f.text_field :css_classes, :class => "form-control" %>
+	</div>  
+  <div class="form-group"> 
+    <%= f.label :image_group_id %>
+    <%= f.select :image_group_id, ImageGroup.where(site_id: @site.id).order('name asc').collect { |c| [c.name, c.id] }, @content_item.image_group_id), {prompt: 'Please Select'}, :class => "form-control" %>
+  </div>
+</div>

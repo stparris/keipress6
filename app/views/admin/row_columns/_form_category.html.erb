@@ -1,0 +1,4 @@
+<div id="category_select" class="form-group">
+	<%= f.label :category_id %>
+	<%= f.select :category_id, Category.where(site_id: @site.id).order('name asc').collect { |c| [c.name, c.id] }, {prompt: 'Please Select'}, :class => "form-control" %>
+</div>

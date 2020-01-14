@@ -1,0 +1,17 @@
+<div class="col-md-4">
+  <h3>Theme Colors</h3>
+<% @theme.theme_colors.each do |color| %>
+  <div class="input-group input-group-sm mb-3">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="inputGroup-sizing-sm" style="background-color: #<%= color.value %>;">&nbsp;</span>
+    </div>
+    <input id="theme_color_text_<%= color.id %>" type="text" class="form-control color-tooltip" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="$<%= color.name %>: #<%= color.value %>;" data-toggle="tooltip" data-placement="top" title="Copied to clipboard" readonly>
+     <span class="input-group-btn">
+    <button id="theme_color_<%= color.id %>" class="btn btn-default color-theme" type="button" data-toggle="tooltip" data-placement="top" title="Copy">
+      <icon class="icon-docs"></icon>
+    </button>
+  </span>
+  </div>
+<% end %>
+</div>
+

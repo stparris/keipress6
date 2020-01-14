@@ -1,0 +1,17 @@
+<div class="row">
+	<div class="col-md-9">
+		<div class="page-header">
+			<h1><%= @navigation_item.name %></h1>
+		</div>	
+		<%= object_table(@navigation_item) %>
+		<%= link_to edit_admin_navigation_item_path(@navigation_item) do %>
+			<button type="submit" class="btn  btn-outline-secondary"><i class="icon-pencil"></i> Edit</button>
+		<% end %>
+		&nbsp;&nbsp;<%= link_to admin_navigation_item_path(@navigation_item), method: :delete, data: { confirm: "Delete navigation_item?" } do %>
+			<button type="submit" class="btn btn-danger"><i class="icon-trash"></i> Delete</button>
+		<% end %>
+	</div>
+	<div class="col-md-3">
+		<%= operations_menu(@navigation_item,[@navigation_item.navigation]) %>
+	</div>
+</div>

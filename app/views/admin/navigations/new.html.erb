@@ -1,0 +1,50 @@
+<div class="row">
+	<div class="col-md-9">
+		<div class="page-header">
+		  <h1>New <%= @navigation.nav_type ? @navigation.nav_type.capitalize : nil %> Navigation</h1>
+		</div>
+<% if @navigation.nav_type %>
+		<%= form_for([:admin, @navigation],:html => {:role => 'form', :class => "formFor"}) do |f| %>
+			<%= render partial: 'form', locals: {f:f} %>
+			<hr />
+			<%= button_tag(type: 'submit', class:"btn  btn-outline-secondary btn-med") do %>
+				<i class="icon-ok"></i>
+				Create
+			<% end %>
+			&nbsp;&nbsp;
+			<%= link_to new_admin_navigation_path do %>
+				<button type="button" class="btn  btn-outline-secondary btn-med btn-right"><i class="icon-cancel"></i> Cancel</button>
+			<% end %>
+		<% end %>
+<% else %>
+		<div class="bs-help">
+			<h3>Navigation types</h3>
+			<div><strong>Navbar: </strong>Creates a responsive navigation header like the ones at the top of this page.
+				<ul><li>  
+				<%= link_to raw('See the Bootstrap Navbar page for detailed CSS information, as well as branding and forms. <i class="icon-right-hand"></i>') , "https://getbootstrap.com/docs/4.0/components/navbar/", target: 'navbar_help' %> 
+				</li></ul>
+				<%= link_to new_admin_navigation_path(nav_type: 'navbar') do %>
+					<button type="button" class="btn  btn-outline-secondary btn-med"><i class="icon-plus"></i> New Navbar Navigation</button>
+				<% end %>
+			</div>
+			<hr/>			
+			<div><strong>Nav: </strong>Similar to navbar, creates an unordered list (ul) of items with 'nav' class attributes. 
+				<ul><li>   
+				<%= link_to raw('See the Bootstrap Navs page for detailed information. <i class="icon-right-hand"></i>'), "https://getbootstrap.com/docs/4.0/components/navs/", target: 'navs_help' %> 
+				</li></ul> 
+				<%= link_to new_admin_navigation_path(nav_type: 'nav') do %>
+					<button type="button" class="btn  btn-outline-secondary btn-med"><i class="icon-plus"></i> New Nav Navigation</button>
+				<% end %>
+		 	</div>
+		</div>
+		<hr/>
+
+		<%= link_to admin_navigations_path do %>
+			<button type="button" class="btn  btn-outline-secondary btn-med btn-right"><i class="icon-cancel"></i> Cancel</button>
+		<% end %>
+<% end %>
+	</div>
+	<div class="col-md-3">
+		<%= operations_menu(@navigation) %>
+	</div>
+</div>

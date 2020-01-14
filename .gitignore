@@ -4,6 +4,9 @@
 # or operating system, you probably want to add a global ignore instead:
 #   git config --global core.excludesfile '~/.gitignore_global'
 
+# For mac os x
+**/.DS_Store
+
 # Ignore bundler config.
 /.bundle
 
@@ -27,3 +30,16 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+
+/public/packs
+/public/packs-test
+/node_modules
+/yarn-error.log
+yarn-debug.log*
+.yarn-integrity
+
+# Ignore test scripts
+/scripts
+
+# Ignore credentials for public version
+# config/credentials.yml.enc

@@ -1,0 +1,17 @@
+<div class="row">
+	<div class="col-md-9">
+		<div class="page-header">
+			<h1><%= @mail_template.name %></h1>
+		</div>	
+		<%= object_table(@mail_template) %>
+		<%= link_to edit_admin_mail_template_path(@mail_template) do %>
+			<button type="submit" class="btn  btn-outline-secondary"><i class="icon-pencil"></i> Edit</button>
+		<% end %>
+		&nbsp;&nbsp;<%= link_to admin_mail_template_path(@mail_template), method: :delete, data: { confirm: "Delete admin?" } do %>
+			<button type="submit" class="btn btn-danger"><i class="icon-trash"></i> Delete</button>
+		<% end %>
+	</div>
+	<div class="col-md-3">
+		<%= operations_menu(@mail_template,[]) %>
+	</div>
+</div>

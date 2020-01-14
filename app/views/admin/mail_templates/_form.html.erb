@@ -1,0 +1,70 @@
+<% if @mail_template.errors.any? %>
+<div id="error_explanation">
+  <div class="alert alert-danger">
+    <%= pluralize(@mail_template.errors.count, "error") %> prohibited this template from being saved:
+  </div>
+  <ul>
+  <% @mail_template.errors.full_messages.each do |msg| %>
+    <li><%= msg %></li>
+  <% end %>
+  </ul>
+</div>
+<% end %>
+<%= f.hidden_field :site_id, value: @site.id %>
+<div class="form-group">
+  <%= f.label :name %>
+  <%= f.text_field :name, :class => "form-control" %>
+</div>
+<div class="form-group">
+  <%= f.label :from_email %> (Site admin)
+  <%= f.select :from_email, @site.admins.collect { |admin| [admin.email,admin.email]} , {}, :class => "form-control" %>
+</div>
+<div class="form-group">
+  <%= f.label :recipient_type %>
+  <%= f.select :recipient_type, {'User'=>'user','Admin'=> 'admin'}, {}, :class => "form-control" %>
+</div>
+<div class="form-group">
+  <%= f.label :template_type %>
+  <%= f.select :template_type, {'Booking'=>'booking','Contact'=>'contact'}, {}, :class => "form-control" %>
+</div>
+<div class="form-group">
+  <%= f.label :locale %>
+  <%= f.select :locale, Site.locales, {}, :class => "form-control" %>
+</div>
+<h3>Macros</h3>
+<p>Copy-paste {{macro-name}} as needed in the Subject and Body fields</p>  
+<h5>Booking</h5>
+<p>
+<% booking_macros.each_key do |macro| %>
+  <%= "{{#{macro}}} " %>
+<% end %>
+</p>
+
+<h5>Contact</h5>
+<p>
+<% contact_macros.each_key do |macro| %>
+  <%= "{{#{macro}}} " %>
+<% end %>
+</p>
+
+<h5>Global</h5>
+<p>
+<% misc_macros.each do |macro| %>
+  <%= "{{#{macro}}} " %>
+<% end %>
+</p>
+
+<div class="form-group">
+  <%= f.label :subject %>
+  <%= f.text_field :subject, :class => "form-control" %>
+</div>
+<div class="form-group">
+  <%= f.label :body_html %> 
+  <div class="form-control-border">
+    <%= f.text_area :body_html, :class => "form-control codemirror-html" %>
+  </div>
+</div>
+<div class="form-group">
+  <%= f.label :body_text %>
+  <%= f.text_area :body_text, rows: 10, :class => "form-control" %>
+</div>

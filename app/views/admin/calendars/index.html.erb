@@ -1,0 +1,35 @@
+<div class="row">
+	<div class="col-md-12">
+		<div class="page-header">
+		  <h1>Calendars</h1>
+		</div>
+		<table class="table table-striped table-bordered">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Modified</th>
+					<th>Parent</th>
+					<th></th>
+					<th></th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+<% @calendars.each do |calendar| %>
+        <tr>
+          <td><%= link_to raw(calendar.name), admin_calendar_path(calendar) %></td>
+          <td><%= link_to calendar.updated_at, admin_calendar_path(calendar) %></td>
+          <td><%= raw(calendar.parent ? '<i class="icon-ok"></i>' : '&nbsp;') %></td>
+          <td><%= link_to raw('<i class="icon-zoom-in"></i>'), admin_calendar_path(calendar) %></td>
+          <td><%= link_to raw('<i class="icon-pencil"></i>'), edit_admin_calendar_path(calendar) %></td>
+          <td><%= link_to raw('<i class="icon-trash"></i>'), admin_calendar_path(calendar), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+<% end %>
+				<%= raw('<tr><td colspan="5">No calendars for this site</td></tr>') unless @calendars.count > 0 %>
+			</tbody>
+		</table>
+		<%= link_to new_admin_calendar_path do %>
+			<button type="button" class="btn  btn-outline-secondary btn-med"><i class="icon-plus"></i> New Calendar</button>
+		<% end %>
+	</div>
+</div>

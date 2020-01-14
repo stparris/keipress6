@@ -1,0 +1,36 @@
+<div class="row">
+	<div class="col-md-12">
+		<div class="page-header">
+		  <h1>List Groups</h1>
+		</div>
+		<table id="list_group_index" class="table table-striped table-bordered">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>CSS</th>
+					<th></th>
+					<th></th>
+					<th>Clone</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+<% @list_groups.order('name asc').each do |list_group| %>
+        <tr>
+          <td><%= link_to raw(list_group.name), admin_list_group_path(list_group) %></td>
+          <td><%= link_to raw(list_group.css_classes), admin_list_group_path(list_group) %></td>
+          <td><%= link_to raw('<i class="icon-zoom-in"></i>'), admin_list_group_path(list_group) %></td>
+          <td><%= link_to raw('<i class="icon-pencil"></i>'), edit_admin_list_group_path(list_group) %></td>
+          <td><%= link_to raw('<i class="icon-docs"></i>'), new_admin_list_group_clone_path(list_group_id: list_group.id), method: :get %></td>
+          <td><%= link_to raw('<i class="icon-trash"></i>'), admin_list_group_path(list_group), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+<% end %>
+				<%= raw('<tr><td colspan="6">No list groups defined.</td></tr>') if @list_groups.count == 0 %>
+			</tbody>
+		</table>
+		<%= link_to new_admin_list_group_path do %>
+			<button type="button" class="btn  btn-outline-secondary btn-med"><i class="icon-plus"></i> New List Group</button>
+		<% end %>
+	</div>
+	<div class="col-md-2">&nbsp;</div>
+</div>

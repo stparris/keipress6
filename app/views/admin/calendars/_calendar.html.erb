@@ -1,0 +1,67 @@
+<% if @message %>
+<h3><% @message %></h3>
+<% else %>
+
+	<% 
+	year = nil
+	month = nil
+	wday = 0
+	week = nil
+	days = @calendar.parse
+	days.each_key do |day| 
+		ymd = day.split(/-/)
+		year = year == ymd[0] ? year : ymd[0]
+	%>
+	<% if month != ymd[1] %>
+	<% unless month == nil %>
+		</tbody>
+	</table>
+	<% end %>
+	<% month = ymd[1]; 
+	pad_day = 0 
+	pad_days = ""
+	until pad_day == days[day]['wday'].to_i do
+		pad_days += '<td class="calendar-cell-pad">&nbsp;</td>'
+		pad_day += 1 
+	end
+	%>
+	<h3><%= "#{year}-#{month}" %></h3>
+	<table class="calendar-table">
+		<thead>
+			<tr>
+				<th>Su</th><th>Mo</th><th>Tu</th><th>We</th><th>Th</th><th>Fr</th><th>Sa</th>
+			</tr>
+		</thead>
+		<tbody>
+<% end %>
+		<% if wday == 0; %>
+			<tr>
+		<% end %>
+		<% if pad_days %>
+			<%= raw(pad_days) %>
+			<% pad_days = nil %>
+		<% end %>	
+			<% events = "" 
+			free = true
+			i = 1
+			days[day]['events'].each do |event|
+				if event['summary'] =~ /\S+/
+					events += "#{'<br>' if i > 1}#{i}.) #{event['summary']} "
+					free = false
+					i += 1
+				else
+					free = true
+				end
+			end
+			%>
+			<td <%= raw("class=\"calendar-cell-blocked\"") if free == false %>><strong><%= ymd[2] %></strong><br/> <%= raw(events) %></td>
+		<% if days[day]['wday'].to_i == 6; wday = 0 %>
+			</tr>
+		<% else %>
+			<% wday += 1 %>		
+		<% end %> 
+	<% end %>
+	</tbody>
+</table>
+<% end %>
+

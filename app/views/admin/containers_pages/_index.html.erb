@@ -1,0 +1,45 @@
+		<div class="page-header">
+		  <h2>Containers</h2>
+		</div>
+   	<%= form_for([:admin, ContainersPage.new], :html => {:role => 'form', remote: true}) do |f| %>
+      <div class="form-group">
+        <label>Assign container</label><br />
+					<%= collection_select :containers_page, :container_id, Container.where("site_id = #{@site.id} AND id NOT IN (SELECT container_id FROM containers_pages WHERE page_id = #{@page.id})").order("name asc"), :id, :name, options = {prompt: 'Please select...'}, html_options = {class: 'form-control'} %>
+      </div>
+      <%= f.hidden_field :page_id, value: @page.id %>
+      <hr />
+			<%= button_tag(type: 'submit', class:"btn btn-outline-secondary btn-med") do %>
+        <i class="icon-ok"></i>
+        Assign
+      <% end %>
+    <% end %>
+    <br/>		
+		<table class="table table-striped table-bordered">
+			<thead>
+				<tr>
+					<th>Position</th>
+					<th>Name</th>
+					<th></th>
+					<th></th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody id="containers_page" data-sort-items-url="<%= sort_admin_containers_pages_url %>">
+<% @containers_pages.each do |containers_page| %>
+				<tr class="containers_page" id="containers_page_<%= containers_page.id %>">
+					<td><span class="handle"><i class="icon-up-hand"></i></span></td>	
+          <td><%= link_to raw(containers_page.container.name), admin_container_path(containers_page.container_id) %></td>
+          <td><%= link_to raw('<i class="icon-zoom-in"></i>'), admin_container_path(containers_page.container_id) %></td>
+          <td><%= link_to raw('<i class="icon-pencil"></i>'), edit_admin_container_path(containers_page.container_id) %></td>
+          <td><%= link_to raw('<i class="icon-trash"></i>'), admin_containers_page_path(containers_page.id), remote: true, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+<% end %>
+				<%= raw('<tr><td colspan="5">No items for this list</td></tr>') unless @containers_pages.count > 0 %>
+			</tbody>
+		</table>
+		<%= link_to new_admin_container_path do %>
+			<button type="button" class="btn btn-outline-secondary btn-med"><i class="icon-plus"></i> New Container</button>
+		<% end %>
+	</div>
+
+

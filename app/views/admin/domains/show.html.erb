@@ -1,0 +1,17 @@
+<div class="row">
+	<div class="col-md-9">
+		<div class="page-header">
+			<h1><%= @domain.name %></h1>
+		</div>	
+		<%= object_table(@domain) %>
+		<%= link_to edit_admin_domain_path(@domain) do %>
+			<button type="submit" class="btn  btn-outline-secondary"><i class="icon-pencil"></i> Edit</button>
+		<% end %>
+		&nbsp;&nbsp;<%= link_to admin_domain_path(@domain), method: :delete, data: { confirm: "Delete domain?" } do %>
+			<button type="submit" class="btn btn-danger"><i class="icon-trash"></i> Delete</button>
+		<% end %>
+	</div>
+	<div class="col-md-3">
+		<%= operations_menu(@domain) %>
+	</div>
+</div>

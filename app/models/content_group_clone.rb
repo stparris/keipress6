@@ -1,0 +1,3 @@
+class ContentGroupClone < ContentGroup
+
+end

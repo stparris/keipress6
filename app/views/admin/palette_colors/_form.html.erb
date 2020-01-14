@@ -1,0 +1,24 @@
+<% if @palette_color.errors.any? %>
+<div id="error_explanation">
+  <div class="alert alert-danger">
+		<%= pluralize(@palette_color.errors.count, "error") %> prohibited this page from being saved:
+	</div>
+  <ul>
+  <% @palette_color.errors.full_messages.each do |msg| %>
+    <li><%= msg %></li>
+  <% end %>
+  </ul>
+</div>
+<% end %>
+<div class="form-group">
+	<%= f.label :palette_id %>
+	<%= f.select :palette_id, Palette.order('name asc').collect { |c| [c.name, c.id] }, {prompt: 'Please Select'}, :class => "form-control" %>
+</div>
+<div class="form-group">
+	<%= f.label :name %>
+	<%= f.text_field :name, :class => "form-control" %>
+</div>
+<div class="form-group">
+	<%= f.label :value %>
+	<%= f.text_field :value, :class => "form-control" %>
+</div>

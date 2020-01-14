@@ -1,0 +1,20 @@
+<% if @containers_page.errors.any? %>
+<div id="error_explanation">
+  <div class="alert alert-danger">
+		<%= pluralize(@containers_page.errors.count, "error") %> prohibited this page from being saved:
+	</div>
+  <ul>
+  <% @containers_page.errors.full_messages.each do |msg| %>
+    <li><%= msg %></li>
+  <% end %>
+  </ul>
+</div>
+<% end %>
+<div class="form-group">
+	<%= f.label :container_id %>
+	<%= f.select :container_id, Container.order('name asc').collect { |c| [c.name, c.id] }, {prompt: 'Please Select'}, :class => "form-control" %>
+</div>
+<div class="form-group">
+	<%= f.label :page_id %>
+	<%= f.select :page_id, Page.order('name asc').collect { |c| [c.name, c.id] }, {prompt: 'Please Select'}, :class => "form-control" %>
+</div>

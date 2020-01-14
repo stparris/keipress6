@@ -1,15 +1,28 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Keipress6</title>
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= @site.name %></title>
+  <meta name="description" content="<%= @site.description ? @site.description : @page.description %>">
+	<meta name="google" value="notranslate">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+	<%= favicon_link_tag sanitize("#{@site.favicon}_favicon.png") %>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
 
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-  </head>
-
-  <body>
-    <%= yield %>
-  </body>
+<% if @page && @page.theme %>
+	<link rel="stylesheet" media="all" href="<%= @page.theme.asset_url %>_production.css" />
+<% end %>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+</head>
+<body>
+<% if @page %>
+	<%= yield %>
+<% else %>
+	<!-- no page -->
+	<%= render 'errors/404' %>
+<% end %>
+</body>
 </html>

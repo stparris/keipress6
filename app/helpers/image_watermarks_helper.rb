@@ -1,0 +1,2 @@
+module ImageWatermarksHelper
+end

@@ -1,0 +1,34 @@
+<div class="row">
+	<div class="col-md-12">
+		<div class="page-header">
+		  <h1> Carousels</h1>
+		</div>
+		<table  id="carousel_index" class="table table-striped table-bordered">
+			<thead>
+				<tr>
+					<th></th>
+					<th>Name</th>
+					<th></th>
+					<th></th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+<% Carousel.where(site_id: @site.id).order('name asc').each do |carousel| %>
+        <tr>
+        	<td><%= link_to image_tag(carousel.carousel_slides.first.image.image.variant(resize: "100x100")), admin_carousel_path(carousel) %></td>
+          <td><%= link_to carousel.name, admin_carousel_path(carousel) %></td>
+          <td><%= link_to raw('<i class="icon-zoom-in"></i>'), admin_carousel_path(carousel) %></td>
+          <td><%= link_to raw('<i class="icon-pencil"></i>'), edit_admin_carousel_path(carousel) %></td>
+          <td><%= link_to raw('<i class="icon-trash"></i>'), admin_carousel_path(carousel), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+<% end %>
+				<%= raw('<tr><td colspan="5">No image groups defined.</td></tr>') if @carousels.count == 0 %>
+			</tbody>
+		</table>
+		<%= link_to new_admin_carousel_path do %>
+			<button type="button" class="btn  btn-outline-secondary btn-med"><i class="icon-plus"></i> New  Carousel</button>
+		<% end %>
+	</div>
+	<div class="col-md-2">&nbsp;</div>
+</div>

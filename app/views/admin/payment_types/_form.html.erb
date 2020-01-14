@@ -1,0 +1,216 @@
+<% if @payment_type.errors.any? %>
+<div id="error_explanation">
+  <div class="alert alert-danger">
+		<%= pluralize(@payment_type.errors.count, "error") %> prohibited this page from being saved:
+	</div>
+  <ul>
+  <% @payment_type.errors.full_messages.each do |msg| %>
+    <li><%= msg %></li>
+  <% end %>
+  </ul>
+</div>
+<% end %>
+<%= f.hidden_field :site_id, value: @site.id %>
+<div class="form-group">
+	<%= f.label :name %>
+	<%= f.text_field :name, :class => "form-control" %>
+</div>
+<div class="form-group">
+	<%= f.label :payment_type %>
+	<%= f.select :payment_type, PaymentType.types, {prompt: "Please select"}, :class => "form-control" %>
+</div>
+<div id="payment_gateway" class="form-group" style="display: none;">
+	<%= f.label :payment_gateway_id %>
+	<%= f.select :payment_gateway_id, PaymentGateway.where(site_id: @site.id).order('name asc').collect { |c| [c.name, c.id] }, {prompt: 'Please Select'}, :class => "form-control country" %>
+</div>
+<%= f.hidden_field :show_email %>
+<%= f.hidden_field :require_email %>
+<% 
+hide_active = true
+hide_active = false if @payment_type.show_email
+hide_active = false if @payment_type.require_email
+%>
+
+<div class="form-group">
+	<label>Hide/Show/Require Email</label><br />
+	<div class="btn-group btn-group-toggle" data-toggle="buttons">
+	  <label id="hide_email" class="btn <%= hide_active ? 'btn-info' : 'btn-secondary' %> user-email">
+	    <input type="checkbox" id="hide_email_input" autocomplete="off"<%= ' checked' unless @payment_type.show_email %>> Hide Email
+	  </label>
+	  <label id="show_email" class="btn <%= @payment_type.show_email ? 'btn-info' : 'btn-secondary' %> user-email">
+	    <input type="checkbox" id="show_email_input" autocomplete="off"<%= ' checked' if @payment_type.show_email %>> Show Email
+	  </label>
+	  <label id="require_email" class="btn <%= @payment_type.require_email ? 'btn-info' : 'btn-secondary' %> user-email">
+	    <input type="checkbox" id="require_email_input" autocomplete="off"<%= ' checked' if @payment_type.require_email %>> Require Email
+	  </label>
+	</div>
+</div>
+
+<%= f.hidden_field :show_user_names %>
+<%= f.hidden_field :require_user_names %>
+<% 
+hide_active = true
+hide_active = false if @payment_type.show_user_names
+hide_active = false if @payment_type.require_user_names
+%>
+
+<div class="form-group">
+	<label>Hide/Show/Require User Names</label><br />
+	<div class="btn-group btn-group-toggle" data-toggle="buttons">
+	  <label id="hide_user_names" class="btn <%= hide_active ? 'btn-info' : 'btn-secondary' %> user-names">
+	    <input type="checkbox" id="hide_user_names_input" autocomplete="off"<%= ' checked' unless @payment_type.show_user_names %>> Hide User Names
+	  </label>
+	  <label id="show_user_names" class="btn <%= @payment_type.show_user_names ? 'btn-info' : 'btn-secondary' %> user-names">
+	    <input type="checkbox" id="show_user_names_input" autocomplete="off"<%= ' checked' if @payment_type.show_user_names %>> Show User Names
+	  </label>
+	  <label id="require_user_names" class="btn <%= @payment_type.require_user_names ? 'btn-info' : 'btn-secondary' %> user-names">
+	    <input type="checkbox" id="require_user_names_input" autocomplete="off"<%= ' checked' if @payment_type.require_user_names %>> Require User Names
+	  </label>
+	</div>
+</div>
+
+<%= f.hidden_field :show_primary_address %>
+<%= f.hidden_field :require_card_address %>
+<%= f.hidden_field :require_billing_address %>
+<%= f.hidden_field :require_shipping_address %>
+<% 
+hide_active = true
+hide_active = false if @payment_type.show_primary_address
+hide_active = false if @payment_type.require_card_address
+hide_active = false if @payment_type.require_billing_address
+hide_active = false if @payment_type.require_shipping_address
+
+%>
+
+<div class="form-group">
+	<label>Hide/Show/Require Addresses</label>
+	<div class="btn-group btn-group-toggle" data-toggle="buttons">
+	  <label id="hide_addresses" class="btn <%= hide_active ? 'btn-info' : 'btn-secondary' %> user-address">
+	    <input type="checkbox" name="options" id="hide_addresses_input" autocomplete="off"<%= ' checked' unless @payment_type.show_primary_address %>> Hide Addresses
+	  </label>
+	  <label id="show_primary_address" class="btn <%= @payment_type.show_primary_address ? 'btn-info' : 'btn-secondary' %> user-address">
+	    <input type="checkbox" name="options" id="show_primary_address_input" autocomplete="off"<%= ' checked' if @payment_type.show_primary_address %>> Show Primary Address
+	  </label>
+    <label id="require_card_address" class="btn <%= @payment_type.require_card_address ? 'btn-info' : 'btn-secondary' %> user-address">
+      <input type="checkbox" name="options" id="require_card_address_input" autocomplete="off"<%= ' checked' if @payment_type.require_card_address %>> Require Card Address
+    </label>    
+	  <label id="require_billing_address" class="btn <%= @payment_type.require_billing_address ? 'btn-info' : 'btn-secondary' %> user-address">
+	    <input type="checkbox" name="options" id="require_billing_address_input" autocomplete="off"<%= ' checked' if @payment_type.require_billing_address %>> Require Billing Address
+	  </label>
+	  <label id="require_shipping_address" class="btn <%= @payment_type.require_shipping_address ? 'btn-info' : 'btn-secondary' %> user-address">
+	    <input type="checkbox" id="require_shipping_address_input" autocomplete="off"<%= @payment_type.require_shipping_address ? 'btn-info' : 'btn-secondary' %>> Require Shipping Address
+	  </label>
+	</div>
+</div>
+<script>
+$(document).ready(function() {
+
+  $(document).on("click",'.user-email',function(e) {
+		let checked = e.target.id; 
+  	if (checked === 'hide_email') {
+      $(".user-email").each(function() {
+        $(this).removeClass("btn-info");
+        $(this).addClass("btn-secondary");
+        $("#payment_type_"+this.id).val('false');
+        $("#"+this.id+"_input").prop('checked',false);
+      }); 
+      $("#payment_type_show_email").val('false');
+      $("#"+checked).addClass("btn-info");
+      $("#"+checked).removeClass("btn-secondary");
+  	} else {
+      if ($("#"+checked+"_input").prop('checked') === true) {
+        console.log('checked '+checked);
+        $("#"+checked).addClass("btn-secondary");
+        $("#"+checked).removeClass("btn-info");
+        $("#"+checked+"_input").prop('checked', false);
+        $("#payment_type_"+checked).val('false');
+      } else {
+        console.log('not checked '+checked);
+        console.log("#"+checked+"_input");
+        $("#"+checked).addClass("btn-info");
+        $("#"+checked).removeClass("btn-secondary");
+        $("#"+checked+"_input").prop('checked', true);
+        $("#payment_type_"+checked).val('true');
+        $("#hide_email").removeClass("btn-info");
+	      $("#hide_email").addClass("btn-secondary");
+      }
+      console.log($("#payment_type_"+checked).val());
+      console.log($("#"+checked+"_input").prop('checked'));
+		}
+  });
+
+
+	$(document).on("click",'.user-names',function(e) {
+		let checked = e.target.id; 
+    if (checked === 'hide_user_names') {
+			$(".user-names").each(function() {
+				$(this).removeClass("btn-info");
+				$(this).addClass("btn-secondary");
+				$("#payment_type_"+this.id).val('false');
+				$("#"+this.id+"_input").prop('checked',false);
+	    });	
+			$("#payment_type_show_user_names").val('false');
+			$("#"+checked).addClass("btn-info");
+    	$("#"+checked).removeClass("btn-secondary");
+    } else {
+    	if ($("#"+checked+"_input").prop('checked') === true) {
+    		console.log('checked '+checked);
+    		$("#"+checked).addClass("btn-secondary");
+    		$("#"+checked).removeClass("btn-info");
+    		$("#"+checked+"_input").prop('checked', false);
+    		$("#payment_type_"+checked).val('false');
+    	} else {
+    		console.log('not checked '+checked);
+    		console.log("#"+checked+"_input");
+    		$("#"+checked).addClass("btn-info");
+    		$("#"+checked).removeClass("btn-secondary");
+    		$("#"+checked+"_input").prop('checked', true);
+    		$("#payment_type_"+checked).val('true');
+	    	$("#hide_user_names").removeClass("btn-info");
+  	  	$("#hide_user_names").addClass("btn-secondary");
+    	}
+    	console.log($("#payment_type_"+checked).val());
+    	console.log($("#"+checked+"_input").prop('checked'));
+    }
+
+	});
+
+	$(document).on("click",'.user-address',function(e) {
+		let checked = e.target.id; 
+    if (checked === 'hide_addresses') {
+			$(".user-address").each(function() {
+				$(this).removeClass("btn-info");
+				$(this).addClass("btn-secondary");
+				$("#payment_type_"+this.id).val('false');
+				$("#"+this.id+"_input").prop('checked',false);
+	    });	
+			$("#payment_type_show_primary_address").val('false');
+			$("#"+checked).addClass("btn-info");
+    	$("#"+checked).removeClass("btn-secondary");
+    } else {
+    	if ($("#"+checked+"_input").prop('checked') === true) {
+    		console.log('checked '+checked);
+    		$("#"+checked).addClass("btn-secondary");
+    		$("#"+checked).removeClass("btn-info");
+    		$("#"+checked+"_input").prop('checked', false);
+    		$("#payment_type_"+checked).val('false');
+    	} else {
+    		console.log('not checked '+checked);
+    		console.log("#"+checked+"_input");
+    		$("#"+checked).addClass("btn-info");
+    		$("#"+checked).removeClass("btn-secondary");
+    		$("#"+checked+"_input").prop('checked', true);
+    		$("#payment_type_"+checked).val('true');
+	    	$("#hide_addresses").removeClass("btn-info");
+  	  	$("#hide_addresses").addClass("btn-secondary");
+    	}
+    	console.log($("#payment_type_"+checked).val());
+    	console.log($("#"+checked+"_input").prop('checked'));
+    }
+
+	});
+  
+});	
+</script>
+
+

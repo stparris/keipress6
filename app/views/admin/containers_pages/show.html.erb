@@ -1,0 +1,17 @@
+<div class="row">
+	<div class="col-md-9">
+		<div class="page-header">
+			<h1><%= @containers_page.name %></h1>
+		</div>	
+		<%= object_table(@containers_page) %>
+		<%= link_to edit_admin_containers_page_path(@containers_page) do %>
+			<button type="submit" class="btn  btn-outline-secondary"><i class="icon-pencil"></i> Edit</button>
+		<% end %>
+		&nbsp;&nbsp;<%= link_to admin_containers_page_path(@containers_page), method: :delete, data: { confirm: "Delete containers_page?" } do %>
+			<button type="submit" class="btn btn-danger"><i class="icon-trash"></i> Delete</button>
+		<% end %>
+	</div>
+	<div class="col-md-3">
+		<%= operations_menu(@containers_page) %>
+	</div>
+</div>

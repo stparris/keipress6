@@ -1,0 +1,3 @@
+class ContainerClone < Container
+
+end

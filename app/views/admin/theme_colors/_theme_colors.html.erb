@@ -1,0 +1,7 @@
+<% @theme.theme_colors.order('name asc').each do |theme_color| %>
+        <tr id="theme_color_<%= theme_color.id %>">
+          <%= render partial: 'admin/theme_colors/form', locals: {theme_color: theme_color} %>
+        </tr>
+<% end %>
+				<%= raw('<tr><td colspan="6">No colors have been defined for the theme.</td></tr>') if @theme.theme_colors.count == 0 %>
+

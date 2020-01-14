@@ -1,0 +1,61 @@
+<%
+@currency_label = currency_icon(@rental_booking.rental.currency)
+
+summary_html = @rental_booking.payment_method.summary_page_html.gsub(/{{total}}/,@rental_booking.total_amount.to_s)
+summary_html = summary_html.gsub(/{{deposit}}/,@rental_booking.deposit.to_s)
+summary_html = summary_html.gsub(/{{first_name}}/,@rental_booking.user.first_name)
+summary_html = summary_html.gsub(/{{last_name}}/,@rental_booking.user.last_name)
+summary_html = summary_html.gsub(/{{full_name}}/,@rental_booking.user.full_name)
+summary_html = summary_html.gsub(/{{rental_name}}/,@rental_booking.rental.name)
+summary_html = summary_html.gsub(/{{currency}}/, raw(@currency_label))
+
+%>		
+
+<div id="booking_show"> 
+	<h1><%= I18n.locale %></h1>
+	<%= raw(summary_html.split(/\{\{details\}\}/)[0]) %>
+	<table class="table table-striped table-bordered">
+		<thead>
+			<tr>
+				<th colspan="2"><%= t('bookings.details', locale: I18n.locale) %></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td><%= t('bookings.check_in', locale: I18n.locale) %>:</td><td><%= @rental_booking.start_date.strftime("%-d %b %Y") %></td>
+			</tr>
+			<tr>
+				<td><%= t('bookings.check_out', locale: I18n.locale) %>:</td><td><%= @rental_booking.end_date.strftime("%-d %b %Y") %></td>
+			</tr>
+			<tr>
+				<td><%= t('bookings.nights', locale: I18n.locale) %>:</td><td><%= @rental_booking.nights %></td>
+			</tr>
+			<tr>
+				<td><%= t('bookings.guests', locale: I18n.locale) %>:</td><td><%= @rental_booking.guests %></td>
+			</tr>
+			<tr>
+				<td><%= t('bookings.base_rate', locale: I18n.locale) %>:</td><td><%= raw(@currency_label) %><%= @rental_booking.base_rate %></td>
+			</tr>
+			<tr>
+				<td><%= t('bookings.extra_rate', locale: I18n.locale) %>:</td><td><%= raw(@currency_label) %><%= @rental_booking.extra_rate %></td>
+			</tr>
+			<tr>
+				<td><%= t('bookings.amount', locale: I18n.locale) %>:</td><td><%= raw(@currency_label) %><%= @rental_booking.amount %></td>
+			</tr>
+			<tr>
+				<td><%= t('bookings.tax', locale: I18n.locale) %>:</td><td><%= raw(@currency_label) %><%= @rental_booking.tax %></td>
+			</tr>
+			<tr>
+				<td><%= t('bookings.total', locale: I18n.locale) %>:</td><td><%= raw(@currency_label) %><%= @rental_booking.total_amount %></td>
+			</tr>
+<% if @rental_booking.payment_method.payment_type.payment_type != 'card_paid' %>
+			<tr>
+				<td><%= t('bookings.deposit', locale: I18n.locale) %>:</td><td><%= raw(@currency_label) %><%= @rental_booking.deposit %></td>
+			</tr>
+<% end %>
+		</tbody>
+	</table>
+	<%= raw(summary_html.split(/\{\{details\}\}/)[1]) %>
+</div>
+
+

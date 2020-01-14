@@ -1,0 +1,41 @@
+<div class="row">
+	<div class="col-md-12">
+	  <h2>Carousel Slides</h2>
+		<table class="table table-striped table-bordered">
+			<thead>
+				<tr>
+					<th>Position</th>
+					<th>Image</th>
+					<th>Name</th>
+					<th>Caption</th>
+					<th></th>
+					<th></th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody id="carousel_slides" data-sort-items-url="<%= sort_admin_carousel_slides_url %>">
+<% @carousel_slides.order('position asc').each do |carousel_slide| %>
+        <tr class="carousel_slides" id="carousel_slide_<%= carousel_slide.id %>">
+        	<td><span class="handle"><i class="icon-up-hand"></i></span></td>	
+        	<td>
+  <% if carousel_slide.image.image.attached? %>
+  					<%= image_tag url_for(carousel_slide.image.image.variant(resize: '100x100')), class: 'img-fluid' %>
+  <% else %>
+          	<%= link_to raw(carousel_slide.image.name), admin_carousel_slide_path(carousel_slide) %>
+  <% end %>           		
+        	</td>	
+          <td><%= link_to raw(carousel_slide.name), admin_carousel_slide_path(carousel_slide) %></td>
+          <td><%= link_to raw(carousel_slide.caption), admin_carousel_slide_path(carousel_slide) %></td>
+          <td><%= link_to raw('<i class="icon-zoom-in"></i>'), admin_carousel_slide_path(carousel_slide) %></td>
+          <td><%= link_to raw('<i class="icon-pencil"></i>'), edit_admin_carousel_slide_path(carousel_slide) %></td>
+          <td><%= link_to raw('<i class="icon-trash"></i>'), admin_carousel_slide_path(carousel_slide), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+<% end %>
+				<%= raw('<tr><td colspan="6">No items for this list</td></tr>') unless @carousel_slides.count > 0 %>
+			</tbody>
+		</table>
+		<%= link_to new_admin_carousel_slide_path(carousel_id: @carousel.id) do %>
+			<button type="button" class="btn  btn-outline-secondary btn-med"><i class="icon-plus"></i> New Carousel Slide</button>
+		<% end %>
+	</div>
+</div>

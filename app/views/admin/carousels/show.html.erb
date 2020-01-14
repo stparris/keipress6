@@ -1,0 +1,21 @@
+<div class="row">
+	<div class="col-md-9">
+		<div class="page-header">
+			<h1><%= @carousel.name %></h1>
+		</div>	
+		<%= object_table(@carousel) %>
+		<%= link_to edit_admin_carousel_path(@carousel) do %>
+			<button type="submit" class="btn  btn-outline-secondary"><i class="icon-pencil"></i> Edit</button>
+		<% end %>
+		&nbsp;&nbsp;<%= link_to admin_carousel_path(@carousel), method: :delete, data: { confirm: "Delete carousel?" } do %>
+			<button type="submit" class="btn btn-danger"><i class="icon-trash"></i> Delete</button>
+		<% end %>
+	</div>
+	<div class="col-md-3">
+		<%= operations_menu(@carousel) %>
+	</div>
+</div>
+
+
+<%= render partial: 'admin/carousel_slides/index' %>
+

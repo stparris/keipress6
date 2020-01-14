@@ -1,0 +1,36 @@
+<div class="row">
+  <div class="col-md-2">&nbsp;</div>
+  <div class="col-md-8">
+    <div class="page-header">
+      <h1>Icons</h1>
+    </div>
+
+<% collections = icon_collections 
+  i = 1
+  collections.each_key do |collection| %>
+    <div>
+      <icon id="zoomin_<%= i %>" class="icon-zoom-in"></icon>
+      <icon id="zoomout_<%= i %>" class="icon-zoom-out" style="display:none;"></icon>
+      &nbsp;<%= collection %>
+    </div>
+    <div id="collection_<%= i %>" style="display:none;" class="icon-collection">
+  <% i += 1 %>  
+  <% collections[collection].each do |icon| %>
+      <div class="input-group input-group-sm mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="inputGroup-sizing-sm"><%= raw("<i class=\"icon-#{icon}\"></i>") %>&nbsp;&nbsp;<%= icon %></span>
+        </div>
+        <input id="icon_value_<%= icon %>" type="text" class="form-control icon-tooltip" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="<%= "<icon class=\"icon-#{icon}\"></icon>" %>" data-toggle="tooltip" data-placement="top" title="Copied to clipboard">
+         <span class="input-group-btn">
+        <button id="icon_btn_<%= icon %>" class="btn btn-sm btn-default icon-btn" type="button" data-toggle="tooltip" data-placement="top" title="Copy">
+          <icon class="icon-docs"></icon>
+        </button>
+      </span>
+      </div>
+  <% end %>
+    </div>
+<% end %>  
+  </div>
+  <div class="col-md-2">&nbsp;</div>
+</div>
+

@@ -1,0 +1,36 @@
+<div class="row">
+	<div class="col-md-12">
+		<div class="page-header">
+		  <h1>Pages</h1>
+		</div>
+		<table id="page_index" class="table table-striped table-bordered">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Description</th>
+					<th>Theme</th>
+					<th></th>
+					<th></th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+<% @pages.each do |page| %>
+        <tr>
+          <td><%= link_to raw(page.name), admin_page_path(page) %></td>
+          <td><%= link_to raw(page.description), admin_page_path(page) %></td>
+          <td><%= link_to raw(page.theme.name), admin_page_path(page) %></td>
+          <td><%= link_to raw('<i class="icon-zoom-in"></i>'), admin_page_path(page) %></td>
+          <td><%= link_to raw('<i class="icon-pencil"></i>'), edit_admin_page_path(page) %></td>
+          <td><%= link_to raw('<i class="icon-trash"></i>'), admin_page_path(page), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+<% end %>
+				<%= raw('<tr><td colspan="6">No content has been defined for the page.</td></tr>') if @pages.count == 0 %>
+			</tbody>
+		</table>
+		<%= link_to new_admin_page_path do %>
+			<button type="button" class="btn  btn-outline-secondary btn-med"><icon class="icon-plus"></icon> New Page</button>
+		<% end %>
+	</div>
+</div>
+

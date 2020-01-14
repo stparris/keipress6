@@ -1,0 +1,20 @@
+<% if @container_clone.errors.any? %>
+<div id="error_explanation">
+  <div class="alert alert-danger">
+		<%= pluralize(@container_clone.errors.count, "error") %> prohibited this page from being saved:
+	</div>
+  <ul>
+  <% @container_clone.errors.full_messages.each do |msg| %>
+    <li><%= msg %></li>
+  <% end %>
+  </ul>
+</div>
+<% end %>
+<%= f.hidden_field :site_id, value: @site.id %>
+<%= hidden_field_tag :container_id, @container.id %>
+<%= f.hidden_field :container_type %>
+<div class="form-group">
+	<%= f.label :name %>
+	<%= f.text_field :name, value: "Clone of #{@container.name}", :class => "form-control" %>
+</div>
+

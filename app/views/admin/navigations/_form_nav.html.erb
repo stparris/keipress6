@@ -1,0 +1,11 @@
+<div id="navs_help" class="bs-help">
+	<p>Use Bootstrap CSS classes plus your own to set the look and behavior of the navigation.</p>
+	<p>Class nav automatically included.</p>
+</div>
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="basic-addon1">nav</span>
+  </div>
+  <%= f.text_field :main_css_classes, value: @navigation.main_css_classes ? @navigation.added_main_css_classes : '', :class => "form-control" %>
+</div>
+
