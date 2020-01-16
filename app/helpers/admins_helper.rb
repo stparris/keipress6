@@ -6,15 +6,15 @@ module AdminsHelper
       template_folder = Dir.new("#{Rails.root}/app/views/admin/#{controller_name}s/templates")
       template_folder.each do |file|
         next if file =~ /^\./
-        templates << {'name'=>file.split(/_/).map(&:capitalize).join(' '),'value'=> file.gsub(/^_|\.html.erb/,'')}  
+        templates << {'name'=>file.split(/_/).map(&:capitalize).join(' '),'value'=> file.gsub(/^_|\.html.erb/,'')}
       end
     end
   end
-  
+
   def icon_collections
-    collections = {} 
+    collections = {}
     collection = []
-    cname = nil 
+    cname = nil
     File.open("#{Rails.root}/app/assets/stylesheets/keipress-fontello.scss", "r") do |f|
       f.each_line do |line|
         next unless line =~ /^\.icon|^\/\*\*\s/
@@ -24,7 +24,7 @@ module AdminsHelper
           next
         end
         # .icon-star:before { content: '\e800'; } /* '' */
-        collections[cname] << line.gsub(/\.icon-|:.*|\n/,'') 
+        collections[cname] << line.gsub(/\.icon-|:.*|\n/,'')
       end
     end
     return Hash[collections.sort]
@@ -48,7 +48,7 @@ module AdminsHelper
       end
 
       value = a[1]
-      next if name =~ /^type|salt|hash|token|position|container_row_id|rows_flag|text_html_flag|icalendar/
+      next if name =~ /^type|scss|salt|hash|token|position|container_row_id|rows_flag|text_html_flag|icalendar/
       next if name =~ /include_admin_handle|include_update_time/ && controller_name != 'blog_posts'
       next if name =~ /include_caption|include_copyright|include_description/ && !(obj.has_attribute?('image_id') && obj.image)
       next if value == nil
@@ -59,7 +59,7 @@ module AdminsHelper
           value = link_to raw("#{attr_obj.full_name} <icon class=\"icon-right-hand\"></icon>"), "/admin/#{class_name}s/#{attr_obj.id}"
         elsif attr_obj && name == 'image_id' && attr_obj.image
           if attr_obj.image.attached?
-            value = link_to "/admin/#{class_name}s/#{attr_obj.id}" do 
+            value = link_to "/admin/#{class_name}s/#{attr_obj.id}" do
               image_tag attr_obj.image.variant(resize: "100x100")
             end
           else
@@ -76,7 +76,7 @@ module AdminsHelper
         elsif attr_obj && attr_obj.has_attribute?('link')
           value = attr_obj.link =~ /http\S*:\/\/\S+/ ? link_to(raw("#{attr_obj.link} <icon class=\"icon-right-hand\"></icon>"), attr_obj.link, target: 'external site') : 'n/a'
           if attr_obj && attr_obj.has_attribute?('body') && attr_obj.body =~ /\S+/
-            value += raw(attr_obj.body) 
+            value += raw(attr_obj.body)
           end
         end
       else
@@ -119,14 +119,14 @@ module AdminsHelper
   end
 
   def operations_menu(obj,parents = [])
-    include_macro_modal = false    
+    include_macro_modal = false
     include_icon_modal = false
     content_item_controllers = ['content_group_items','article_posts','blog_posts']
     macros = ''
     icons = ''
     html = '
 <div class="operations">
-  <h4>Operations</h4>    
+  <h4>Operations</h4>
   <ul class="nav flex-column">'
     if parents.any?
       parents.each_with_index do |parent,index|
@@ -138,7 +138,7 @@ module AdminsHelper
       end
     elsif controller_name =~ /image_optimizations|image_uploads/
        html += '<li class="nav-item">' + link_to(raw("<icon class=\"icon-list\"></icon> Images"), "/admin/images") + '</li>'
-    else  
+    else
       html += '<li class="nav-item">' + link_to(raw("<icon class=\"icon-list\"></icon> #{controller_name.gsub(/_/,' ').capitalize}"), "/admin/#{controller_name}") + '</li>'
     end
     if obj
@@ -150,15 +150,15 @@ module AdminsHelper
       obj_controller = obj_controller.sub(/ys$/,'ies') unless obj_controller == 'payment_gateways'
       obj_name = obj.has_attribute?('name') ? obj.name : obj_text
       obj_name = "Column #{obj.position}" if obj.class.name == 'RowColumn'
-      if action_name =~ /edit|new/ 
+      if action_name =~ /edit|new/
         if (obj.has_attribute?('content_type') && obj.content_type =~ /text|html/) ||
-          (obj.has_attribute?('item_type') && obj.item_type) 
+          (obj.has_attribute?('item_type') && obj.item_type)
           include_macro_modal = true
-          include_icon_modal = true  
+          include_icon_modal = true
         end
         if controller_name =~ /navigation/
           include_macro_modal = true
-          include_icon_modal = true  
+          include_icon_modal = true
         end
       end
       if action_name =~ /edit/ and not controller_name =~ /content_group_text_items/
@@ -166,16 +166,16 @@ module AdminsHelper
         <li class="nav-item">' + link_to(raw("<icon class=\"icon-zoom-in\"></icon> #{obj_name}"), "/admin/#{obj_controller}/#{obj.id}") + '</li>'
       # elsif action_name == 'show' && content_item_controllers.include?(controller_name)
       #     html += '
-      #   <li class="nav-item">' + link_to(raw("<i class=\"icon-plus\"></i> New #{obj_text}"), "/admin/#{obj_controller}/new?#{parents.first.class.name.underscore}_id=#{parents.first.id}") + '</li>'      
+      #   <li class="nav-item">' + link_to(raw("<i class=\"icon-plus\"></i> New #{obj_text}"), "/admin/#{obj_controller}/new?#{parents.first.class.name.underscore}_id=#{parents.first.id}") + '</li>'
       # elsif action_name == 'show' && controller_name == 'user_addresses'
       #    html += '
-      #   <li class="nav-item">' + link_to(raw("<i class=\"icon-plus\"></i> New #{obj_text}"), "/admin/#{obj_controller}/new?user_id=#{parents.first.id}") + '</li>'      
+      #   <li class="nav-item">' + link_to(raw("<i class=\"icon-plus\"></i> New #{obj_text}"), "/admin/#{obj_controller}/new?user_id=#{parents.first.id}") + '</li>'
       elsif action_name == 'show' && parents.any?
         html += '
-        <li class="nav-item">' + link_to(raw("<i class=\"icon-plus\"></i> New #{obj_text}"), "/admin/#{obj_controller}/new?#{parents.last.class.name.underscore}_id=#{parents.last.id}") + '</li>'      
+        <li class="nav-item">' + link_to(raw("<i class=\"icon-plus\"></i> New #{obj_text}"), "/admin/#{obj_controller}/new?#{parents.last.class.name.underscore}_id=#{parents.last.id}") + '</li>'
       elsif action_name == 'show'
         html += '
-        <li class="nav-item">' + link_to(raw("<i class=\"icon-plus\"></i> New #{obj_text}"), "/admin/#{obj_controller}/new") + '</li>'      
+        <li class="nav-item">' + link_to(raw("<i class=\"icon-plus\"></i> New #{obj_text}"), "/admin/#{obj_controller}/new") + '</li>'
       end
       html += macros_button if include_macro_modal
       html += icons_button if include_icon_modal
@@ -193,7 +193,7 @@ module AdminsHelper
   end
 
   def site_subs
-    ['sites','mail_servers','mail_templates','payment_gateways','payment_types','payment_methods']  
+    ['sites','mail_servers','mail_templates','payment_gateways','payment_types','payment_methods']
   end
 
   def media_subs
@@ -230,7 +230,7 @@ module AdminsHelper
 
   def subscription_subs
     ['subscriptions']
-  end  
+  end
 
   def design_subs
     ['themes','theme_colors','theme_icons','palettes','palette_colors','designers']

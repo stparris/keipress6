@@ -1,4 +1,4 @@
-$(document).ready(function(){
+$(document).on('turbolinks:load', function() {
 	if ($("#theme_colors").length) {
 	  function parseFormData($inputs) {
 	    let indexed_array = undefined;
@@ -40,7 +40,7 @@ $(document).ready(function(){
 		$('body').on('click', '.save_theme_color', function(e) {
 			var color_id = e.target.id.split('_')[3];
 			color_name = $("#theme_color_name_"+color_id).val();
-			color_value = $("#theme_color_value_"+color_id).val();			
+			color_value = $("#theme_color_value_"+color_id).val();
 			var auth_token = $("#auth_token_"+color_id).val();
       patch_data = '&theme_color[name]='+color_name+'&theme_color[value]='+color_value;
       $.ajax({
@@ -89,7 +89,7 @@ $(document).ready(function(){
       $("#theme_color_text_"+color_id).tooltip("hide");
     }, 2000);
   });
- 
+
 
 });
 

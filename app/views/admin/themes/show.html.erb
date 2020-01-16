@@ -2,7 +2,7 @@
 	<div class="col-md-12">
 		<div class="page-header">
 			<h1><%= @theme.name %> Theme</h1>
-		</div>	
+		</div>
 		<%= render partial: 'theme_nav' %>
 		<div id="theme_view">
 			<%= render partial: 'properties' %>
@@ -14,60 +14,12 @@
 			<%= render partial: 'classes' %>
 		</div>
 		<div id="work_view" style="display:none;">
-			<%= render partial: 'scss_workspace' %>
-		</div>		
+			<%-# render partial: 'scss_workspace' %>
+		</div>
 		<div id="prod_view" style="display:none;">
 			<%= render partial: 'scss_production' %>
-		</div>	
+		</div>
 	</div>
 </div>
 
 <%= render partial: 'scss_error_modal' %>
-
-<script>
-$(document).ready(function(){
-  if ($("#theme_view").length) {
-  	var view = 'theme';
-  			
-  	var workspace_codemirror =	CodeMirror.fromTextArea($("#theme_new_scss_workspace").get(0), {
-      lineNumbers: true,
-      mode: "sass",
-      tabSize: 2
-		});
-
-  	var production_codemirror =	CodeMirror.fromTextArea($("#theme_new_scss_production").get(0), {
-      lineNumbers: true,
-      mode: "sass",
-      tabSize: 2
-		});
-
-  	var theme_css =	CodeMirror.fromTextArea($("#theme_css").get(0), {
-      lineNumbers: true,
-      mode: "sass",
-      tabSize: 2
-		});
-
-  	$('.theme-css-link').on('click', function (e) {
-  		theme_css.refresh();
-  	});
-
-  	$('.theme-link').on('click', function (e) {
-  		new_view = e.target.id;
-  		$("#"+view+"_view").hide();
-  		$("#"+new_view+"_view").show();
-			$('#'+view).removeClass('active');
-    	$('#'+new_view).addClass('active');
-  		view = new_view;
-  		if (view == 'work') {
-  			workspace_codemirror.refresh();
-  		}
-  		if (view == 'prod') {
-  			production_codemirror.refresh();
-  		}
-  	});
-
-
-  }
-
- });
- </script>

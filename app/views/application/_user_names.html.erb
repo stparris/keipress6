@@ -1,0 +1,14 @@
+<div id="user_names" style="display:none;">
+	<%= fields_for User.new do |u| %>
+		<%= u.hidden_field :locale, value: I18n.locale %>
+		<%= u.hidden_field :site_id, value: @site.id %>
+		<div class="form-group">
+			<%= u.label :first_name %>
+			<%= u.text_field :first_name, :class => "form-control" %>
+		</div>
+		<div class="form-group">
+			<%= u.label :last_name %>
+			<%= u.text_field :last_name, :class => "form-control" %>
+		</div>
+	<% end %>
+</div>

@@ -1,0 +1,36 @@
+<div id="carousel-<%= carousel.id %>" class="carousel slide"<%= ' data-ride="carousel" ' if carousel.with_ride == true %>>
+<% if carousel.with_indicators == true %>
+  <ol class="carousel-indicators">
+  <% carousel.carousel_slides.each_with_index do |slide,index| %>
+    <li data-target="#carousel_<%= carousel.id %>" data-slide-to="<%= index %>"<%= 'class="active"' if index == 1 %>></li>
+  <% end %>  
+  </ol>
+<% end %>
+  <div class="carousel-inner">
+<% carousel.carousel_slides.each_with_index do |slide,index| %>
+    <div class="carousel-item<%= ' active' if index == 0 %>">
+      <%= src_sets(slide.image) %>
+    </div>
+<% end %>
+  </div>
+<% if carousel.with_controls == true %>
+  <a class="carousel-control-prev" href="#carouselIndicators<%= carousel.id %>" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselIndicators<%= carousel.id %>" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+<% end %>
+</div>
+
+<% if carousel.with_captions == true %>
+<carousel id="" name="" value="" />
+<% end %>
+<% if carousel.with_pause == true %>
+<carousel id="" name="" value="" />
+<% end %>
+<script>
+$('.carousel').carousel();
+</script>

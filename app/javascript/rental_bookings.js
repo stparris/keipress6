@@ -1,4 +1,4 @@
-$(document).ready(function(){
+$(document).on('turbolinks:load', function() {
 	if ($("#booking_form").length) {
   	let minStart = $("#minStart").attr('value');
   	let minDays = $("#minDays").attr('value');
@@ -22,7 +22,7 @@ $(document).ready(function(){
   				datepicker.setDate();
   				$("#select_guests").hide();
   			} else {
-          // May not be necessary. 
+          // May not be necessary.
           // let url = "/calendars/"+calendarId+"?start_date="+dates[0]+"&end_date="+dates[1];
           // $.get(url, function( data ) {
           //   if (data.conflict === true) {
@@ -58,7 +58,7 @@ $(document).ready(function(){
       let end_date = $("#rental_booking_end_date").val();
       let url = "/rental_bookings/new?rental_booking[rental_id]="+rental_id+"&rental_booking[guests]="+guests+"&rental_booking[start_date]="+start_date+"&rental_booking[end_date]="+end_date;
       $.get(url, function( data ) {
-        if (data.success === 'true') { 
+        if (data.success === 'true') {
           $("#booking_nights").html(data.nights);
           if (data.is_regular_rate == true) {
             $("#discount_text").hide();
@@ -88,7 +88,7 @@ $(document).ready(function(){
           $("#booking_error").show();
           console.log('succes: '+data.success+' message: '+data.message);
         }
-      }, "json" );     
+      }, "json" );
     }
 
     function set_flatpicker() {
@@ -105,7 +105,7 @@ $(document).ready(function(){
   				let dates = dateStr.split(' to ');
   				$("#rental_booking_start_date").val(dates[0]);
   				$("#rental_booking_end_date").val(dates[1]);
-  				check_dates(dates);	 			
+  				check_dates(dates);
       	}
   		});
       $("#checkingCalendar").hide();
@@ -149,7 +149,7 @@ $(document).ready(function(){
       $("#submit_booking_btn").attr("disabled",true);
       $("#payment_card_errors").hide();
       $("#submit_booking_btn").parents('form').submit();
-    });    
+    });
 
     $(document).on("click",'.payment-btn',function() {
       let payment_method_id = this.id.split('_')[2];
@@ -184,11 +184,11 @@ $(document).ready(function(){
           $("#"+this.id).collapse();
           $("#payment_method_"+this.id+' icon').removeClass('icon-dot-circled');
           $("#payment_method_"+this.id+' icon').addClass('icon-circle-empty');
-        }); 
+        });
         $(".payment-btn").each(function() {
           $("#"+this.id+' icon').removeClass('icon-dot-circled');
           $("#"+this.id+' icon').addClass('icon-circle-empty');
-        }); 
+        });
         $("#collapse_payment_method_"+payment_method_id).addClass('show');
         $("#submit_booking_btn").attr("disabled",false);
         $('#payment_method_'+payment_method_id+' icon').removeClass('icon-circle-empty');

@@ -33,7 +33,7 @@
 
 <% Palette.all.each do |palette| %>
 	<% i = 0 %>
-      	
+
 				<table class="table table-striped table-bordered">
 					<thead>
 						<tr>
@@ -44,7 +44,7 @@
 		        <tr>
 		          <td>
   <% palette.palette_colors.each do |color| %>
-  							<%= form_for([:admin, ThemeColor.new],:html => {remote: true, :role => 'form', :class => "formFor"}) do |f| %>
+  							<%= form_for([:admin, ThemeColor.new],:html => {id: "tc-#{color.id}-#{i}", remote: true, :role => 'form', :class => "formFor"}) do |f| %>
 									<%= f.hidden_field :theme_id, value: @theme.id %>
 									<%= f.hidden_field :palette_color_id, value: color.id %>
 									<%= f.hidden_field :name, value: color.name %>
@@ -57,7 +57,7 @@
 								<% end %>
 		  					</div>
   	<% i += 1 %>
-  <% end %>       	
+  <% end %>
     						<div style="clear:left;"></div>
     					</td>
 		        </tr>

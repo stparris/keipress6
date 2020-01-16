@@ -1,0 +1,31 @@
+<!-- <div id="email_display" style="display: none;">
+	<label>Email</label> <span id="email_value"></span>	<a id="edit_email_btn" name="edit_email"><i class="icon icon-pencil"></i></a></label>
+ -->
+<div id="email_display" style="display: none;">
+	<div class="form-group">
+		<label>Email</label>
+		<div class="input-group mb-3">
+		  <input id="email_value" type="text" class="form-control" disabled>
+		  <div class="input-group-append">
+		    <span class="input-group-text" id="edit_email_btn"><i class="icon icon-pencil"></i></span>
+		  </div>
+		</div>
+	</div>
+</div>
+
+</div>
+<div id="email_form" style="display: none;margin-bottom: 10px;">
+	<%= fields_for User.new do |u| %>	
+		<%= u.hidden_field :email %>
+		<div class="form-group">
+			<%= t('bookings.email') %>&nbsp;&nbsp;&nbsp;<span id="email_invalid" style="display:none;color: red;">
+				<i class="icon icon-alert"></i> <%= t('bookings.email_invalid') %></span>
+			<%= text_field_tag :email, '', :class => "form-control" %>
+		</div>
+		<div id="email_confirmation_div" class="form-group">
+			<label><%= t('bookings.retype_email') %></label>
+			<%= text_field_tag :email_confirmation, '', :class => "form-control" %>
+		</div>
+	<% end %>
+	<button type="button" id="confirm_email_btn" class="btn btn-secondary btn-bookings"><%= t('button.confirm_email') %> <i class="icon icon-right-big"></i></button>
+</div>

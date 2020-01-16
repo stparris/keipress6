@@ -1,0 +1,17 @@
+<ul class="list-group <%= list_group.css_classes %>">
+<% list_group.list_group_items.order("position asc").each do |item| %>
+	<li class="<%= item.css_classes %>">
+	<% if item.item_type == 'plain_text' %>
+		<%= raw(item.label) %>
+		<%= raw(item.link_text.body) if item.link_text.body =~ /\S+/ %>
+	<% elsif item.item_type == 'external_link' %>
+		<%= link_to raw(item.label), item.link_text.link, target: item.link_text.new_window ? "_blank" : false %>
+		<%= raw(item.link_text.body) if item.link_text.body =~ /\S+/ %>
+	<% elsif item.item_type == 'page_link' %>
+		<%= link_to raw(item.label), "/#{item.page.nice_url}" %>
+	<% elsif item.item_type == 'category_link' %>
+		<%= link_to raw(item.label), "/#{item.category.nice_url}" %>
+	<% end %>
+	</li>
+<% end %> 
+</ul>

@@ -1,6 +1,8 @@
-$(document).ready(function(){
+
+
+$(document).on('turbolinks:load', function() {
   $(".icon-tooltip").tooltip({
-    trigger :'manual' 
+    trigger :'manual'
   });
   $(".icon-zoom-in").css("cursor","pointer");
   $(".icon-zoom-out").css("cursor","pointer");
@@ -10,7 +12,7 @@ $(document).ready(function(){
     $("#collection_"+collection_id).show();
     $("#zoomin_"+collection_id).hide();
     $("#zoomout_"+collection_id).show();
-  });  
+  });
 
   $(".icon-zoom-out").on('click', function () {
     var button = this.id;
@@ -18,7 +20,7 @@ $(document).ready(function(){
     $("#collection_"+collection_id).hide();
     $("#zoomin_"+collection_id).show();
     $("#zoomout_"+collection_id).hide();
-  });  
+  });
 
   $('.icon-btn').on('click', function () {
     var button = this.id;
@@ -33,5 +35,7 @@ $(document).ready(function(){
       $("#icon_value_"+icon_id).tooltip("hide");
     }, 2000);
   });
+
+
 
 });

@@ -1,0 +1,29 @@
+	<payment_type id="payment_method_type_<%= payment_method.id %>" value="<%= payment_method.payment_type.payment_type %>"></payment_type>
+  <div class="card card-payment-method">
+    <div class="card-header" id="headingOne">
+      <h5 class="mb-0">
+        <button type="button" id="payment_method_<%= payment_method.id %>" class="btn btn-link payment-btn" data-toggle="collapse" data-target="#collapse_<%= payment_method.id %>" aria-expanded="true" aria-controls="collapse_<%= payment_method.id %>">
+<% if payment_method.payment_type.payment_type == 'card_deposit' %>         	
+        <icon class="icon-circle-empty"></icon>   <%= payment_method.name %> <%= raw(@currency_label) %><span class="deposit-amount"></span>
+<% elsif payment_method.payment_type.payment_type =~ /card|invoice|check/ %>
+        <icon class="icon-circle-empty"></icon>   <%= payment_method.name %> <%= raw(@currency_label) %><span class="full-amount"></span> 
+<% else %>
+        <icon class="icon-circle-empty"></icon>   <%= payment_method.name %> 
+<% end %>
+        </button>
+      </h5>
+    </div>
+
+    <div id="collapse_payment_method_<%= payment_method.id %>" class="collapse<%= ' show' if payment_method_count == 1 %> paymethod-method-collapse" aria-labelledby="heading_<%= payment_method.id %>" data-parent="#accordion">
+      <div class="card-body">
+      	<%= raw(payment_method.instructions) %>
+<% if payment_method.payment_type.payment_type == 'invoice' %>
+	<% if payment_method.payment_type.require_billing_address %>	
+				<%= fields_for UserBillingAddress.new do |b| %>
+						<%= render partial: 'application/addresses', locals: {a: b}	%>
+				<% end %>
+	<% end %>
+<% end %>
+    </div>
+  </div>
+</div>

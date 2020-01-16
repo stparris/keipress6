@@ -1,0 +1,67 @@
+<div class="modal fade" id="cardErrorModal" tabindex="-1" role="dialog" aria-labelledby="cardErrorModal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"><%= t('payment_card.errors_title') %></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p><%= t('payment_card.errors_message') %></p>
+        <p><a id="payment_card_errors_link" style="color: #e6e6e6;font-size: 10px;">Error details</a></p>
+        <p id="payment_card_errors" style="display:none;"></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="payment_card_top" class="form-group">
+	<label><%= t('payment_card.brand') %>
+    &nbsp;<icon class="icon-cc-visa"></icon> 
+    &nbsp;<icon class="icon-cc-mastercard"></icon> 
+    &nbsp;<icon class="icon-cc-discover"></icon> 
+    <span id="payment_card_brand_error" class="error-label" style="display: none;color: red;"><br/><%= t('payment_card.brand_error') %></span>
+  </label><br />
+	<%= card.select :brand, {}, {prompt: 'Please select'}, {class: "form-control"} %>
+</div>
+<div class="form-group">
+	<label><%= t('payment_card.first_name') %>
+   <span id="payment_card_first_name_error" class="error-label" style="display: none;color: red;"><br/><%= t('payment_card.first_name_error') %></span>
+  </label><br />
+	<%= card.text_field :first_name, {class: "form-control"} %>
+</div>
+<div class="form-group">
+	<label><%= t('payment_card.last_name') %>
+   <span id="payment_card_last_name_error" class="error-label" style="display: none;color: red;"><br/><%= t('payment_card.last_name_error') %></span>
+  </label><br />
+	<%= card.text_field :last_name, {class: "form-control"} %>
+</div>
+<div class="form-group">
+	<label><%= t('payment_card.card_number') %>
+    <span id="payment_card_card_number_error" class="error-label" style="display: none;color: red;"><br/><%= t('payment_card.card_number_error') %></span>
+  </label><br />
+	<%= card.text_field :card_number, {class: "form-control"} %>
+</div>
+<div class="form-group">
+	<label><%= t('payment_card.expiration_month') %>   
+    <span id="payment_card_expiration_month_error" class="error-label" style="display: none;color: red;"><br/><%= t('payment_card.expiration_month_error') %></span>
+  </label><br />
+	<%= card.select :expiration_month, ['1','2','3','4','5','6','7','8','9','10','11','12'],{}, class: "form-control"%>
+</div>
+<div class="form-group">
+	<label><%= t('payment_card.expiration_year') %>
+   <span id="payment_card_expiration_year_error" class="error-label" style="display: none;color: red;"><br/><%= t('payment_card.expiration_year_error') %></span>
+  </label><br />
+	<%= card.select :expiration_year, options = (Time.zone.now.year)..(Time.now.year + 10), {}, class: "form-control" %>
+</div>
+<div class="form-group">
+	<label><%= t('payment_card.card_verification') %>
+   <span id="payment_card_card_verification_error" class="error-label" style="display: none;color: red;"><br/><%= t('payment_card.card_verification_error') %></span>
+  </label><br />
+	<%= card.text_field :card_verification, {class: "form-control"} %>
+</div>
+
