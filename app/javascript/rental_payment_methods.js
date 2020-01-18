@@ -1,4 +1,4 @@
-$(document).ready(function(){
+$(document).on('turbolinks:load', function() {
   var post_url;
   if ($('#rental_payment_method').length) {
     post_url = $('#rental_payment_method').data('sort-items-url');
@@ -12,4 +12,3 @@ $(document).ready(function(){
   }
 });
 
- 

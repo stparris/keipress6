@@ -63,8 +63,6 @@ $(document).on('turbolinks:load', function() {
 
     $('.theme-link').on('click', function (e) {
       let new_view = e.target.id;
-      console.log(new_view);
-      console.log(view);
       $("#"+view+"_view").hide();
       $("#"+new_view+"_view").show();
       $('#'+view).removeClass('active');
@@ -76,7 +74,6 @@ $(document).on('turbolinks:load', function() {
       if (view == 'prod') {
         production_codemirror.refresh();
       }
-      console.log(view);
     });
   }
 

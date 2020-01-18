@@ -1,4 +1,4 @@
-$(document).ready(function(){
+$(document).on('turbolinks:load', function() {
 	if ($("#payment_card_brand").length) {
 		$(document).on("click","#payment_card_errors_link",function() {
 			$("#payment_card_errors").show();

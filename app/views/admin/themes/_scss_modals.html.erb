@@ -1,0 +1,37 @@
+<div id="scss_error" class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">SCSS Syntax Error</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div id="scss_syntax_error" class="modal-body">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="scss_success" class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Success!</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div id="scss_syntax_error" class="modal-body">
+        <h4><%= @theme.name %> SCSS complied to CSS</h4>
+        <h5>Do a hard refresh to view changes in your browser</h5>
+        <p>Mac: shift + <icon class="icon-cw"></icon><br>Windows: Ctrl + F5</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

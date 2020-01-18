@@ -1,4 +1,4 @@
-$(document).ready(function(){
+$(document).on('turbolinks:load', function() {
 
 	$('body').on('click', '#import_btn', function(e) {
 	  $('#import_btn').css("pointerEvents","none");
@@ -7,4 +7,4 @@ $(document).ready(function(){
 		$("#calendar").hide();
 	});
 
-});	
+});

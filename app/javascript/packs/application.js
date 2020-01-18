@@ -14,6 +14,8 @@ require('jquery-ui/ui/widgets/sortable');
 import $ from 'jquery';
 global.$ = jQuery;
 
+import 'expose-loader?$!jquery';
+import 'expose-loader?jQuery!jquery';
 
 
 // Uncomment to copy all static images under ../images to the output folder and reference

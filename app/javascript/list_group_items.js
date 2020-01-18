@@ -1,4 +1,4 @@
-$(document).ready(function(){
+$(document).on('turbolinks:load', function() {
   var post_url;
   if ($('#list_group_items').length) {
     post_url = $('#list_group_items').data('sort-items-url');

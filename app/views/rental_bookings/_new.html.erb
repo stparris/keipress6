@@ -8,7 +8,7 @@
 	currency_icon['AUD'] = 'dollar'
 	currency_icon['GBP'] = 'pound'
 	currency_icon['JPY'] = 'yen'
-	@currency_label = ""	
+	@currency_label = ""
 	if currency_icon[currency]
 		@currency_label = "<icon class=\"icon icon-#{currency_icon[currency]}\"></icon>"
 	else
@@ -24,7 +24,7 @@
 <% if @rental_booking.start_date && @rental_booking.end_date %>
 <defaultDate name="min-days" id="defaultDate" value="['<%= start_str %>>,'<%= end_str %>'] "></defaultDate>
 <% end %>
-<calendarStatus name="calendarStatus" id="calendarStatus" value="<%= @rental_booking.rental.calendar.updated_at > 30.minutes.ago ? 'stale' : 'good' %>"></calendarStatus>	
+<calendarStatus name="calendarStatus" id="calendarStatus" value="<%= @rental_booking.rental.calendar.updated_at > 30.minutes.ago ? 'stale' : 'good' %>"></calendarStatus>
 <calendarId name="calendarId" id="calendarId" value="<%= @rental_booking.rental.calendar.id %>"></calendarId>
 <session_expitation name="session_expitation" id="session_expitation" value="<%= 30.minutes.from_now %>"></session_expitation>
 
@@ -38,7 +38,8 @@
 <%= form_for(@rental_booking,:html => {:role => 'form', remote: true, :class => "formFor"}) do |f| %>
 	<%= f.hidden_field :site_id, value: @site.id %>
 	<%= f.hidden_field :rental_id %>
-	<%= f.hidden_field :payment_method_id %> 
+	<%= f.hidden_field :payment_method_id %>
+	<%= hidden_field_tag :authenticity_token, form_authenticity_token %>
 	<div class="form-group">
 		<label><%= t('bookings.date_range') %></label>
 		<%= date_field_tag :date_range %>
@@ -84,25 +85,25 @@
 		</table>
 		<%= raw(booking_instruction.booking_instructions) %>
 
-<% 
+<%
 show_forms = {}
 payment_method_brands = []
-@rental_booking.rental.payment_methods.where(locale: I18n.locale).each do |payment_method| 
+@rental_booking.rental.payment_methods.where(locale: I18n.locale).each do |payment_method|
 	show_forms['email'] = 1 if payment_method.payment_type.show_email || payment_method.payment_type.require_email
 	show_forms['user'] = 1 if payment_method.payment_type.show_user_names || payment_method.payment_type.require_user_names
-	if payment_method.payment_type.show_primary_address || 
-			payment_method.payment_type.require_billing_address || 
+	if payment_method.payment_type.show_primary_address ||
+			payment_method.payment_type.require_billing_address ||
 			payment_method.payment_type.require_shipping_address
-		show_forms['primary'] = 1 
+		show_forms['primary'] = 1
 	end
 	if payment_method.payment_type.payment_type =~ /card/
-		show_forms['card'] = 1 
+		show_forms['card'] = 1
 		brands = {}
 		brands['id'] = payment_method.id
 		brands['options'] = ""
-		payment_method.payment_type.payment_gateway.brands.each do |key,val| 
-			brands['options'] += "#{val}-#{key}," 
-		end 
+		payment_method.payment_type.payment_gateway.brands.each do |key,val|
+			brands['options'] += "#{val}-#{key},"
+		end
 		brands['options'] = brands['options'].chop
 		payment_method_brands << brands
 	end
@@ -119,12 +120,12 @@ end
 <% if show_forms['email'] %>
 			<%= render partial: 'application/email_form' %>
 <% end %>
-	
-<% if show_forms['user'] %>	
+
+<% if show_forms['user'] %>
 		<%= render partial: 'application/user_names' %>
 <% end %>
 
-<% if show_forms['primary'] %>	
+<% if show_forms['primary'] %>
 		<div id="primary_address" style="display:none;">
 			<%= fields_for UserAddress.new do |a| %>
 				<%= render partial: 'application/addresses', locals: {a: a}	%>
@@ -145,7 +146,7 @@ payment_methods.each_with_index do |payment_method,position| %>
 			<%= fields_for PaymentCard.new do |card| %>
 				<%= render partial: 'application/card_form', locals: {card: card} %>
 			<% end %>
-	<% if show_forms['card_address'] %>	
+	<% if show_forms['card_address'] %>
 			<%= fields_for UserCardAddress.new do |a| %>
 				<%= render partial: 'application/addresses', locals: {a: a}	%>
 			<% end %>

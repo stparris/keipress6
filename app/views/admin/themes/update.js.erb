@@ -3,7 +3,9 @@ $("#scss_syntax_error").html("<%= @theme.syntax_errors %>");
 $("#scss_error").modal('show');
 $('.edit-scss').animate({borderColor:'red'}, 400);
 <% else %>
+$("#scss_success").modal('show');
 $('.edit-scss').animate({borderColor:'green'}, 400)
   .delay(400)
   .animate({borderColor:'#e6e6e6'}, 1000);
 <% end %>
+

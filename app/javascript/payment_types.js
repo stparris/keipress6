@@ -1,4 +1,4 @@
-$(document).ready(function(){
+$(document).on('turbolinks:load', function() {
 	function set_gateway(payment_type) {
 		if (payment_type === 'card_paid' || payment_type === 'card_deposit') {
 			$("#payment_gateway").show();

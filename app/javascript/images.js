@@ -1,4 +1,4 @@
-$(document).ready(function(){
+$(document).on('turbolinks:load', function() {
 
 	$('.image-select').on('click', function (e) {
 		var button_id = e.target.id;

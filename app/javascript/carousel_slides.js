@@ -1,4 +1,4 @@
-$(document).ready(function(){
+$(document).on('turbolinks:load', function() {
   var post_url;
   if ($('#carousel_slides').length) {
     post_url = $('#carousel_slides').data('sort-items-url');
@@ -10,7 +10,7 @@ $(document).ready(function(){
       }
     });
   }
-  
+
   $('.carousel').carousel({
     interval: 2000
   });

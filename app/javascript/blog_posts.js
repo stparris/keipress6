@@ -1,4 +1,4 @@
-$(document).ready(function(){
+$(document).on('turbolinks:load', function() {
   var post_url;
   if ($('#blog_posts').length) {
     post_url = $('#blog_posts').data('sort-items-url');

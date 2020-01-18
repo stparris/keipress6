@@ -1,4 +1,4 @@
-$(document).ready(function(){
+$(document).on('turbolinks:load', function() {
   var post_url;
   if ($('#row_columns').length) {
     post_url = $('#row_columns').data('sort-items-url');
@@ -9,5 +9,5 @@ $(document).ready(function(){
         return $.post(post_url, $(this).sortable('serialize'));
       }
     });
-  }	
+  }
 });

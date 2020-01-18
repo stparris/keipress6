@@ -68,7 +68,7 @@ logger.info   "========\n#{link_text_params}"
       end
       if params[:dropdown].present?
         @navigation_item.dropdown.update!(dropdown_params)
-      end      
+      end
       if @navigation_item.update(navigation_item_params)
         flash[:success] = 'Navigation item was successfully updated'
         if @page
@@ -87,6 +87,7 @@ logger.info   "========\n#{link_text_params}"
   # DELETE /navigation_items/1
   # DELETE /navigation_items/1.json
   def destroy
+    @navigation = @navigation_item.navigation
     @navigation_item.destroy
     respond_to do |format|
       flash[:success] = 'Navigation item was successfully deleted'
@@ -104,7 +105,7 @@ logger.info   "========\n#{link_text_params}"
     def set_new
       @navigation = Navigation.find(params[:navigation_id])
       @navigation_item = NavigationItem.new
-      @navigation_item.navigation = @navigation       
+      @navigation_item.navigation = @navigation
       @navigation_item.item_type = params[:item_type].present? ? params[:item_type] : nil
       @link_text = LinkText.new(site_id: @site.id,link: 'https://',http_https: 'https') if @navigation_item.item_type && @navigation_item.item_type =~ /external/
       @dropdown = Dropdown.new(site_id: @site.id) if @navigation_item.item_type && @navigation_item.item_type =~ /dropdown/

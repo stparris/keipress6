@@ -1,4 +1,4 @@
-$(document).ready(function(){
+$(document).on('turbolinks:load', function() {
 	jQuery(function() {
 	  var post_url;
 	  if ($('#navigation_items')) {

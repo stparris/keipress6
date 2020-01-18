@@ -1,4 +1,4 @@
-$(document).ready(function(){
+$(document).on('turbolinks:load', function() {
 	var set_navigation_select, navigation_type;
 	set_navigation_select = function(navigation_type) {
 		if (navigation_type === 'list_group') {
@@ -9,15 +9,15 @@ $(document).ready(function(){
 			$("#navbar_form").hide();
 			$("#inputGroup-sizing-default").html("list-group");
 			$("#css_classes").show();
-		} else if (navigation_type === 'nav') {	
+		} else if (navigation_type === 'nav') {
 			$("#list_group_help").hide();
 			$("#navs_help").show();
 			$("#navbar_help").hide();
 			$("#navbar_brand").hide();
 			$("#navbar_form").hide();
 			$("#inputGroup-sizing-default").html("nav");
-			$("#css_classes").show();		
-		} else if (navigation_type === 'navbar') {	
+			$("#css_classes").show();
+		} else if (navigation_type === 'navbar') {
 			$("#list_group_help").hide();
 			$("#navs_help").hide();
 			$("#navbar_help").show();
@@ -30,14 +30,14 @@ $(document).ready(function(){
 		      mode: "htmlmixed",
 		      tabSize: 2
 		    });
-		  });	
+		  });
 			$("#css_classes").show();
 		} else {
 			$("#list_group_help").hide();
 			$("#navs_help").hide();
 			$("#navbar_help").hide();
 			$("#navbar_brand").hide();
-			$("#navbar_form").hide();	
+			$("#navbar_form").hide();
 			$("#css_classes").hide();
 		}
 	}

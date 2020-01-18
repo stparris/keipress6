@@ -1,4 +1,4 @@
-$(document).ready(function(){
+$(document).on('turbolinks:load', function() {
 
 	var isValidEmailAddress;
 	isValidEmailAddress = function(emailAddress) {
@@ -50,7 +50,7 @@ $(document).ready(function(){
           $("#error_div").show();
         }
       });
-      $("#content_div").hide();  
+      $("#content_div").hide();
     });
 	}
 });

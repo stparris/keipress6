@@ -1,4 +1,4 @@
-$(document).ready(function(){
+$(document).on('turbolinks:load', function() {
   if ($("#image_crop").length) {
     var image_id = $('#image_id').attr('value')
     var $image = $('#image');
@@ -9,14 +9,14 @@ $(document).ready(function(){
         toggleDragModeOnDblclick: false
     };
 
-    $image.cropper(options); 
+    $image.cropper(options);
     $("#aspect_ratio").val(NaN);
 
     $("#aspect_ratio").change(function(e) {
       options.aspectRatio = Number($("#aspect_ratio option:selected").val());
       // $image.cropper('destroy').cropper(options);
       $image.cropper('destroy').cropper(options);
-    });  
+    });
 
     $("#rotate_left").click(function(e) {
       $image.cropper('rotate', -0.5);

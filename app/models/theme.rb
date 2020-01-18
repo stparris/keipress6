@@ -9,13 +9,13 @@ class Theme < ApplicationRecord
 	validates :name, uniqueness: { scope: :site_id, message: "Name is already in use for this site" }
 	validate :new_scss_workspace, on: :update, if: :new_scss_workspace_changed?
 	validate :new_scss_production, on: :update, if: :new_scss_production_changed?
-	
+
 	before_create :new_scss_production
 
 	def default_scss
 		scss = "/**
- Theme 
-Created at #{Time.now}	
+ Theme
+Created at #{Time.now}
 */
 .#{self.css_class} {
 
@@ -26,24 +26,24 @@ Created at #{Time.now}
 	def set_scss
 		self.new_scss_production = default_scss
 		self.new_scss_workspace = default_scss
-	end 
+	end
 
 # Production scss updated
 	def new_scss_production
 		@new_scss_production
-	end	
+	end
 
 	def new_scss_production_changed?
 		!@new_scss_production.blank?
 	end
 
 	def new_scss_production=(scss)
-		css = Theme.generate_css(scss)
-		if css =~ /^Syntax Error/
-			self.syntax_errors = css
-		else
+		begin
+			css = Theme.generate_css(scss)
 			self.scss_production = scss
 			File.open("#{asset_path}/#{asset_name}_production.css", 'w') { |f| f.write(css) }
+		rescue Exception => e
+			self.syntax_errors = "Syntax #{e.message.split(/\n/).join(' ')}"
 		end
 	end
 
@@ -58,21 +58,20 @@ Created at #{Time.now}
 	end
 
 	def new_scss_workspace=(scss)
-		css = Theme.generate_css(scss)
-		if css =~ /^Syntax Error/
-			self.syntax_errors = css
-		else
-			@is_valid_syntax = true
-			self.scss_workspace = scss
-			File.open("#{asset_path}/#{asset_name}_workspace.css", 'w') { |f| f.write(css) }
+		begin
+			css = Theme.generate_css(scss)
+			self.scss_production = scss
+			File.open("#{asset_path}/#{asset_name}_production.css", 'w') { |f| f.write(css) }
+		rescue Exception => e
+			self.syntax_errors = "Syntax #{e.message.split(/\n/).join(' ')}"
 		end
-	end	
+	end
 
 	def asset_path
 		path = Rails.root.join('public', 'assets')
 		unless Dir.exists?(path)
       Dir.mkdir(path,0700)
-    end  
+    end
     return path
 	end
 
@@ -87,17 +86,12 @@ Created at #{Time.now}
 	private
 
 		def self.generate_css(scss)
-			css = ""
-			begin
-				css =	Sass::Engine.new(scss, {
-						    syntax: :scss,
-						    cache: false,
-						    read_cache: false,
-						    style: :compressed 
-							  }).render
-			rescue Exception => e
-				css = "Syntax Error: #{e.message} #{e.backtrace[0].sub(/\(sass\)/,'Line')}"
-			end
+			SassC::Engine.new(scss, {
+					    syntax: :scss,
+					    cache: false,
+					    read_cache: false,
+					    style: :compressed
+						  }).render
 		end
 
 end

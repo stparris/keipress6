@@ -1,4 +1,4 @@
-$(document).ready(function(){
+$(document).on('turbolinks:load', function() {
 
 	var isValidEmailAddress;
 	isValidEmailAddress = function(emailAddress) {
@@ -33,9 +33,9 @@ $(document).ready(function(){
 							}
 							if ($("#user_first_name").length) {
 								$("#user_first_name").val(data.first_name);
-							} 
+							}
 							if ($("#user_middle_name").length) {
-								$("#user_middle_name").val(data.middle_name); 
+								$("#user_middle_name").val(data.middle_name);
 							}
 							if ($("#user_last_name").length) {
 								$("#user_last_name").val(data.last_name);
@@ -109,18 +109,18 @@ $(document).ready(function(){
     					$("#user_email").val('');
     					console.log(data.message);
     				}
-    			}, "json" );	
+    			}, "json" );
 				} else {
 					console.log(email+' is invalid');
 					$("#email").addClass('input-error');
 					$("#email_confirmation").addClass('input-error');
 					$("#email_invalid").show();
-				}   
+				}
 			} else {
 				console.log(email+' is invalid');
 				$("#email").addClass('input-error');
 				$("#email_confirmation").addClass('input-error');
-				$("#email_invalid").show();			
+				$("#email_invalid").show();
 			}
 	  });
 	}

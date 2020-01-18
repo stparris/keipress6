@@ -25,21 +25,21 @@ class Admin::ThemesController < AdminController
 
   def edit_scss_production
   end
-  
+
   def edit_scss_workspace
-  end   
-  
+  end
+
   # POST /themes
   # POST /themes.json
   def create
     @theme = Theme.new(theme_params)
     respond_to do |format|
       if @theme.save
-        flash[:success] = 'Theme was successfully created.' 
+        flash[:success] = 'Theme was successfully created.'
         format.html { redirect_to admin_theme_url(@theme) }
         format.json { render :show, status: :created, location: @theme }
       else
-        flash[:danger] = 'Theme was successfully created.' 
+        flash[:danger] = 'Theme was successfully created.'
         format.html { render :new }
         format.json { render json: @theme.errors, status: :unprocessable_entity }
       end
@@ -53,12 +53,12 @@ class Admin::ThemesController < AdminController
     @message = nil
     respond_to do |format|
       now = Time.now.strftime("%Y-%m-%d %H:%M")
-      format.js do 
+      format.js do
         @theme.update(theme_params)
       end
       format.html do
         if @theme.update!(theme_params)
-          flash[:success] = 'Theme was successfully updated.' 
+          flash[:success] = 'Theme was successfully updated.'
           redirect_to admin_theme_url(@theme)
         else
           format.html { render :edit }
@@ -72,7 +72,7 @@ class Admin::ThemesController < AdminController
   def destroy
     @theme.destroy
     respond_to do |format|
-      flash[:success] = 'Theme was successfully deleted.' 
+      flash[:success] = 'Theme was successfully deleted.'
       format.html { redirect_to themes_url }
       format.json { head :no_content }
     end
