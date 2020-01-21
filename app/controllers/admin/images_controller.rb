@@ -7,7 +7,7 @@ class Admin::ImagesController < AdminController
   # GET /images
   # GET /images.json
   def index
-        @images = Image.all
+    @images = Image.all
   end
 
   # GET /images/1
@@ -67,7 +67,7 @@ class Admin::ImagesController < AdminController
           format.html { render :edit }
           format.json { render json: @image.errors, status: :unprocessable_entity }
         end
-      rescue Exception => e 
+      rescue Exception => e
         flash[:danger] = "Oops! Something went wrong: #{e.message}"
         format.html { render :edit }
       end
@@ -79,12 +79,12 @@ class Admin::ImagesController < AdminController
   def destroy
     respond_to do |format|
       begin
-        if @image.destroy      
+        if @image.destroy
           flash[:success] = 'Image was successfully removed.'
           format.html { redirect_to admin_images_url }
           format.json { head :no_content }
         end
-      rescue Exception => e 
+      rescue Exception => e
         flash[:danger] = "Oops! Something went wrong: #{e.message}"
         format.html { render :new }
       end
@@ -99,7 +99,7 @@ class Admin::ImagesController < AdminController
     end
 
     def set_category
-      @category = params[:category_id].present? ? Category.find(params[:category_id]) : nil 
+      @category = params[:category_id].present? ? Category.find(params[:category_id]) : nil
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

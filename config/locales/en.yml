@@ -27,7 +27,86 @@
 #   'true': 'foo'
 #
 # To learn more, please read the Rails Internationalization guide
-# available at https://guides.rubyonrails.org/i18n.html.
+# available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  activerecord:
+    attributes:
+      user:
+        first_name: 'First name'
+        last_name: 'Last name'
+      rental_booking:
+        date_range: "Please select your check in and check out dates"
+        guests: "Please select the number of guests"
+        details: "Requests or additional information"       
+      user_address:
+        post_code: "Post Code / Zipcode"
+        phone: "Phone number: Please include your country code"
+        address1: "Address"
+        address2: "Address 2"
+        city: "City"
+        state: "State/Province"
+      user_billing_address:
+        name: 'Your billing address'
+        post_code: "Post Code / Zipcode"
+        phone: "Phone number: Please include your country code"
+        address1: "Address"
+        address2: "Address 2"
+        city: "City"
+        state: "State/Province"
+      user_card_address:
+        name: 'Your card address'
+        post_code: "Post Code / Zipcode"
+        phone: "Phone number: Please include your country code"
+        address1: "Address"
+        address2: "Address 2"
+        city: "City"
+        state: "State/Province"
+      user_shipping_address:
+        name: 'Your shipping address'
+        post_code: "Post Code / Zipcode"
+        phone: "Phone number: Please include your country code"
+        address1: "Address"
+        address2: "Address 2"
+        city: "City"
+        state: "State/Province"
+  buttons:
+    continue: 'Continue'
+    submit: 'Submit'
+    cancel: 'Cancel'
+    confirm_email: 'Confirm email'
+  bookings: 
+    nights: 'Number of nights'
+    base_rate: 'Base rate'
+    extra_rate: 'Extra person rate'
+    amount: 'Amount'
+    tax: 'Tax'
+    total: 'Total'
+    email_invalid: 'Email is invalid or does not match'
+    retype_email: 'Retype your email'
+    details: 'Booking Details'
+    check_in: 'Check in'
+    check_out: 'Check out'
+    calendar_loading: 'Checking available dates'
+  payment_card:
+    brand: 'Card Type'
+    brand_error: 'Please select a card type' 
+    first_name: 'First name on card'
+    first_name_error: "First name must be valid" 
+    last_name: 'Last name on card'
+    last_name_error: "Last name must be valid"
+    card_number: 'Card Number'
+    card_number_error: 'Card Number must be valid'
+    expiration_month: 'Expiration month'
+    expiration_month_error: 'Must be a valid month'
+    expiration_year: 'Expiration year'
+    expiration_year_error: 'Must be a valid year'
+    card_verification: 'Card verification'
+    card_verification_error: 'Card verification must be a valid CVV2, CVC2, or CID'
+    errors_title: 'Card Processing Error(s)'
+    errors_message: 'Please verify the higlighted fields'
+  contact:
+    details: "Please provide any questions/details regarding your reservation "
+
+
+

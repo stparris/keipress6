@@ -7,9 +7,7 @@ class Admin::ImageUploadsController < AdminController
   def edit
   end
 
-  # PATCH/PUT /image_uploads/1
-  # PATCH/PUT /image_uploads/1.json
-  def update
+    def update
     respond_to do |format|
       begin
         @image_upload.update!(image_upload_params)
@@ -27,6 +25,28 @@ class Admin::ImageUploadsController < AdminController
       end
     end
   end
+
+
+  # PATCH/PUT /image_uploads/1
+  # PATCH/PUT /image_uploads/1.json
+  # def update
+  #   respond_to do |format|
+  #     begin
+  #       @image_upload.update!(image_upload_params)
+  #       @image_upload.max_width = nil
+  #       @image_upload.quality = nil
+  #       @image_upload.save
+  #       flash[:success] = 'Image was successfully uploaded.'
+  #       format.html { redirect_to admin_image_url(@image_upload) }
+  #       format.json { render :show, status: :ok, location: @image_upload }
+  #     rescue ImageUpload::ImageTooBigError, ImageUpload::ImageInvalidTypeError => e
+  #       flash[:danger] = "Error: #{e.message}"
+  #       @image_upload.image.purge
+  #       format.html { render :edit }
+  #       format.json { render json: @image_upload.errors, status: :unprocessable_entity }
+  #     end
+  #   end
+  # end
 
   private
     # Use callbacks to share common setup or constraints between actions.

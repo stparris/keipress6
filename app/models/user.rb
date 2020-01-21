@@ -8,7 +8,7 @@ class User < ApplicationRecord
 
   validates :first_name, presence: true
   validates :last_name, presence: true
-  validates :email, presence: true, uniqueness: { :scope => :site_id }  
+  validates :email, presence: true, uniqueness: { :scope => :site_id }
   validates_confirmation_of :new_password, :if=>:password_changed?
   validate :password_non_blank
 
@@ -17,10 +17,10 @@ class User < ApplicationRecord
 	def full_name
 		full_name = ""
 		full_name += "#{self.prefix} " if self.prefix =~ /\S+/
-		full_name += "#{self.first_name} " if self.first_name =~ /\S+/ 
-		full_name += "#{self.middle_name} " if self.middle_name =~ /\S+/ 
-		full_name += "#{self.last_name} " if self.last_name =~ /\S+/ 
-		full_name += self.suffix if self.suffix =~ /\S+/ 
+		full_name += "#{self.first_name} " if self.first_name =~ /\S+/
+		full_name += "#{self.middle_name} " if self.middle_name =~ /\S+/
+		full_name += "#{self.last_name} " if self.last_name =~ /\S+/
+		full_name += self.suffix if self.suffix =~ /\S+/
 		return full_name
 	end
 
@@ -67,7 +67,7 @@ class User < ApplicationRecord
 
   def shipping_address
     self.user_addresses.find_by(name: 'shipping')
-  end  
+  end
 
 private
 
@@ -80,9 +80,9 @@ private
   end
 
   def self.encrypted_password(password, salt)
-    string_to_hash = password + "whippet" + salt
+    string_to_hash = password + Rails.application.credentials.dig(:secret_salt_phrase) + salt
     Digest::SHA1.hexdigest(string_to_hash)
-  end    
+  end
 
 end
 

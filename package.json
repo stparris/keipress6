@@ -7,6 +7,7 @@
     "@rails/activestorage": "^6.0.0",
     "@rails/ujs": "^6.0.0",
     "@rails/webpacker": "4.2.2",
+    "blueimp-file-upload": "^10.7.0",
     "bootstrap": "^4.4.1",
     "codemirror": "^5.50.2",
     "cropper": "^4.1.0",

@@ -3,6 +3,9 @@
 	<%= render partial: 'application/image_carousel', locals: {image_carousel: image_carousel} %>
 <% elsif content_item.content_type == 'image' %>
 	<%= src_sets(content_item.image) %>
+  <%= raw("<span class=\"imge-caption\">#{content_item.image.caption}</span>" if content_item.include_caption) %>
+  <%= raw("<span class=\"imge-copyright\"><icon class=\"icon-copyright\"></icon> #{content_item.image.caption}</span>" if content_item.include_copyright) %>
+  <%= raw("#{content_item.image.description}" if content_item.include_description) %>
 <% elsif content_item.content_type == 'list_group' %>
 	<%= render partial: "application/list_group", locals: {list_group: content_item.list_group} %>
 <% elsif content_item.content_type == 'image_group' %>

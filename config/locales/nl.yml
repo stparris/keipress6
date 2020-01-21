@@ -1,0 +1,107 @@
+# Files in the config/locales directory are used for internationalization
+# and are automatically loaded by Rails. If you want to use locales other
+# than English, add the necessary files in this directory.
+#
+# To use the locales, use `I18n.t`:
+#
+#     I18n.t 'hello'
+#
+# In views, this is aliased to just `t`:
+#
+#     <%= t('hello') %>
+#
+# To use a different locale, set it with `I18n.locale`:
+#
+#     I18n.locale = :es
+#
+# This would use the information in config/locales/es.yml.
+#
+# The following keys must be escaped otherwise they will not be retrieved by
+# the default I18n backend:
+#
+# true, false, on, off, yes, no
+#
+# Instead, surround them with single quotes.
+#
+# en:
+#   'true': 'foo'
+#
+# To learn more, please read the Rails Internationalization guide
+# available at http://guides.rubyonrails.org/i18n.html.
+
+nl:
+  activerecord:
+    attributes:
+      user:
+        first_name: 'Voornaam'
+        last_name: 'Achternaam'
+      user_address:
+        post_code: "Postcode"
+        phone: "Telefoon: vermeld uw landcode"
+        address1: "Straatadresregel"
+        address2: "Straatadresregel 2"
+        city: "Stad"
+        state: "Provincie"
+      user_billing_address:
+        post_code: "Postcode"
+        phone: "Telefoon: vermeld uw landcode"
+        address1: "Straatadresregel"
+        address2: "Straatadresregel 2"
+        city: "Stad"
+        state: "Provincie"
+      user_card_address:
+        post_code: "Postcode"
+        phone: "Telefoon: vermeld uw landcode"
+        address1: "Straatadresregel"
+        address2: "Straatadresregel 2"
+        city: "Stad"
+        state: "Provincie"
+      user_shipping_address:
+        post_code: "Postcode"
+        phone: "Telefoon: vermeld uw landcode"
+        address1: "Straatadresregel"
+        address2: "Straatadresregel 2"
+        city: "Stad"
+        state: "Provincie"        
+  buttons:
+    continue: 'Doorgaan met'
+    submit: 'Voorleggen'
+    cancel: 'Annuleren'
+    confirm_email: 'Confirm email'
+  bookings: 
+    nights: 'Nummer van nachten'
+    base_rate: 'Basistarief'
+    extra_rate: 'Extra persoonstarief'
+    amount: 'Bedrag'
+    tax: 'Belasting'
+    total: 'Totaal'
+    email_invalid: 'Email is ongeldig of komt niet overeen'
+    retype_email: 'Typ uw email opnieuw'
+    details: 'Boeking Details'
+    check_in: 'Inchecken'
+    check_out: 'Uitchecken'
+    calendar_loading: 'Checking available dates'
+    date_range: "Selecteer Inchecken Uitchecken datums"
+    guests: "Selecteer het aantal gasten"
+    details: "Verzoeken of aanvullende informatie"
+  payment_card:
+    brand: 'Kaarttype'
+    brand_error: 'Selecteer een kaarttype' 
+    first_name: 'Voornaam op kaart'
+    first_name_error: "Voornaam moet geldig zijn" 
+    last_name: 'Achternaam op kaart'
+    last_name_error: "Achternaam moet geldig zijn"
+    card_number: 'Kaartnummer'
+    card_number_error: 'Kaartnummer moet geldig zijn'
+    expiration_month: 'Vervalmaand'
+    expiration_month_error: 'Moet een geldige maand zijn'
+    expiration_year: 'Vervaljaar'
+    expiration_year_error: 'Moet een geldig jaar zijn'
+    card_verification: 'Kaartverificatie'
+    card_verification_error: 'Kaartverificatie moet een geldige CVV2, CVC2 of CID zijn'
+    errors_title: 'Kaartverwerkingsfouten'
+    errors_message: 'Controleer de gemarkeerde velde'
+  contact:
+    details: "Gelieve eventuele vragen / details met betrekking tot uw reservering te verstrekke "
+
+

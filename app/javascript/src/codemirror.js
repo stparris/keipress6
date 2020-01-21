@@ -14,6 +14,7 @@ $(document).on('turbolinks:load', function() {
   $(".codemirror-css").each(function() {
     CodeMirror.fromTextArea($(this).get(0), {
       lineNumbers: true,
+      theme: "eclipse",
       mode: "sass",
       tabSize: 2
     });
@@ -30,6 +31,7 @@ $(document).on('turbolinks:load', function() {
   $(".codemirror-json").each(function() {
     CodeMirror.fromTextArea($(this).get(0), {
       lineNumbers: true,
+      theme: "eclipse",
       mode: "javascript",
       tabSize: 2
     });
@@ -44,12 +46,14 @@ $(document).on('turbolinks:load', function() {
 
     var production_codemirror = CodeMirror.fromTextArea($("#theme_new_scss_production").get(0), {
       lineNumbers: true,
+      theme: "eclipse",
       mode: "sass",
       tabSize: 2
     });
 
     var theme_css = CodeMirror.fromTextArea($("#theme_css").get(0), {
       lineNumbers: true,
+      theme: "eclipse",
       mode: "sass",
       tabSize: 2
     });

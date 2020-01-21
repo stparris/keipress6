@@ -14,8 +14,11 @@ require('jquery-ui/ui/widgets/sortable');
 import $ from 'jquery';
 global.$ = jQuery;
 
-import 'expose-loader?$!jquery';
-import 'expose-loader?jQuery!jquery';
+import 'jquery-ui/themes/base/core.css';
+import 'jquery-ui/themes/base/menu.css';
+import 'jquery-ui/themes/base/autocomplete.css';
+import 'jquery-ui/themes/base/theme.css';
+
 
 
 // Uncomment to copy all static images under ../images to the output folder and reference
@@ -41,39 +44,7 @@ import flatpickr from "flatpickr"
 require("flatpickr/dist/flatpickr.css")
 
 // Legacy JQuery/Javascript
-require("article_posts.js")
-require("blog_posts.js")
-// require("cable.js")
-require("calendars.js")
-require("carousel_slides.js")
-require("codemirror.js")
-require("contacts.js")
-require("container_rows.js")
-require("containers.js")
-require("containers_pages.js")
-require("content_group_items.js")
-require("content_items.js")
-require("country.js")
-require("datatables.js")
-require("image_crops.js")
-require("image_items.js")
-require("images.js")
-require("list_group_items.js")
-require("navigation_items.js")
-require("navigations.js")
-require("pages.js")
-require("page_contents.js")
-require("payment_cards.js")
-require("payment_methods.js")
-require("payment_types.js")
-require("rental_bookings.js")
-require("rental_payment_methods.js")
-require("row_columns.js")
-require("sub_list_items.js")
-require("summernote-init.js")
-require("theme_colors.js")
-require("themes.js")
-require("tooltip.js")
-require("users.js")
+require("src")
+
 
 
