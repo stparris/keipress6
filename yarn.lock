@@ -2891,6 +2891,11 @@ file-loader@^4.2.0:
     loader-utils "^1.2.3"
     schema-utils "^2.5.0"
 
+file-upload-with-preview@^4.0.8:
+  version "4.0.8"
+  resolved "https://registry.yarnpkg.com/file-upload-with-preview/-/file-upload-with-preview-4.0.8.tgz#4bc67de03afed2ee429bc0d5aa2a23cdaedc21a5"
+  integrity sha512-ZlxHvPBcx1LLPOH8vuwxRnYgeUfbDgl5JYXl9GiRGDZvB4zZMHKJOlBt5CwH/jb+Aw9EhQS33NmJ33KHLoRaSQ==
+
 file-uri-to-path@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/file-uri-to-path/-/file-uri-to-path-1.0.0.tgz#553a7b8446ff6f684359c445f1e37a05dacc33dd"

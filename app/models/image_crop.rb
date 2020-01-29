@@ -1,4 +1,4 @@
-class ImageCrop < Image
+class ImageCrop < ImagePreview
 
 	attr_accessor :blob
 

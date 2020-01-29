@@ -1,3 +1,6 @@
+import Cropper from 'cropper';
+import 'cropper/dist/cropper.min.css'
+
 $(document).on('turbolinks:load', function() {
   if ($("#image_crop").length) {
     var image_id = $('#image_id').attr('value')

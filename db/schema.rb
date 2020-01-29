@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_10_191744) do
+ActiveRecord::Schema.define(version: 2020_01_25_191222) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -141,11 +141,10 @@ ActiveRecord::Schema.define(version: 2019_10_10_191744) do
   create_table "calendars", force: :cascade do |t|
     t.string "name"
     t.bigint "site_id"
-    t.string "calendar_type"
     t.string "import_url"
     t.string "export_url"
     t.text "icalendar"
-    t.boolean "parent", default: false, null: false
+    t.boolean "parent"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["site_id"], name: "index_calendars_on_site_id"
@@ -170,11 +169,11 @@ ActiveRecord::Schema.define(version: 2019_10_10_191744) do
     t.text "description"
     t.string "css_classes"
     t.string "image_variant"
-    t.boolean "with_controls", default: false, null: false
-    t.boolean "with_indicators", default: false, null: false
-    t.boolean "with_captions", default: false, null: false
-    t.boolean "with_pause", default: false, null: false
-    t.boolean "with_ride", default: false, null: false
+    t.boolean "with_controls", default: false
+    t.boolean "with_indicators", default: false
+    t.boolean "with_captions", default: false
+    t.boolean "with_pause", default: false
+    t.boolean "with_ride", default: false
     t.integer "interval", default: 0
     t.bigint "site_id"
     t.datetime "created_at", null: false
@@ -271,11 +270,11 @@ ActiveRecord::Schema.define(version: 2019_10_10_191744) do
     t.bigint "text_html_flag"
     t.text "body"
     t.bigint "admin_id"
-    t.boolean "include_admin_handle", default: false, null: false
-    t.boolean "include_update_time", default: false, null: false
-    t.boolean "include_caption", default: false, null: false
-    t.boolean "include_copyright", default: false, null: false
-    t.boolean "include_description", default: false, null: false
+    t.boolean "include_admin_handle", default: false
+    t.boolean "include_update_time", default: false
+    t.boolean "include_caption", default: false
+    t.boolean "include_copyright", default: false
+    t.boolean "include_description", default: false
     t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -301,7 +300,7 @@ ActiveRecord::Schema.define(version: 2019_10_10_191744) do
     t.string "name"
     t.string "css_classes"
     t.string "type"
-    t.boolean "published", default: false, null: false
+    t.boolean "published"
     t.bigint "admin_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -315,8 +314,8 @@ ActiveRecord::Schema.define(version: 2019_10_10_191744) do
     t.string "iso"
     t.string "iso3"
     t.integer "numcode"
-    t.boolean "state_required", default: false, null: false
-    t.boolean "post_code_required", default: false, null: false
+    t.boolean "state_required"
+    t.boolean "post_code_required"
     t.boolean "eu"
     t.index ["name"], name: "index_countries_on_name"
   end
@@ -420,6 +419,21 @@ ActiveRecord::Schema.define(version: 2019_10_10_191744) do
     t.index ["site_id"], name: "index_image_groups_on_site_id"
   end
 
+  create_table "image_previews", force: :cascade do |t|
+    t.bigint "image_id"
+    t.integer "parent_id", default: 0
+    t.string "preview_type"
+    t.string "file_name"
+    t.string "file_type"
+    t.integer "file_size"
+    t.string "crop_info"
+    t.string "optimization_info"
+    t.boolean "published", default: false, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["image_id"], name: "index_image_previews_on_image_id"
+  end
+
   create_table "images", force: :cascade do |t|
     t.string "name"
     t.string "caption"
@@ -439,7 +453,7 @@ ActiveRecord::Schema.define(version: 2019_10_10_191744) do
     t.string "link"
     t.text "body"
     t.string "test_text"
-    t.boolean "new_window", default: false, null: false
+    t.boolean "new_window", default: false
     t.string "css_classes"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -479,6 +493,7 @@ ActiveRecord::Schema.define(version: 2019_10_10_191744) do
   create_table "mail_servers", force: :cascade do |t|
     t.string "name"
     t.bigint "site_id"
+    t.string "gateway_type"
     t.json "config"
     t.boolean "active", default: true, null: false
     t.datetime "created_at", null: false
@@ -884,6 +899,7 @@ ActiveRecord::Schema.define(version: 2019_10_10_191744) do
   add_foreign_key "image_group_items", "images", on_delete: :cascade
   add_foreign_key "image_groups", "images", on_delete: :nullify
   add_foreign_key "image_groups", "sites", on_delete: :cascade
+  add_foreign_key "image_previews", "images", on_delete: :cascade
   add_foreign_key "images", "sites", on_delete: :cascade
   add_foreign_key "link_texts", "sites", on_delete: :cascade
   add_foreign_key "list_group_items", "categories", on_delete: :cascade

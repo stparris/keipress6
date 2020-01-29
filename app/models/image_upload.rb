@@ -1,6 +1,9 @@
-class ImageUpload < Image
+class ImageUpload
+  include ActiveModel::Model
+  include ActiveModel::Validations
 
-  validate :image_validation
+  attr_accessor :image_id, :image_file
+ # validate :image_validation
 
   def image_validation
     if self.image.attached?

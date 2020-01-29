@@ -20,15 +20,15 @@
 <% @images.where(site_id: @site.id).order('name asc').each do |image| %>
         <tr>
         	<td>
-        		<%= link_to image_tag(image.image.variant(resize: "100x100")), admin_image_path(image) if image.image.attached? %>
+        		<%= link_to image_tag(image.image.variant(resize: "100x100")), admin_image_path(image) if image.image.attached? && Rails.env.production? %>
         	</td>
           <td><%= link_to raw(image.name), admin_image_path(image) %></td>
           <td><%= link_to image.image.filename, admin_image_path(image) if image.image.attached? %></td>
           <td><%= link_to image.created_at.strftime("%Y-%m-%d"), admin_image_path(image) %></td>
-  <% if image.image.attached? %>     
+  <% if image.image.attached? %>
   				<%= optimize_td(image) %>
   <% else %>
-  				<td><%= link_to raw("<icon class=\"icon-upload\"></icon> Upload"), edit_admin_image_upload_path(image) %></td>
+  				<td><%= link_to raw("<icon class=\"icon-upload\"></icon> Upload"), new_admin_image_preview_path(image) %></td>
   <% end %>
           <td><%= link_to raw('<i class="icon-zoom-in"></i>'), admin_image_path(image) %></td>
           <td><%= link_to raw('<i class="icon-pencil"></i>'), edit_admin_image_path(image) %></td>

@@ -2,30 +2,41 @@
 	<div class="col-md-9">
 		<div class="page-header">
 			<h1><%= @image.name %></h1>
-		</div>	
+		</div>
+		<h3>Status: <%= @image.image.attached? ? 'Published' : 'Not Published' %></h3>
 <% if @image.image.attached? %>
 		<div class="image-original">
 			<%= image_tag url_for(@image.image), class: 'img-fluid' %>
 		</div>
 		<div class="image-buttons">
-			<%= link_to edit_admin_image_crop_path(@image) do %>
+			<%= link_to new_admin_image_upload_path(image_id: @image.id) do %>
+			<button type="button" class="btn btn-outline-secondary btn-sm"><icon class="icon-upload"></icon> Upload/Replace Image</button>
+			<% end %>
+		</div>
+		<%= optimize_div(@image) %>
+<% elsif @image.image_previews.where(preview_type: 'original').any? %>
+	<% original_image = @image.image_previews.where(preview_type: 'original').first %>
+		<div class="image-original">
+			<%= image_tag "/image_previews/original_#{original_image.id}_#{original_image.file_name}", class: 'img-fluid' %>
+		</div>
+		<div class="image-buttons">
+			<%= link_to new_admin_image_crop_path(parent_id: original_image.id) do %>
 			<button type="button" class="btn btn-outline-secondary btn-sm"><icon class="icon-crop"></icon> Crop Image</button>
 			<% end %>
 			<div style="display:none;">
-				<%= link_to admin_image_watermark_path(@image) do %>
+				<%= link_to new_admin_image_watermark_path((parent_id: original_image.id) do %>
 				<button type="button" class="btn btn-outline-secondary btn-sm"><icon class="icon-water"></icon> Watermark</button>
 				<% end %>
 			</div>
-			<%= link_to edit_admin_image_upload_path(@image) do %>
+			<%= link_to new_admin_image_preview_path(image_id: @image.id) do %>
 			<button type="button" class="btn btn-outline-secondary btn-sm"><icon class="icon-upload"></icon> Upload/Replace Image</button>
-			<%= link_to edit_admin_image_optimization_path(@image) do %>
+			<% end %>
+			<%= link_to new_admin_image_optimization_path(parent_id: original_image.id) do %>
 			<button type="button" class="btn btn-outline-secondary btn-sm"><icon class="icon-ok"></icon> Optimize Image</button>
 			<% end %>
-		</div>	
-		<%= optimize_div(@image) %>
-		<% end %>
+		</div>
 <% else %>
-		<%= link_to edit_admin_image_upload_path(@image) do %>
+		<%= link_to new_admin_image_upload_path(image_id: @image.id) do %>
 			<div class="image-place">
 				<button type="button" class="btn btn-secondary"><icon class="icon-upload"></icon> Upload Image</button>
 			</div>
@@ -33,10 +44,10 @@
 <% end %>
 		<%= object_table(@image) %>
 		<%= link_to edit_admin_image_path(@image) do %>
-			<button type="submit" class="btn  btn-outline-secondary"><i class="icon-pencil"></i> Edit</button>
+			<button type="button" class="btn  btn-outline-secondary"><i class="icon-pencil"></i> Edit</button>
 		<% end %>
 		&nbsp;&nbsp;<%= link_to admin_image_path(@image), method: :delete, data: { confirm: "Delete image?" } do %>
-			<button type="submit" class="btn btn-danger"><i class="icon-trash"></i> Delete</button>
+			<button type="button" class="btn btn-danger"><i class="icon-trash"></i> Delete</button>
 		<% end %>
 	</div>
 	<div class="col-md-3">

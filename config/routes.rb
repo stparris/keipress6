@@ -114,10 +114,10 @@ Rails.application.routes.draw do
         patch 'category'
       end
     end
-    resources :image_crops, only: [:edit, :update]
-    resources :image_optimizations, only: [:edit, :update]
-    resources :image_uploads, only: [:edit, :update]
-    resources :image_watermarks, only: [:edit, :update]
+    resources :image_crops
+    resources :image_optimizations
+    resources :image_previews
+    resources :image_watermarks
     resources :image_groups
     resources :image_group_items do
       collection do

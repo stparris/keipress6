@@ -1,3 +1,3 @@
-class ImageOptimization < Image
-  
+class ImageOptimization < ImagePreview
+
 end

@@ -45,7 +45,7 @@ class Admin::ImagesController < AdminController
     respond_to do |format|
       if @image.save
         flash[:success] = 'Image was successfully created.'
-        format.html { redirect_to admin_image_url(@image) }
+        format.html { redirect_to new_admin_image_preview_url(image_id: @image.id) }
         format.json { render :show, status: :created, location: @image }
       else
         format.html { render :new }
@@ -104,6 +104,6 @@ class Admin::ImagesController < AdminController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def image_params
-      params.require(:image).permit(:site_id,:name,:caption,:copyright_year,:copyright_by,:description,:image)
+      params.require(:image).permit(:site_id,:name,:caption,:copyright_year,:copyright_by,:description,:image,:image_preview_id)
     end
 end

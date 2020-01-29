@@ -1,7 +1,9 @@
 class Admin::ImageCropsController < AdminController
-  before_action :set_image_crop, only: [:show, :edit, :update, :destroy]
+  before_action :set_image_crop, only: [:edit, :update, :destroy]
 
   layout 'admins'
+
+  require 'fileutils'
 
   # GET /image_crops
   # GET /image_crops.json
@@ -15,35 +17,41 @@ class Admin::ImageCropsController < AdminController
     filename = @image_crop.image.filename
       File.open("#{Rails.root}/assets/images/#{filename}", "wb") do |f|
       f.write(@image_crop.image.download)
-    end  
+    end
   end
 
   # GET /image_crops/new
   def new
-    @image_crop = ImageCrop.new
+
   end
 
   # GET /image_crops/1/edit
   def edit
-    filename = @image_crop.image.filename
-      File.open("#{Rails.root}/public/assets/images/#{filename}", "wb") do |f|
-      f.write(@image_crop.image.download)
-    end  
+    # filename = @image_crop.image.filename
+    #   File.open("#{Rails.root}/public/assets/images/#{filename}", "wb") do |f|
+    #   f.write(@image_crop.image.download)
+    # end
   end
 
   # POST /image_crops
   # POST /image_crops.json
   def create
-    @image_crop = ImageCrop.new(image_crop_params)
-
     respond_to do |format|
-      if @image_crop.save
-        format.html { redirect_to @image_crop, notice: 'Image crop was successfully created.' }
-        format.json { render :show, status: :created, location: @image_crop }
-      else
-        format.html { render :new }
-        format.json { render json: @image_crop.errors, status: :unprocessable_entity }
-      end
+      # begin
+        @image_crop = ImageCrop.new(image_crop_params)
+        @original_image = @image_crop.image.image_previews.where(preview_type: 'original').first
+        @image_crop.parent_id = @original_image.id
+        @image_crop.preview_type = 'crop'
+        @image_crop.file_name = @original_image.file_name
+        @image_crop.file_type = @original_image.file_type
+        @image_crop.save
+        original_file = "#{Rails.root}/public/image_previews/original_#{@original_image.id}.#{@original_image.file_type}"
+        crop_file = "#{Rails.root}/public/image_previews/crop_#{@image_crop.id}.#{@image_crop.file_type}"
+        FileUtils.cp original_file, crop_file
+        format.html { redirect_to edit_admin_image_crop_url(@image_crop) }
+      # rescue
+      #   format.html { redirect_to admin_image_preview_url(@original_image)}
+      # end
     end
   end
 
@@ -54,11 +62,7 @@ class Admin::ImageCropsController < AdminController
     content_type = @image_crop.image.content_type
     File.open("#{Rails.root}/tmp/#{filename}", "wb") do |f|
       f.write(params[:image][:blob].read)
-    end  
-    @image_crop.image.purge
-    @image_crop.image.attach(io: File.open("#{Rails.root}/tmp/#{filename}"), filename: "#{filename}", content_type: "#{content_type}") 
-    @image_crop.save
-    FileUtils.rm("#{Rails.root}/tmp/#{filename}")
+    end
 
   end
 
@@ -74,12 +78,20 @@ class Admin::ImageCropsController < AdminController
 
   private
     # Use callbacks to share common setup or constraints between actions.
+    def set_image
+      @image = params[:image_id].present? ? Image.find(params[:image_id]) : nil
+    end
+
+    def set_original_image
+
+    end
+
     def set_image_crop
       @image_crop = ImageCrop.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def image_crop_params
-      params.require(:image).permit(:blob)
+      params.require(:image_crop).permit(:image_id,:parent_id,:blob)
     end
 end

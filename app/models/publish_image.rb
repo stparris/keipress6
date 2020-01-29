@@ -1,0 +1,4 @@
+class PublishImage < Image
+
+
+end

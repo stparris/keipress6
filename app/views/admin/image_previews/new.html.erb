@@ -1,0 +1,33 @@
+<div class="row">
+  <div class="col-md-9">
+    <div class="page-header">
+      <h1><%= @image.name %></h1>
+    </div>
+    <h3>Status: <%= @image.image.attached? ? 'Published' : 'Not Published' %></h3>
+    <%= object_table(@image) %>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#uploadModal">
+      <icon class="icon-upload"></icon>
+      Upload Image
+    </button>
+    <hr/>
+    <div id="original_image" class="image-original" style="display: none;"></div>
+    <div id="image_buttons" class="image-buttons">
+      <span style="float: left;">
+        <%= form_for([:admin,ImageCrop.new], :html => {:role => 'form'}) do |f| %>
+          <%= f.hidden_field :image_id, value: @image.id %>
+          <button type="submit" class="btn btn-outline-secondary btn-sm"><icon class="icon-crop"></icon> Crop Image</button>
+        <% end %>
+      </span>
+      <span style="float: left;padding-left: 10px;">
+        <%= form_for([:admin,ImageOptimization.new], :html => {:role => 'form'}) do |f| %>
+          <%= f.hidden_field :image_id, value: @image.id %>
+          <button type="submit" class="btn btn-outline-secondary btn-sm"><icon class="icon-ok"></icon> Optimize Image</button>
+        <% end %>
+      </span>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <%= operations_menu(@image) %>
+  </div>
+</div>
+<%= render partial: 'admin/image_previews/upload_modal' %>
