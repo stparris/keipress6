@@ -33,6 +33,7 @@
 
 /public/packs
 /public/packs-test
+/public/image_previews
 /node_modules
 /yarn-error.log
 yarn-debug.log*

@@ -9,9 +9,6 @@ class Admin::AdminSessionsController < AdminController
 	def create
     admin_session = AdminSession.new(admin_session_params)
     @admin = admin_session.authenticate
-
-logger.info "=============================\n#{@admin.inspect}"
-
     if @admin
       flash[:success] = "Welcome #{@admin.full_name}"
       new_token = rand(@admin.id.to_i + 100000000)
@@ -20,7 +17,7 @@ logger.info "=============================\n#{@admin.inspect}"
       @admin.save!
       if @admin.role == 1 || @admin.sites.count > 1
         redirect_to admin_sites_path
-      elsif @admin.sites.count == 1 
+      elsif @admin.sites.count == 1
         redirect_to admin_site_path(@admin.sites.first)
       else
         flash[:danger] = "Sorry, there are no sites associated with this login."
