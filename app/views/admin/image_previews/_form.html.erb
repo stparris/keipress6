@@ -1,10 +1,77 @@
-<%= f.hidden_field :image_id, value: @image.id %>
-<div id="upload_image" class="custom-file-container" data-upload-id="newImageUpload" style="max-width:500px;">
-    <label>Upload File <a href="javascript:void(0)" class="custom-file-container__image-clear" title="Clear Image"><icon class="icon-arrows-cw"></icon> Reset </a></label>
-    <label class="custom-file-container__custom-file" >
-      <input name="image_upload[image_file]" type="file" class="custom-file-container__custom-file__custom-file-input" accept="image/*" aria-label="Choose File">
-      <input type="hidden" name="MAX_FILE_SIZE" value="2000000" />
-      <span class="custom-file-container__custom-file__custom-file-control"></span>
-    </label>
-    <div class="custom-file-container__image-preview" style="height: 333px;"></div>
+<div class="row">
+  <div class="col-md-9">
+    <div class="page-header">
+      <h1><%= @image.name %></h1>
+    </div>
+<% if @image.image.attached? %>
+    <h4>Current Published Image:</h4>
+    <%= image_tag @image.image.variant(resize: '768x768'), class: "image-fluid modal-image" %>
+<% else %>
+    <h4>Status: Not Published</h4>
+<% end %>
+    <%= object_table(@image) %>
+<% if !@image.image.attached? %>
+    <%= link_to edit_admin_image_path(@image) do %>
+      <button type="button" class="btn  btn-outline-secondary"><i class="icon-pencil"></i> Edit</button>
+    <% end %>
+    &nbsp;&nbsp;<%= link_to admin_image_path(@image), method: :delete, data: { confirm: "Delete image?" } do %>
+      <button type="button" class="btn btn-danger"><i class="icon-trash"></i> Delete</button>
+    <% end %>
+<% end %>
+  </div>
+  <div class="col-md-3">
+     <%= operations_menu(@image, [@image]) %>
+  </div>
 </div>
+<div class="row">
+  <div class="col-md-9">
+    <h3>Process/Publish New Image:</h3>
+<% if @image_preview.source_file =~ /\S+/ %>
+    <h4>Image: <%= @image_preview.source_file %></h4>
+    <%= image_tag "/image_previews/original_#{@image.id}.#{@image_preview.file_extention}?#{rand(10000000)}", class: 'img-fluid' %>
+    <%= file_size_div(@image_preview.size,@image_preview.width) %>
+    <h6>Dimensions: Width <%= @image_preview.width %>px, Height <%= @image_preview.height %>px</h6>
+    <div class="image-buttons">
+      <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#uploadModal">
+        <icon class="icon-upload"></icon>
+        Upload/Replace Image
+      </button>
+      <%= link_to new_admin_image_crop_path(parent_id: @image_preview.id) do %>
+      <button type="button" class="btn btn-outline-secondary btn-sm"><icon class="icon-crop"></icon> Crop Image</button>
+      <% end %>
+      <div style="display:none;">
+        <%= link_to new_admin_image_watermark_path(parent_id: @image_preview.id) do %>
+        <button type="button" class="btn btn-outline-secondary btn-sm"><icon class="icon-water"></icon> Watermark</button>
+        <% end %>
+      </div>
+      <%= link_to new_admin_image_optimization_path(parent_id: @image_preview.id) do %>
+        <button type="button" class="btn btn-outline-secondary btn-sm"><icon class="icon-ok"></icon> Optimize Image
+        </button>
+      <% end %>
+      <%= link_to admin_image_preview_path(@image_preview), method: 'delete' do %>
+        <button type="button" class="btn btn-outline-secondary btn-sm"><icon class="icon-trash"></icon> Reset Workspace
+        </button>
+      <% end %>
+    </div>
+<% else %>
+    <div class="image-place">
+      <button type="button" class="btn btn-primary " data-toggle="modal" data-target="#uploadModal">
+        <icon class="icon-upload"></icon>
+        Upload Image
+      </button>
+    </div>
+  <% if @image.image.attached? && !@image_preview.source_file %>
+    <%= link_to admin_image_preview_path(@image_preview), method: 'delete' do %>
+      <button type="button" class="btn  btn-outline-secondary"><i class="icon-cancel"></i> Cancel</button>
+    <% end %>
+  <% end %>
+<% end %>
+<% if @image_crop %>
+    <%= render partial: 'admin/image_crops/show' %>
+<% end %>
+<% if @image_optimization %>
+    <%= render partial: 'admin/image_optimizations/show' %>
+<% end %>
+  <div class="col-md-3"></div>
+</div>
+<%= render partial: 'admin/image_previews/upload_modal' %>

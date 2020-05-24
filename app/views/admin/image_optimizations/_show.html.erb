@@ -1,0 +1,45 @@
+<h4>Optimized Image</h4>
+<%= image_tag "/image_previews/optimize_#{@image_optimization.image.id}.#{@image_optimization.file_extention}?#{rand(10000000)}", class: 'img-fluid' %>
+<%= file_size_div(@image_optimization.size,@image_optimization.width) %>
+<h6>Dimensions: Width <%= @image_optimization.width %>px, Height <%= @image_optimization.height %>px</h6>
+<h6>Quality: <%= @image_optimization.quality %></h6>
+<h6>Source: <%= @image_optimization.parent.preview_type.capitalize %></h6>
+<div class="image-buttons">
+  <%= link_to edit_admin_image_optimization_path(@image_optimization) do %>
+    <button type="button" class="btn btn-outline-secondary btn-sm"><icon class="icon-ok"></icon> Optimize Again
+    </button>
+  <% end %>
+  <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#publishImage">
+    <icon class="icon-attention-alt"></icon> Publish Image
+  </button>
+</div>
+<div class="modal fade" id="publishImage" tabindex="-1" role="dialog" aria-labelledby="publishImageLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="publishImageLabel"><icon class="icon-picture"></icon> Publish Image</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <%= form_for([:admin, ImagePublish.new],:html => {:role => 'form', :class => "formFor"}) do |f| %>
+        <div class="modal-body">
+          <%= f.hidden_field :parent_id, value: @image_optimization.id %>
+<% if @image_optimization.image.image.attached? %>
+          <%= image_tag @image_optimization.image.image.variant(resize: '300x300'), class: "image-fluid modal-image" %>
+          <h6>Warning! You are about to replace the current image with this optimized image, and the current workspace will be reset. (You can always upload a new version.)</h6>
+<% else %>
+          <h6>Warning! Publishing the current optimized image will reset the current workspace. (You can always upload a new version.)</h6>
+<% end %>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary btn-med" data-dismiss="modal">Close</button>
+          <%= button_tag(type: 'submit', class:"btn  btn-danger btn-med") do %>
+            <icon class="icon-attention-alt"></icon>
+            Publish
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

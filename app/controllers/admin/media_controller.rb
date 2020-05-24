@@ -1,5 +1,7 @@
-class Admin::MediaController < ApplicationController
+class Admin::MediaController < AdminController
   before_action :set_medium, only: [:show, :edit, :update, :destroy]
+
+  layout 'admins'
 
   # GET /media
   # GET /media.json
@@ -28,7 +30,7 @@ class Admin::MediaController < ApplicationController
 
     respond_to do |format|
       if @medium.save
-        format.html { redirect_to admin_medi_url(@medium) }
+        format.html { redirect_to admin_medium_url(@medium) }
         format.json { render :show, status: :created, location: @medium }
       else
         format.html { render :new }
@@ -42,7 +44,7 @@ class Admin::MediaController < ApplicationController
   def update
     respond_to do |format|
       if @medium.update(medium_params)
-        format.html { redirect_to admin_medi_url(@medium) }
+        format.html { redirect_to admin_medium_url(@medium) }
         format.json { render :show, status: :ok, location: @medium }
       else
         format.html { render :edit }
@@ -56,7 +58,7 @@ class Admin::MediaController < ApplicationController
   def destroy
     @medium.destroy
     respond_to do |format|
-      format.html { redirect_to media_url, notice: 'Medium was successfully deleted.' }
+      format.html { redirect_to admin_media_url, notice: 'Medium was successfully deleted.' }
       format.json { head :no_content }
     end
   end
@@ -70,6 +72,18 @@ class Admin::MediaController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def medium_params
-      params.fetch(:medium, {})
+      params.require(:medium).permit(
+        :name,
+        :type,
+        :caption,
+        :copyright_year,
+        :copyright_by,
+        :description,
+        :image_id,
+        :image_variant,
+        :site_id)
     end
 end
+
+
+

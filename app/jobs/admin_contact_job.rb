@@ -1,9 +1,10 @@
 class AdminContactJob < ApplicationJob
   queue_as :user_contact
   require 'mail'
-  
-  def perform(mail_server,from_email,subject,html,text)
+
+  def perform(mail_server_id,from_email,subject,html,text)
   	require 'mail'
+    mail_server = MailServer.find(mail_server_id)
   	mail_server_conn = mail_server.connection_config
   	Mail.defaults do
 		  delivery_method :smtp, mail_server_conn
@@ -29,9 +30,9 @@ class AdminContactJob < ApplicationJob
 			html_part.body = html
 
 			mail.text_part = text_part
-			mail.html_part = html_part    
+			mail.html_part = html_part
 			mail.deliver
-		rescue Exception => e 
+		rescue Exception => e
 			open("log/delayed_job_error.log", 'a') do |f|
 				f.puts "\n#{Time.now} : #{to_email} #{e.message}"
 			end

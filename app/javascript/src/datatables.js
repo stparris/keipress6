@@ -38,6 +38,20 @@ $(document).on('turbolinks:load', function() {
 });
 
 $(document).on('turbolinks:load', function() {
+  var table = $("#image_table").DataTable({
+    columnDefs: [
+      { orderable: false, targets: 1 },
+      { orderable: false, targets: 5 }
+    ],
+    sPaginationType: "full_numbers"
+  });
+  $('#image_table tbody').on('click', 'tr', function () {
+    var data = table.row( this ).data();
+    $(".select-image").removeClass('image-selected');
+    $("#image_select_"+data[0]).addClass('image-selected');
+    $("#image_text").text(data[2]);
+    $("#hidden_image_field").val(data[0]);
+  });
   $('#page_index').dataTable({
     columnDefs: [
       { orderable: false, targets: 3 },

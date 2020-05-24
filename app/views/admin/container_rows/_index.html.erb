@@ -19,7 +19,7 @@
 			<tbody id="container_rows" data-sort-items-url="<%= sort_admin_container_rows_url %>">
 <% @container_rows.each do |container_row| %>
 				<tr class="container_row" id="container_row_<%= container_row.id %>">
-					<td><span class="handle"><i class="icon-up-hand"></i></span></td>		
+					<td><span class="handle"><i class="icon-up-hand"></i></span></td>
           <td><%= link_to "Row #{container_row.position}", admin_container_row_path(container_row) %></td>
           <td><%= link_to raw(container_row.css_classes), admin_container_row_path(container_row) %></td>
   <%
@@ -34,14 +34,14 @@
   		content += "#{i}.) "
   		case col.content_type
   		when 'carousel'
-   			content += link_to raw("#{col.carousel.name} <icon class=\"icon-right-hand\"></icon>"), admin_carousel_url(col.carousel), target: "#{content_type}?#{rand(4)}"
+   			content += link_to raw("#{col.carousel.name} <icon class=\"icon-right-hand\"></icon>"), admin_carousel_url(col.carousel), target: "#{content_type}?#{rand(10000000)}"
   		when /image_group|image_grid/
-   			content += link_to raw("#{col.image_group.name} <icon class=\"icon-right-hand\"></icon>"), admin_image_group_url(col.image_group), target: "#{content_type}?#{rand(4)}"
+   			content += link_to raw("#{col.image_group.name} <icon class=\"icon-right-hand\"></icon>"), admin_image_group_url(col.image_group), target: "#{content_type}?#{rand(10000000)}"
   		when 'list_group'
-   			content += link_to raw("#{col.list_group.name} <icon class=\"icon-right-hand\"></icon>"), admin_list_group_url(col.list_group), target: "#{content_type}?#{rand(4)}"
+   			content += link_to raw("#{col.list_group.name} <icon class=\"icon-right-hand\"></icon>"), admin_list_group_url(col.list_group), target: "#{content_type}?#{rand(10000000)}"
    		when 'content_group'
-   			content += link_to raw("#{col.content.name} <icon class=\"icon-right-hand\"></icon>"), admin_content_group_url(col.content), target: "#{content_type}?#{rand(4)}"
-  		else 
+   			content += link_to raw("#{col.content.name} <icon class=\"icon-right-hand\"></icon>"), admin_content_group_url(col.content), target: "#{content_type}?#{rand(10000000)}"
+  		else
   			content = "#{col.inspect}"
   		end
   		column_css += "<br/>"

@@ -48,7 +48,7 @@ module AdminsHelper
       end
 
       value = a[1]
-      next if name =~ /^type|scss|salt|hash|token|position|container_row_id|rows_flag|text_html_flag|icalendar/
+      next if name =~ /^type|scss|salt|hash|token|position|container_row_id|rows_flag|text_html_flag|icalendar|sequence/
       next if name =~ /include_admin_handle|include_update_time/ && controller_name != 'blog_posts'
       next if name =~ /include_caption|include_copyright|include_description/ && !(obj.has_attribute?('image_id') && obj.image)
       next if value == nil
@@ -71,6 +71,8 @@ module AdminsHelper
           value = attr_obj.name
         elsif attr_obj && name =~ /country_id|state_id/
           value = attr_obj.name
+        elsif attr_obj && name == 'category_id'
+          value = link_to raw("#{attr_obj.name} <icon class=\"icon-right-hand\"></icon>"), "/admin/categories/#{attr_obj.id}"
         elsif attr_obj && attr_obj.has_attribute?('name')
           value = link_to raw("#{attr_obj.name} <icon class=\"icon-right-hand\"></icon>"), "/admin/#{class_name}s/#{attr_obj.id}"
         elsif attr_obj && attr_obj.has_attribute?('link')
@@ -93,7 +95,7 @@ module AdminsHelper
         value = value.capitalize.gsub(/_/, ' ') if name =~ /type/
       end
       name = name.gsub(/_/, ' ')
-      value = author_hash[a[1]] if name =~ /by$/
+      # value = author_hash[a[1]] if name =~ /by$/
       name = name.sub(/\sid/,'').capitalize
       name = name.sub(/Css/, 'CSS')
       name = name.sub(/Url/, 'URL')
@@ -112,6 +114,7 @@ module AdminsHelper
   def process_parent_obj(parent)
     parent_text = parent.class.name.split(/(?=[A-Z])/).map(&:capitalize).join(' ')
     parent_controller = parent.class.name.split(/(?=[A-Z])/).map(&:downcase).join('_') + 's'
+    parent_controller = parent_controller.sub(/hs/,'hes')
     parent_name = parent && parent.has_attribute?('name') ? parent.name : parent_text
     parent_name = "Row #{parent.position}" if parent && parent.class.name == 'ContainerRow'
     html = ''
@@ -132,12 +135,13 @@ module AdminsHelper
       parents.each_with_index do |parent,index|
         if index == 0 && controller_name !~ /row_columns|container_rows/
           parent_controller = parent.class.name.split(/(?=[A-Z])/).map(&:downcase).join('_') + 's'
+          parent_controller = parent_controller.sub(/hs/,'hes')
           html += '<li class="nav-item">' + link_to(raw("<icon class=\"icon-list\"></icon> #{parent_controller.gsub(/_/,' ').capitalize}"), "/admin/#{parent_controller}") + '</li>'
         end
         html += process_parent_obj(parent)
       end
     elsif controller_name =~ /image_optimizations|image_uploads/
-       html += '<li class="nav-item">' + link_to(raw("<icon class=\"icon-list\"></icon> Images"), "/admin/images") + '</li>'
+      html += '<li class="nav-item">' + link_to(raw("<icon class=\"icon-list\"></icon> Images"), "/admin/images") + '</li>'
     else
       html += '<li class="nav-item">' + link_to(raw("<icon class=\"icon-list\"></icon> #{controller_name.gsub(/_/,' ').capitalize}"), "/admin/#{controller_name}") + '</li>'
     end
@@ -147,6 +151,7 @@ module AdminsHelper
       obj_text = 'Row' if obj.class.name == 'ContainerRow'
       obj_controller = obj.class.name.split(/(?=[A-Z])/).map(&:downcase).join('_') + 's'
       obj_controller = obj_controller.sub(/ss$/,'ses')
+      obj_controller = obj_controller.sub(/hs$/,'hes')
       obj_controller = obj_controller.sub(/ys$/,'ies') unless obj_controller == 'payment_gateways'
       obj_name = obj.has_attribute?('name') ? obj.name : obj_text
       obj_name = "Column #{obj.position}" if obj.class.name == 'RowColumn'
@@ -197,7 +202,7 @@ module AdminsHelper
   end
 
   def media_subs
-    ['images','image_uploads','image_crops','image_watermarks','image_groups','image_group_items','carousels','carousel_slides','songs','videos']
+    ['images','image_batches','image_previews','image_crops','image_watermarks','image_optimizations','image_groups','image_group_items','carousels','carousel_slides','media']
   end
 
   def page_subs

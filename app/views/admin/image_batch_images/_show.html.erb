@@ -1,0 +1,60 @@
+<div id="image_card_<%= image.id %>" class="card batch-card">
+<% if image.image && image.image.attached? %>
+  <%= image_tag(image.image.variant(resize: "400x400") , class: 'card-img-top') %>
+<% else
+  image_preview = ImagePreview.find_by(image_id: image.id, preview_type: 'original')
+  image_optimized = ImagePreview.find_by(image_id: image.id, preview_type: 'optimize')
+%>
+  <%= image_tag "/image_previews/original_#{image.id}.#{image_preview.file_extention}", class: 'card-img-top' %>
+  <%= link_to(raw('<button type="button" class="btn  btn-secondary btn-sm btn-right card-crop-btn">
+    <i class="icon-crop"></i> Crop</button>'), new_admin_image_crop_path(parent_id: image_preview.id), target: "image_#{image.id}") %>
+<% end %>
+<% if image.image && image.image.attached? %>
+      <%= file_size_div(image.image.blob.byte_size,400) %>
+<% else %>
+      <%= file_size_div(image_optimized ? image_optimized.size : image_preview.size ,400) %>
+<% end %>
+  <%= form_for([:admin,image], html: {remote: true, role: 'form', class: "formFor"}) do |f| %>
+    <div class="card-body">
+      <div class="form-group">
+        <%= f.label :name %><br/>
+        <%= f.text_field :name, :class => "form-control form-control-sm" %>
+      </div>
+      <div class="form-group">
+        <%= f.label :caption %><br/>
+        <%= f.text_field :caption, :class => "form-control form-control-sm" %>
+      </div>
+      <div class="form-group">
+        <%= f.label :description %><br/>
+        <%= f.text_field :description, :class => "form-control form-control-sm" %>
+      </div>
+      <div class="form-group">
+        <%= f.label :copyright_by %><br/>
+        <%= f.text_field :copyright_by, :class => "form-control form-control-sm" %>
+      </div>
+      <div class="form-group">
+        <%= f.label :copyright_year %><br/>
+        <%= f.select :copyright_year, options = (Time.now.year - 20)..(Time.now.year + 1), {selected: Time.now.year}, class: "form-control-sm" %>
+      </div>
+    </div>
+    <div class="card-footer">
+      <%= button_tag(type: 'submit', class:"btn  btn-primary btn-sm") do %>
+        <i class="icon-ok"></i>
+        Save
+      <% end %>
+      &nbsp;
+<% if image.image && image.image.attached? %>
+      <span><i class="icon-picture"></i> Published</span>
+<% elsif image_optimized %>
+      <%= link_to(raw('<button type="button" class="btn btn-danger btn-sm btn-center">
+        <i class="icon-picture"></i>
+          Publish</button>'), admin_image_path(image), target: "image_#{image.id}") %>
+
+<% else %>
+      <%= link_to(raw('<button type="button" class="btn btn-danger btn-sm btn-center">
+        <i class="icon-picture"></i>
+          Publish</button>'), admin_image_path(image), target: "image_#{image.id}") %>
+<% end %>
+    </div>
+  <% end %>
+</div>

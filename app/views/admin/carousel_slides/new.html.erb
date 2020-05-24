@@ -1,11 +1,27 @@
 <div class="row">
-	<div class="col-md-9">
+	<div class="col-md-12">
 		<div class="page-header">
-		  <h1>New Carousel Slide</h1>
+		  <h1>New Carousel Slide<%= 's' if @new_from_category || @new_from_iage_group %></h1>
 		</div>
 		<%= form_for([:admin, @carousel_slide],:html => {:role => 'form', :class => "formFor"}) do |f| %>
-			<%= render partial: 'form', locals: {f:f} %>
+			<%= f.hidden_field :carousel_id, value: @carousel.id %>
+<% if @new_from_category %>
+			<div class="form-group">
+				<%= f.label :category_id %>
+				<%= f.select :category_id, CategoriesImage.categories(@site.id).collect  { |c| [c.name, c.id] }, {prompt: 'Please Select'}, :class => "form-control" %>
+			</div>
+<% elsif @new_from_image_group %>
+			<div class="form-group">
+				<%= f.label :image_group_id %>
+				<%= f.select :image_group_id, ImageGroup.where(site_id: @site.id).order('name asc').collect  { |c| [c.name, c.id] }, {prompt: 'Please Select'}, :class => "form-control" %>
+			</div>
+<% else %>
+			<%= render partial: 'admin/images/image_select_table', locals: {selected_id: nil } %>
 			<hr />
+		  <%= f.hidden_field :image_id, id: "hidden_image_field" %>
+		  <h4>Selected: <span id="image_text"><%= @carousel_slide.image ? @carousel_slide.image.name : "not selected" %></span></h4>
+<% end %>
+		  <hr/>
 			<%= button_tag(type: 'submit', class:"btn  btn-outline-secondary btn-sm") do %>
 				<i class="icon-ok"></i>
 				Create
@@ -16,8 +32,4 @@
 			<% end %>
 		<% end %>
 	</div>
-	<div class="col-md-3">
-		<%= operations_menu(@carousel_slide,[@carousel]) %>
-	</div>
 </div>
-<%= render partial: 'admin/images/image_select', locals: {selected_id:  @carousel_slide.image ? @carousel_slide.image.id : nil} %>

@@ -7,9 +7,10 @@ class Category < ApplicationRecord
 	has_many :images, through: :categories_images
 	has_many :categories_meduim
 	has_many :media, through: :categories_medium
+	has_many :image_batches
 
 	validates :name, presence: true
-	validates :name, uniqueness: { :scope => :site_id }	
+	validates :name, uniqueness: { :scope => :site_id }
 	validates :nice_url, uniqueness: { scope: :site_id, message: "The URL >> %{nice_url} << generated from the category name is already in use." }
 
 	before_validation :gen_nice_url

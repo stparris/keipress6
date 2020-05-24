@@ -1,0 +1,139 @@
+<style>
+@media (min-width: 768px) {
+.carousel-multi-item-2 .col-md-3 {
+float: left;
+width: 25%;
+max-width: 100%; } }
+
+.carousel-multi-item-2 .card img {
+border-radius: 2px; }
+
+.carousel-mid {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+</style>
+
+<div id="image-gallery" class="carousel slide carousel-multi-item carousel-multi-item-2" <%= ' data-ride="carousel" ' if carousel.with_ride == true %> data-interval="false">
+  <div class="controls-top gallery-controls" style="font-size: 24px;text-align: center;padding: 10px;" >
+    <span style="padding-right: 10px;margin-top:2px;" class="gallery-name"><%= carousel.name %></span>
+    <a class="black-text" href="#image-gallery" data-slide="prev"><i class="fas fa-angle-left" style="color: #000;"></i></a>
+    <a class="black-text" href="#image-gallery" data-slide="next"><i class="fas fa-angle-right" style="color: #000;"></i></a>
+  </div>
+  <div id="image_gallery" class="carousel-inner" role="listbox">
+  </div>
+</div>
+
+<%
+slides = []
+carousel.carousel_slides.order('position asc').each_with_index do |carousel_slide|
+  next unless carousel_slide.image && carousel_slide.image.image.attached?
+  slide = {}
+  slide['id'] = carousel_slide.id
+  slide['name'] = carousel_slide.name
+  slide['caption'] = carousel_slide.caption
+  slide['thumb_url'] = url_for(carousel_slide.image.image.variant(resize: "768x768"))
+  slide['display_url'] = url_for(carousel_slide.image.image.variant(resize: "1366x1366"))
+  slides << slide
+end
+%>
+<script>
+$(document).ready(function(){
+  const slides = $.parseJSON('<%= raw(slides.to_json) %>');
+  function set_galery(width) {
+    let thumbs = "";
+    let i = 0;
+    if (width >= 768) {
+      alert('> 768 '+width);
+      $(slides).each(function(index,slide){
+        if (i === 0) {
+          thumbs += '<div class="carousel-item';
+          if (index === 0) {
+            thumbs += ' active">\n';
+          } else {
+            thumbs += '">\n';
+          }
+        }
+        thumbs += '  <div class="col-md-3 mb-3">\n';
+        thumbs += '    <div class="card">\n';
+        thumbs += '      <img class="img-fluid" src="'+slide.thumb_url+' alt="'+slide.name+'">\n';
+        thumbs += '      <div class="">'+slide.caption+'</div>\n'
+        thumbs += '    </div>\n';
+        thumbs += '  </div>\n';
+
+        if (i === 3 || index === slides.count - 1) {
+          thumbs += '</div>\n';
+        }
+        i += 1
+        if (i === 4) {
+          i = 0;
+        }
+      });
+    } else if (width > 380) {
+      alert('> 380 '+width);
+      $(slides).each(function(index,slide){
+        if (i === 0) {
+          thumbs += '<div class="carousel-item';
+          if (index === 0) {
+            thumbs += ' active">\n';
+          } else {
+            thumbs += '">\n';
+          }
+        }
+        thumbs += '<div class="carousel-item';
+        if (index === 0) {
+          thumbs += ' active">\n';
+        } else {
+          thumbs += '">\n';
+        }
+        thumbs += '  <img class="img-fluid" src="'+slide.thumb_url+'">\n';
+        thumbs += '</div>\n';
+
+        if (i === 1 || index === slides.count - 1) {
+          thumbs += '</div>\n';
+        }
+        i += 1
+        if (i === 2) {
+          i = 0;
+        }
+      });
+    } else {
+      alert('< 380 '+width);
+      $(slides).each(function(index,slide){
+        thumbs += '<div class="carousel-item';
+        if (index === 0) {
+          thumbs += ' active">\n';
+        } else {
+          thumbs += '">\n';
+        }
+        thumbs += '  <img class="img-fluid" src="'+slide.thumb_url+'">\n';
+        thumbs += '</div>\n';
+      });
+    }
+    $("#image_gallery").html(thumbs);
+    $('.carousel').carousel()
+  }
+  let width = $(window).width()
+  set_galery(width);
+
+  function check_width() {
+    let new_width = $(window).width();
+    console.log('width '+new_width+' old '+width);
+    if (new_width > width && width <= 768) {
+      set_galery(new_width);
+    } else if (new_width <= 768 && width > 768) {
+      set_galery(new_width);
+    }
+    width = new_width;
+  }
+  window.addEventListener("resize", check_width);
+
+});
+
+</script>
+
+
+
+
+

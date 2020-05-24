@@ -17,4 +17,8 @@
 	<%= f.label :name %>
 	<%= f.text_field :name, :class => "form-control" %>
 </div>
+<% if @content_item.content_type =~ /video/ %>
+<%= render partial: "admin/content_forms/form_video", locals: {f:f} %>
+<% else %>
 <%= render partial: "admin/content_forms/form_#{@content_item.content_type}", locals: {f:f} %>
+<% end %>

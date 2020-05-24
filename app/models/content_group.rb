@@ -1,5 +1,5 @@
 class ContentGroup < Content
- 
+
 	has_many :content_group_items, -> { order(position: :asc) }, foreign_key: "content_id", class_name: "ContentGroupItem"
 
 
@@ -10,7 +10,7 @@ class ContentGroup < Content
 	end
 
 	def add_group
-		self.name = "#{self.clear_group} Group"
+		self.name = "#{self.clear_group} Group" unless self.name =~ /Group$/
 	end
 
 

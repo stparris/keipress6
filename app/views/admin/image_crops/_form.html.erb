@@ -4,7 +4,7 @@
       <h1><icon class="icon-crop"></icon> Crop <%= @image_crop.image.name %></h1>
     </div>
     <div class="crop-workspace">
-      <img id="image" src="<%= cacheBustUrl("/image_previews/crop_#{@image_crop.id}.#{@image_crop.file_type}") %>" style="max-width:100%;" crossorigin="anonymous" />
+      <img id="image" src="<%= cacheBustUrl(@image_url) %>" style="max-width:100%;" crossorigin="anonymous" />
     </div>
     <div class="crop-controls">
       <div class="input-group mb-3">
@@ -71,7 +71,7 @@
         <button type="button" id="save" class="btn btn-outline-secondary btn-med">
           <i class="icon-crop"></i> Crop it!
         </button>
-        <%= link_to admin_image_path(@image_crop.image) do %>
+        <%= link_to admin_image_preview_path(@image_crop.image) do %>
         <button type="button" id="done" class="btn btn-outline-secondary btn-med">
           <i class="icon-cancel"></i> Done
         </button>
@@ -81,6 +81,8 @@
   </div>
 </div>
 <imgid id="image_id" name="image_id" value="<%= @image_crop.image.id %>" />
+<imgtype id="image_type" name="image_type" value="<%= @image_crop.content_type ? @image_crop.content_type : 'jpg' %>" />
+<imgcropid id="image_crop_id" name="image_crop_id" value="<%= @image_crop.id %>" />
 <div class="modal fade docs-cropped" id="getCroppedCanvasModal" role="dialog" aria-hidden="true" aria-labelledby="getCroppedCanvasTitle" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -107,7 +109,7 @@
         <h5 class="modal-title" id="loadingModalTitle"></h5>
       </div>
       <div class="modal-body">
-        <div class="activity-indicator">
+        <div id="modalMessage" class="activity-indicator">
           <icon class="icon-spin1 animate-spin"></icon>
         </div>
       </div>

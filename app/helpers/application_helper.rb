@@ -1,5 +1,11 @@
 module ApplicationHelper
 
+  def copyright(model)
+    years = model.copyright_year > 0 && Time.now.year < Time.now.year.to_i ? "#{video.copyright_year.to_S}-#{Time.now.year}" : Time.now.year
+    by = model.copyright_by =~ /\S+/ ? model.copyright_by : model.site.name
+    return "<icon class=\"icon-copyright\"></icon> #{years} #{by}"
+  end
+
   def process_macros(text)
     text = text.gsub(/{{year}}/,Time.now.year.to_s)
     text = text.gsub(/{{today}}/,Time.now.strftime("%-d %B %Y"))
@@ -78,9 +84,9 @@ module ApplicationHelper
       </div>
       <div class="modal-body">'
 
-  collections = icon_collections 
+  collections = icon_collections
     i = 1
-    collections.each_key do |collection| 
+    collections.each_key do |collection|
     modal += "
       <div>
         <icon id=\"zoomin_#{i}\" class=\"icon-zoom-in\"></icon>
@@ -88,8 +94,8 @@ module ApplicationHelper
         &nbsp;#{collection}
       </div>
       <div id=\"collection_#{i}\" style=\"display:none;\" class=\"icon-collection\">"
-    i += 1  
-    collections[collection].each do |icon| 
+    i += 1
+    collections[collection].each do |icon|
         modal += "
         <div class=\"input-group input-group-sm mb-3\">
           <div class=\"input-group-prepend\">
@@ -104,7 +110,7 @@ module ApplicationHelper
         </div>"
     end
        modal += '</div>'
-  end  
+  end
 
       modal += '
       </div>

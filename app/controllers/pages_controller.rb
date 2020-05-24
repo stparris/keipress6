@@ -2,8 +2,12 @@ class PagesController < ProductionController
   before_action :set_page
 
   layout 'application'
- 
+
   def show
+
+  end
+
+  def static_asset
 
   end
 
@@ -15,14 +19,14 @@ class PagesController < ProductionController
   private
 
     def set_page
-      if params[:nice_url].present? 
+      if params[:nice_url].present?
         @page = Page.find_by(nice_url: params[:nice_url], site_id: @site.id)
         if @page && @page.assignment =~ /booking-\S{2}-rental/
           rental = Rental.find(@page.assignment.split(/:/)[1])
-          if rental 
+          if rental
             @rental_booking = RentalBooking.new()
             @rental_booking.rental = rental
-          else 
+          else
             @page = nil
           end
         end
@@ -30,7 +34,7 @@ class PagesController < ProductionController
         @muparams = params[:muparams].present? ? params[:muparams] : nil
       end
       unless @page
-        @page = Page.find_by(site_id: @site.id, assignment: 'home') 
+        @page = Page.find_by(site_id: @site.id, assignment: 'home')
       end
     end
 end

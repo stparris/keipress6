@@ -20,15 +20,23 @@
 <% @images.where(site_id: @site.id).order('name asc').each do |image| %>
         <tr>
         	<td>
-        		<%= link_to image_tag(image.image.variant(resize: "100x100")), admin_image_path(image) if image.image.attached? && Rails.env.production? %>
-        	</td>
+  <% if image.image.attached? %>
+        		<%= link_to image_tag(image.image.variant(resize: "100x100")), admin_image_path(image) %>
+  <% elsif image.image_previews.any?
+    preview = ImagePreview.find_by(image_id: image.id,preview_type: 'original')
+  %>
+            <%= link_to image_tag("/image_previews/original_#{image.id}.#{preview.file_extention}", style: 'max-width: 100px'), admin_image_path(image) %>
+  <% end %>
+          </td>
           <td><%= link_to raw(image.name), admin_image_path(image) %></td>
           <td><%= link_to image.image.filename, admin_image_path(image) if image.image.attached? %></td>
           <td><%= link_to image.created_at.strftime("%Y-%m-%d"), admin_image_path(image) %></td>
   <% if image.image.attached? %>
   				<%= optimize_td(image) %>
+  <% elsif image.image_previews.any? %>
+          <td><%= link_to raw("<icon class=\"icon-cog\"></icon> Unpublished image"), admin_image_preview_path(image) %></td>
   <% else %>
-  				<td><%= link_to raw("<icon class=\"icon-upload\"></icon> Upload"), new_admin_image_preview_path(image) %></td>
+  				<td><%= link_to raw("<icon class=\"icon-upload\"></icon> Upload"), new_admin_image_preview_path(image_id: image.id) %></td>
   <% end %>
           <td><%= link_to raw('<i class="icon-zoom-in"></i>'), admin_image_path(image) %></td>
           <td><%= link_to raw('<i class="icon-pencil"></i>'), edit_admin_image_path(image) %></td>
@@ -41,5 +49,8 @@
 		<%= link_to new_admin_image_path do %>
 			<button type="button" class="btn  btn-outline-secondary btn-med"><i class="icon-plus"></i> New Image</button>
 		<% end %>
+    <%= link_to new_admin_image_batch_path do %>
+      <button type="button" class="btn  btn-outline-secondary btn-med"><i class="icon-plus"></i> New Image Batch</button>
+    <% end %>
 	</div>
 </div>

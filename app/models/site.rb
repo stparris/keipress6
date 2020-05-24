@@ -18,6 +18,7 @@ class Site < ApplicationRecord
 
 	has_many :images
 	has_many :image_groups
+  has_many :image_batches
 	has_many :carousels
 	has_many :media
 
@@ -31,7 +32,7 @@ class Site < ApplicationRecord
 	validates :name, presence: true
   validates :name, uniqueness: true
 
-  def self.locales 
+  def self.locales
   	{
   		'English'=>'en',
   		'Nederlands'=>'nl'
@@ -61,15 +62,15 @@ class Site < ApplicationRecord
 		options['N/A'] = 'n/a'
 		possible = ['home','articles']
 		possible.each do |p|
-			options[p.capitalize] = p 
+			options[p.capitalize] = p
 		end
 		self.blogs.order('name asc').each do |blog|
-			options["Blog #{blog.name}"] = "blog:#{cal.id}"
+			options["Blog #{blog.name}"] = "blog:#{blog.id}"
 		end
 		lang.each do |k,v|
 			self.rentals.order('name asc').each do |rental|
 				options["Booking for #{k} #{rental.name}"] = "booking-#{v}-rental:#{rental.id}"
-			end 
+			end
 		end
 =begin
 		Category.where(site_id: @site.id).order('name asc').each do |cat|

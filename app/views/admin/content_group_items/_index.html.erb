@@ -18,12 +18,16 @@
 			<tbody id="content_group_items" data-sort-items-url="<%= sort_admin_content_group_items_url %>">
 <% @content_group.content_group_items.each do |content_group_item| %>
         <tr class="content_group_items" id="content_group_item_<%= content_group_item.id %>">
-        	<td><span class="handle"><i class="icon-up-hand"></i></span></td>	
+        	<td><span class="handle"><i class="icon-up-hand"></i></span></td>
           <td><%= link_to content_group_item.name, admin_content_group_item_path(content_group_item) %></td>
-          <td><%= link_to content_group_item.content_type, admin_content_group_item_path(content_group_item) %></td>
+          <td><%= link_to content_group_item.content_type.split(/_/).map(&:capitalize).join(' '), admin_content_group_item_path(content_group_item) %></td>
           <td>
-  <% if content_group_item.content_type == 'medium' %>
-          	<%= image_tag(content_group_item.medium.image.image.variant(resize: "100x100")) %>
+  <% if content_group_item.content_type =~ /media|video/ %>
+    <% if content_group_item.video.image && content_group_item.video.image.image.attached? %>
+          	<%= image_tag(content_group_item.video.image.image.variant(resize: "100x100")) %>
+    <% else %>
+            No image
+    <% end %>
   <% elsif content_group_item.content_type == 'list_group' %>
           	<%= content_group_item.list_group.name %>
   <% elsif content_group_item.content_type == 'carousel' %>
@@ -35,7 +39,7 @@
   <% else %>
   					<%= raw(truncate_with_tags(content_group_item.body)) %>
   <% end %>
-        	</td>  
+        	</td>
           <td><%= link_to raw('<i class="icon-zoom-in"></i>'), admin_content_group_item_path(content_group_item) %></td>
           <td><%= link_to raw('<i class="icon-pencil"></i>'), edit_admin_content_group_item_path(content_group_item) %></td>
           <td><%= link_to raw('<i class="icon-trash"></i>'), admin_content_group_item_path(content_group_item), method: :delete, data: { confirm: 'Are you sure?' } %></td>

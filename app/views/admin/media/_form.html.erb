@@ -1,22 +1,20 @@
-<% if @medi.errors.any? %>
+<% if @medium.errors.any? %>
 <div id="error_explanation">
   <div class="alert alert-danger">
-		<%= pluralize(@medi.errors.count, "error") %> prohibited this page from being saved:
+		<%= pluralize(@medium.errors.count, "error") %> prohibited this page from being saved:
 	</div>
   <ul>
-  <% @medi.errors.full_messages.each do |msg| %>
+  <% @medium.errors.full_messages.each do |msg| %>
     <li><%= msg %></li>
   <% end %>
   </ul>
 </div>
 <% end %>
+<%= f.hidden_field :site_id, value: @site.id %>
+<%= f.hidden_field :type, value: 'Video' %>
 <div class="form-group">
 	<%= f.label :name %>
 	<%= f.text_field :name, :class => "form-control" %>
-</div>
-<div class="form-group">
-	<%= f.label :type %>
-	<%= f.text_field :type, :class => "form-control" %>
 </div>
 <div class="form-group">
 	<%= f.label :caption %>
@@ -24,25 +22,16 @@
 </div>
 <div class="form-group">
 	<%= f.label :copyright_year %>
-	<%= f.select :copyright_year,{'Yes'=>'1','No'=>'0'}, {}, :class => "form-control" %>
+	<%= f.select :copyright_year, options = (Time.now.year - 20)..(Time.now.year + 1), {selected: Time.now.year}, class: "form-control" %>
 </div>
 <div class="form-group">
 	<%= f.label :copyright_by %>
 	<%= f.text_field :copyright_by, :class => "form-control" %>
 </div>
 <div class="form-group">
-	<%= f.label :description %>
-	<%= f.text_area :description, 'data-provider': :summernote, :class => "form-control" %>
+  <label>Link or embedded code</label>
+  <div class="form-control-border">
+    <%= f.text_area :description, :class => "form-control codemirror-html" %>
+  </div>
 </div>
-<div class="form-group">
-	<%= f.label :image_id %>
-	<%= f.select :image_id, Image.order('name asc').collect { |c| [c.name, c.id] }, {prompt: 'Please Select'}, :class => "form-control" %>
-</div>
-<div class="form-group">
-	<%= f.label :image_variant %>
-	<%= f.text_field :image_variant, :class => "form-control" %>
-</div>
-<div class="form-group">
-	<%= f.label :site_id %>
-	<%= f.select :site_id, Site.order('name asc').collect { |c| [c.name, c.id] }, {prompt: 'Please Select'}, :class => "form-control" %>
-</div>
+

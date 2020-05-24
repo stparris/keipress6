@@ -1,0 +1,8 @@
+$("#image_<%= @image.id %>").html("<%= escape_javascript(render(:partial => 'admin/image_batch_images/show', locals: {image: @image} )) %>");
+$("#image_card_<%= @image.id %>").css({borderColor:'green'});
+$("#image_card_<%= @image.id %>").css({backgroundColor:'#e7f3f3'});
+setTimeout(() => { $("#image_card_<%= @image.id %>").css({backgroundColor:'#fff'}) }, 1000);
+
+
+
+

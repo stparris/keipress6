@@ -2,7 +2,7 @@ class Admin::DomainsController < AdminController
   before_action :set_domain, only: [:show, :edit, :update, :destroy]
 
   layout 'admins'
-  
+
   # GET /domains
   # GET /domains.json
   def index
@@ -38,10 +38,10 @@ class Admin::DomainsController < AdminController
           format.html { render :new }
           format.json { render json: @domain.errors, status: :unprocessable_entity }
         end
-      rescue Exception => e 
+      rescue Exception => e
         flash[:danger] = "Oops! Something went wrong: #{e.message}"
         format.html { render :new }
-      end        
+      end
     end
   end
 
@@ -58,10 +58,10 @@ class Admin::DomainsController < AdminController
           format.html { render :edit }
           format.json { render json: @domain.errors, status: :unprocessable_entity }
         end
-      rescue Exception => e 
+      rescue Exception => e
         flash[:danger] = "Oops! Something went wrong: #{e.message}"
         format.html { render :new }
-      end    
+      end
     end
   end
 
@@ -75,17 +75,17 @@ class Admin::DomainsController < AdminController
           format.html { redirect_to admin_domains_url }
           format.json { head :no_content }
         end
-      rescue Exception => e 
+      rescue Exception => e
         flash[:danger] = "Oops! Something went wrong: #{e.message}"
         format.html { render :new }
-      end          
+      end
     end
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_domain
-      @domain = Domain.find_by(id: params[:id],site_id: @site.id)
+      @domain = Domain.find(params[:id])
       redirect_to admin_errors_url(error_template: '403') unless @domain
     end
 

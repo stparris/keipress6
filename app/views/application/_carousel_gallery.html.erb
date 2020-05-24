@@ -1,0 +1,229 @@
+<style>
+
+.carousel {
+  width: 100%;
+}
+
+.gallery-controls a:hover {
+  background-color: transparent;
+}
+
+.slide-box {
+  display: flex;
+  justify-content: space-between;
+}
+
+.slide-box a {
+  align-self: flex-start;
+  max-width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-right: 2px;
+  padding-left: 2px;
+}
+
+.slide-box a:hover {
+  cursor: pointer;
+  background-color: transparent;
+}
+
+.slide-box img {
+  width: 100%;
+  height: 100%;
+}
+
+.modal-body img {
+  width: 100%;
+  height: 100%;
+}
+
+@media (min-width: 576px) and (max-width: 767.98px) {
+  .slide-box a {
+    -ms-flex: 0 0 50%;
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .slide-box a {
+    -ms-flex: 0 0 33.3333%;
+    flex: 0 0 33.3333%;
+    max-width: 33.3333%;
+  }
+}
+
+@media (min-width: 992px)
+{
+  .slide-box a {
+    -ms-flex: 0 0 25%;
+    flex: 0 0 25%;
+    max-width: 25%;
+  }
+}
+
+.carousel-caption {
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  border-radius: .5rem;
+}
+
+</style>
+
+<div id="image_gallery" class="carousel slide">
+  <div class="controls-top gallery-controls" style="font-size: 24px;text-align: center;padding: 10px;" >
+    <span style="padding-right: 10px;margin-top:2px;" class="gallery-name"><%= carousel.name %></span>
+    <a class="black-text" href="#image_gallery" data-slide="prev"><i class="fas fa-angle-left" style="color: #000;"></i></a>
+    <a class="black-text" href="#image_gallery" data-slide="next"><i class="fas fa-angle-right" style="color: #000;"></i></a>
+  </div>
+  <div id="image_gallery_inner" class="carousel-inner" role="listbox">
+  </div>
+</div>
+
+<%
+slides = []
+carousel.carousel_slides.order('position asc').each_with_index do |carousel_slide|
+  next unless carousel_slide.image && carousel_slide.image.image.attached?
+  slide = {}
+  slide['id'] = carousel_slide.id
+  slide['name'] = carousel_slide.name
+  slide['caption'] = carousel_slide.caption
+  slide['thumb_url'] = url_for(carousel_slide.image.image.variant(resize: "768x768"))
+  slide['display_url'] = url_for(carousel_slide.image.image.variant(resize: "1366x1366"))
+  slides << slide
+end
+%>
+
+<!-- image modal -->
+<div id="gallery_modal" class="modal gallery-modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 id="gallery_modal_title" class="modal-title"></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <img id="gallery_modal_image" src="" alt="" title="">
+      </div>
+      <div class="modal-footer">
+        <p class="mr-auto" id="gallery_modal_caption"></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+$(document).ready(function(){
+  let slides = $.parseJSON('<%= raw(slides.to_json) %>');
+  let options = $.parseJSON('<%= raw(carousel.to_json) %>');
+  let base_interval = options.interval > 0 ? options.interval : false;
+  function set_carousel() {
+    $("#image_gallery").carousel('dispose');
+    console.log('resize '+width);
+    $("#image_gallery").carousel({
+      interval: interval,
+      pause: <%= raw(carousel.with_pause ? '"hover"' : 'false') %>,
+      ride: <%= raw(carousel.with_ride ? '"carousel"' : 'false') %>
+    });
+  }
+
+  function set_galery(width) {
+    let thumbs = "";
+    let i = 0;
+    $(slides).each(function(index,slide){
+      if (i === 0) {
+        thumbs += '\n<div class="carousel-item';
+        if (index === 0) {
+          thumbs += ' active">\n';
+        } else {
+          thumbs += '">\n';
+        }
+        thumbs += '<div class="slide-box">\n';
+      }
+      thumbs += '   <a class="gallery-thumbnail" id="slide_'+index+'"><img src="'+slide.thumb_url+'"></a>\n';
+      if (width >= 992) {
+        // 4 per slide
+        if (i === 3 || index === slides.length - 1) {
+          thumbs += '</div>\n</div>\n';
+        }
+        i += 1
+        if (i === 4) {
+          i = 0;
+        }
+      } else if (width >= 768 && width < 992) {
+        // 3 per slide
+        if (i === 2 || index === slides.length - 1) {
+          thumbs += '</div>\n</div>\n';
+        }
+        i += 1
+        if (i === 3) {
+          i = 0;
+        }
+      } else if (width >= 576 && width < 768) {
+        // 2 per slide
+        if (i === 1 || index === slides.length - 1) {
+          thumbs += '</div>\n</div>\n';
+        }
+        i += 1
+        if (i === 2) {
+          i = 0;
+        }
+      }
+    });
+    $("#image_gallery_inner").html(thumbs);
+    $(slides).each(function(index,slide){
+      $("#slide_"+slide.id+", img").attr('alt',slide.name);
+      $("#slide_"+slide.id+", img").attr('title',slide.caption);
+    });
+    set_carousel();
+  }
+
+  let width = $(window).width();
+  let interval = images_per_slide(width) * base_interval;
+  set_galery(width);
+
+  function images_per_slide(width) {
+    if (width >= 992) {
+      return 4;
+    } else if (width >= 768 && width < 992) {
+      return 3;
+    } else if (width >= 576 && width < 768) {
+      return 2;
+    } else {
+      return 1;
+    }
+  }
+
+  function check_width() {
+    let new_width = $(window).width();
+    // console.log('width '+new_width+' old '+width);
+    let img_per_slide = images_per_slide(new_width);
+    if (img_per_slide !== images_per_slide(width)) {
+      set_galery(new_width);
+      interval = img_per_slide * base_interval;
+    }
+    width = new_width;
+  }
+  window.addEventListener("resize", check_width);
+  // const thumb = document.querySelector('.gallery-thumbnail');
+  // thumb.addEventListener("click", showGalleryModal);
+  // function showGalleryModal(e) {
+  $(document.body).on('click', '.gallery-thumbnail' ,function(){
+    let index = this.id.split('_')[1]
+    console.log('modal open');
+    $("#image_gallery").carousel('pause');
+    let slide = slides[index];
+    $("#gallery_modal_title").html(slide.name);
+    $("#gallery_modal_image").attr('src',slide.display_url);
+    $("#gallery_modal_image").attr('alt',slide.caption);
+    $("#gallery_modal_caption").html(slide.caption);
+    $("#gallery_modal").modal('show');
+  });
+
+  $('#gallery_modal').on('hidden.bs.modal', function (e) {
+    $("#image_gallery").carousel('cycle');
+  });
+});
+</script>

@@ -9,25 +9,30 @@
 					<th>Position</th>
 					<th>Name</th>
 					<th>Image</th>
-					<th></th>
+					<th>Published?</th>
+          <th></th>
 					<th></th>
 				</tr>
 			</thead>
 			<tbody id="image_group_items" data-sort-items-url="<%= sort_admin_image_group_items_url %>">
 <% @image_group.image_group_items.order('position asc').each do |image_group_item| %>
+  <% published = image_group_item.image.image.attached? ? true : false %>
         <tr id="image_group_item_<%= image_group_item.id %>">
-        	<td><span class="handle"><i class="icon-up-hand"></i></span></td>	
+        	<td><span class="handle"><i class="icon-up-hand"></i></span></td>
           <td><%= link_to raw(image_group_item.image.name), admin_image_group_item_path(image_group_item) %></td>
           <td>
-  <% if image_group_item.image.image.attached? %>
+  <% if published %>
   					<%= image_tag url_for(image_group_item.image.image.variant(resize: '100x100')), class: 'img-fluid' %>
-  <% else %>
-          	<%= link_to raw(image_group_item.image.name), admin_image_path(image_group_item) %>
-  <% end %>        		
+  <% else
+    preview = ImagePreview.find_by(image_id: image_group_item.image_id, preview_type: 'original')
+  %>
+          	<%= link_to image_tag("/image_previews/original_#{preview.image_id}.#{preview.file_extention}", style: 'max-width: 100px'), admin_image_path(image_group_item.image) %>
+  <% end %>
           </td>
+          <td><%= published ? 'Yes' : 'No' %></td>
           <td>
   					<%= link_to raw('<i class="icon-zoom-in"></i>'), admin_image_group_item_path(image_group_item) %>
-  				</td>     
+  				</td>
           <td><%= link_to raw('<i class="icon-trash"></i>'), admin_image_group_item_path(image_group_item), method: :delete, data: { confirm: 'Are you sure?' } %></td>
         </tr>
 <% end %>

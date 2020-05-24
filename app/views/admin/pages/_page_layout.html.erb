@@ -1,14 +1,14 @@
 <div class="page-layout">
-	<p><a class="page-containers" href="#"><icon class="icon-cog"></icon> Manage Containers</a></p>	
+	<p><a class="page-containers" href="#"><icon class="icon-cog"></icon> Manage Containers</a></p>
 <% @page.containers.order('position asc').each do |container| %>
 	<div class="container-layout">
-		<p><%= container.container_type.capitalize %> Container: <%= container.name %> 
+		<p><%= container.container_type.capitalize %> Container: <%= container.name %>
 			<%= link_to raw("<icon class=\"icon-pencil\"></icon>"), edit_admin_container_path(container, page_id: @page.id) %>
 		</p>
 		<%= raw("<p>CSS: #{container.css_classes}</p>") if container.css_classes.match /\S+/ %>
 	<% if container.container_type.match /navbar|nav/ %>
 		<div class="navigation-layout">
-			<p>Navigation: <%= container.navigation.name %> 
+			<p>Navigation: <%= container.navigation.name %>
 				<%= link_to raw("<icon class=\"icon-pencil\"></icon>"), edit_admin_navigation_path(container.navigation, page_id: @page.id) %>
 			</p>
 			<p>
@@ -23,21 +23,21 @@
 			</div>
 		<% end %>
 		</div>
-	
+
 	<% elsif container.container_type == 'carousel' %>
-		<p>Carousel: <%= container.carousel.name %>	
+		<p>Carousel: <%= container.carousel.name %>
 		<%= link_to raw("<icon class=\"icon-zoom-in\"></icon>"), admin_carousel_path(container.carousel_id) %>
-		</p>			
+		</p>
 	<% elsif container.container_type == 'image' %>
 		<div class="row-layout">
-			<p>Image: <%= container.image.name %>	
-				<%= link_to raw("<icon class=\"icon-zoom-in\"></icon>"), admin_image_path(container.image_id) %>			
+			<p>Image: <%= container.image.name %>
+				<%= link_to raw("<icon class=\"icon-zoom-in\"></icon>"), admin_image_path(container.image_id) %>
 			</p>
 			<%= image_tag(url_for(container.image.image.variant(resize: '150x150')), class: 'img-fluid') if container.image.image.attached? %>
-		</div>	
+		</div>
 	<% elsif container.container_type == 'video' %>
-		<p>Video: <%= container.video.name %>	
-		<%= link_to raw("<icon class=\"icon-zoom-in\"></icon>"), admin_video_path(container.medium_id) %>			
+		<p>Video: <%= container.video.name %>
+		<%= link_to raw("<icon class=\"icon-zoom-in\"></icon>"), admin_video_path(container.medium_id) %>
 		</p>
 	<% elsif container.container_type == 'jumbotron' %>
 
@@ -48,22 +48,22 @@
 				<%= link_to raw("<icon class=\"icon-pencil\"></icon>"), edit_admin_container_row_path(row.id, page_id: @page.id) %>
 			</p>
 			<p>CSS: <%= row.css_classes %></p>
-			
+
 			<% row.row_columns.order('position asc').each do |col| %>
 			<div class="col-layout">
 				<p>Column: <%= col.position %>
 					<%= link_to raw("<icon class=\"icon-pencil\"></icon>"), edit_admin_row_column_path(col.id, page_id: @page.id) %>
 				</p>
 				<%= raw("<p>CSS: #{col.css_classes}</p>") if col.css_classes =~ /\S+/ %>
-				<div class="content-layout">		
+				<div class="content-layout">
 				<% if col.content_type == 'content_group' %>
-					<p>Content: <%= col.content.name %>	
+					<p>Content: <%= col.content.name %>
 					<%= link_to raw("<icon class=\"icon-zoom-in\"></icon>"), admin_content_group_path(col.content_id) %>
 					</p>
 					<%= raw("<p>CSS: #{col.content.css_classes}</p>") if col.content.css_classes =~ /\S+/ %>
 					<% col.content.content_items.order('position asc').each do |item| %>
 					<div class="item-layout">
-						<p><%= item.content_type %>: <%= item.name.capitalize %> <%= item.name %> 
+						<p><%= item.content_type %>: <%= item.name.capitalize %> <%= item.name %>
 							<%= link_to raw("<icon class=\"icon-pencil\"></icon>"), edit_admin_content_group_item_path(item) %>
 						</p>
 						<% if item.content_type == "text" %>
@@ -71,39 +71,39 @@
 						<% elsif item.content_type == "html" %>
 							<%= raw(item.body) %>
 						<% elsif item.content_type == "carousel" %>
-							<% if item.carousel.carousel_slides.any? 
+							<% if item.carousel.carousel_slides.any?
 							 if	item.carousel.carousel_slides.first.image.image.attached?
 							%>
 							<%= image_tag(url_for(item.carousel.carousel_slides.first.image.image.variant(resize: '150x150')), class: 'img-fluid') %>
-							<% end 
+							<% end
 								end %>
 						<% end %>
 					</div>
 					<% end %>
 				<% elsif col.content_type == 'image_group' %>
-					<p>Image Group: <%= col.image_group.name %>	
-					<%= link_to raw("<icon class=\"icon-zoom-in\"></icon>"), admin_image_group_path(col.image_group_id) %>				
+					<p>Image Group: <%= col.image_group.name %>
+					<%= link_to raw("<icon class=\"icon-zoom-in\"></icon>"), admin_image_group_path(col.image_group_id) %>
 					</p>
 				<% elsif col.content_type == 'category' %>
-					<p>Category: <%= col.category.name %>	
+					<p>Category: <%= col.category.name %>
 					<%= link_to raw("<icon class=\"icon-zoom-in\"></icon>"), admin_category_path(col.category_id) %>
-					</p>	
-				<% elsif col.content_type == 'carousel' %>
-					<p>Carousel: <%= col.carousel.name %>	
-					<%= link_to raw("<icon class=\"icon-zoom-in\"></icon>"), admin_carousel_path(col.carousel_id) %>			
 					</p>
-					<% if col.carousel.carousel_slides.any? 
-					 if	col.carousel.carousel_slides.first.image.image.attached?
+				<% elsif col.content_type == 'carousel' %>
+					<p>Carousel: <%= col.carousel.name %>
+					<%= link_to raw("<icon class=\"icon-zoom-in\"></icon>"), admin_carousel_path(col.carousel_id) %>
+					</p>
+					<% if col.carousel.carousel_slides.any?
+					 if	col.carousel.carousel_slides.first.image && col.carousel.carousel_slides.first.image.image.attached?
 					%>
 					<%= image_tag(url_for(col.carousel.carousel_slides.first.image.image.variant(resize: '150x150')), class: 'img-fluid') %>
-					<% end 
+					<% end
 						end %>
 				<% elsif col.content_type == 'list_group' %>
-					<p>List group: <%= col.list_group.name %>	
-					<%= link_to raw("<icon class=\"icon-zoom-in\"></icon>"), admin_list_group_path(col.list_group_id) %>	
-					</p>		
+					<p>List group: <%= col.list_group.name %>
+					<%= link_to raw("<icon class=\"icon-zoom-in\"></icon>"), admin_list_group_path(col.list_group_id) %>
+					</p>
 				<% end %>
-				</div>				
+				</div>
 			</div>
 			<% end %>
 		</div>
@@ -114,4 +114,3 @@
 	<p><a class="page-containers" href="#"><icon class="icon-cog"></icon> Manage Containers</a></p>
 </div>
 
-	

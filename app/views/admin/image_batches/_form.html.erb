@@ -1,0 +1,92 @@
+<% if @image_batch.errors.any? %>
+<div id="error_explanation">
+  <div class="alert alert-danger">
+    <%= pluralize(@image_batch.errors.count, "error") %> prohibited this page from being saved:
+  </div>
+  <ul>
+  <% @image_batch.errors.full_messages.each do |msg| %>
+    <li><%= msg %></li>
+  <% end %>
+  </ul>
+</div>
+<% end %>
+<%= f.hidden_field :site_id, value: @site.id %>
+<div class="form-group">
+  <%= f.label :name %>
+  <div class="input-group mb-3">
+  <%= f.text_field :name, value: @image_batch.name ? @image_batch.name : Time.zone.now.strftime("%Y%m%d") + "-#{rand(100000)}", :class => "form-control" %>
+  </div>
+</div>
+<h4>Naming</h4>
+<div class="form-group">
+  <div class="form-check">
+    <input id="image_batch_use_filename" class="form-check-input" type="radio" name="image_batch[naming_method]" value="use_filename"<%= ' checked' if @image_batch.naming_method == 'use_filename' %>>
+    <label class="form-check-label" for="use_filename">
+      Use filename
+    </label>
+  </div>
+  <div class="form-check">
+    <input id="image_batch_rename_with_sequence" class="form-check-input" type="radio" name="image_batch[naming_method]" value="rename_with_sequence"<%= ' checked' if @image_batch.naming_method == 'rename_with_sequence' %>>
+    <label class="form-check-label" for="name_with_sequence">
+      Rename with sequence
+    </label>
+  </div>
+</div>
+<small>Example: <em>new image name n</em>, where sequence number <em>n</em> is 1,2,3...</small>
+<div class="form-group">
+  <%= f.label :naming_prefix %>
+  <div class="input-group mb-3">
+  <%= f.text_field :naming_prefix,  placeholder: 'new image name', :class => "form-control" %>
+    <div class="input-group-append">
+      <span class="input-group-text" id="inputGroup-sizing-default">Sequence # added</span>
+    </div>
+  </div>
+</div>
+<h4>Defaults</h4>
+<div class="form-group">
+  <%= f.label :caption %>
+  <%= f.text_field :caption, :class => "form-control" %>
+</div>
+<div class="form-group">
+  <%= f.label :description %>
+  <%= f.text_field :description, :class => "form-control" %>
+</div>
+<div class="form-group">
+  <%= f.label :copyright_by %>
+  <%= f.text_field :copyright_by, :class => "form-control" %>
+</div>
+<div class="form-group">
+  <%= f.label :copyright_year %>
+  <%= f.select :copyright_year, options = (Time.now.year - 20)..(Time.now.year + 1), {selected: Time.now.year}, class: "form-control" %>
+</div>
+<h4>Optimize & Publish</h4>
+<div class="form-group">
+  <%= f.label :quality %>
+  <%= f.select :quality, {'Skip'=>'0','Maximum 100'=>'100','High 80'=>'80','Medium 65'=>'65','Low 30'=>'30'}, {}, :class => "form-control" %>
+</div>
+<div class="form-group">
+  <%= f.label :publish %>
+  <%= f.select :publish, {'No'=>'false','Yes'=>'true'}, {}, :class => "form-control" %>
+</div>
+<h4>Assign</h4>
+<div class="form-group">
+  <%= f.label :image_group %>
+  <div class="input-group mb-2">
+    <%= f.select :image_group_id, ImageGroup.where(site_id: @site.id).order("name asc").collect { |c| [c.name, c.id] }, {prompt: 'Choose...'}, :class => "form-control" %>
+    <div class="input-group-prepend">
+      <div class="input-group-text">New</div>
+    </div>
+    <%= f.text_field :image_group_name, class: 'form-control', placeholder: 'Image group name' %>
+  </div>
+</div>
+
+<div class="form-group">
+  <%= f.label :category %>
+  <div class="input-group mb-2">
+    <%= f.select :category_id, Category.where(site_id: @site.id).order("name asc").collect { |c| [c.name, c.id] }, {prompt: 'Choose...'}, :class => "form-control" %>
+    <div class="input-group-prepend">
+      <div class="input-group-text">New</div>
+    </div>
+    <%= f.text_field :category_name, class: 'form-control', placeholder: 'Category name' %>
+  </div>
+</div>

@@ -167,9 +167,9 @@
 			padding:5px 0 10px 0;
 			background-color:$operations-background;
 			border:solid 2px $operations-background;
-			-moz-border-radius:5px;
-			border-radius: 5px;
-			-webkit-border-radius: 5px;
+			-moz-border-radius:10px;
+			border-radius: 10px;
+			-webkit-border-radius: 10px;
 			.nav-item {
 				padding-top: 7px;
 			}
@@ -203,6 +203,37 @@
 	    	margin-right:2px;
 	    	margin-bottom:2px;
 	    }
+		}
+		.image-bytes-angry {
+			margin-top: 5px;
+			margin-bottom: 5px;
+			padding: 5px;
+			width:100%;
+			background-color: #ffb399;
+		}
+		.image-bytes-surprised {
+			margin-top: 5px;
+			margin-bottom: 5px;
+			padding: 5px;
+			width:100%;
+			background-color: #ffb366;
+		}
+		.image-bytes-unhappy {
+			margin-top: 5px;
+			margin-bottom: 5px;
+			padding: 5px;
+			width:100%;
+			background-color: #ffffb3;
+		}
+		.image-bytes-happy {
+			margin-top: 5px;
+			margin-bottom: 5px;
+			padding: 5px;
+			width:100%;
+			background-color: #ccffcc;
+		}
+		.modal-image {
+			margin-bottom: 10px;
 		}
 		.crop-workspace {
 			width: 100%;
@@ -241,6 +272,9 @@
 				margin-top: 50px;
 				margin-bottom: 50px;
 			}
+		}
+		.carousel-slide-updated {
+			background-color: #ccffcc !important;
 		}
 		#theme_colors {
 			.form-group {
@@ -315,6 +349,12 @@
 			border-radius: 5px;
 			-webkit-border-radius: 5px;
 		}
+
+		.card-crop-btn {
+			z-index: 100;
+			margin-top: -40px;
+			margin-right: 10px;
+		}
 		.page-layout {
 			width:100%;
 			font-size: 10px;
@@ -356,7 +396,7 @@
 			}
 		}
 		.image-selected {
-			background-color: #E7F3F3;
+			background-color: #99ff99 !important;
 		}
 	}
 

@@ -1,13 +1,13 @@
 class ListGroup < ApplicationRecord
-	
+
 	belongs_to :site
-	
+
 	has_many :list_group_items
 	has_many :navigation_items
 
 	validates :name, presence: true
 	validates :name, uniqueness: { scope: :site_id, message: " already exists" }
-	
+
 	before_save :add_group
 
 	def clear_group
@@ -15,7 +15,7 @@ class ListGroup < ApplicationRecord
 	end
 
 	def add_group
-		self.name = "#{self.clear_group} Group"
+		self.name = "#{self.clear_group} Group" unless self.name =~ /Group$/
 	end
 
 end

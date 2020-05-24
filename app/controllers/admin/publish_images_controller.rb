@@ -13,7 +13,7 @@ class Admin::PublishImagesController < AdminController
       begin
         @image_publish.image.purge if @image_publish.image.attached?
         preview_file = "#{Rails.root}/image_previews/#{@image_preview.preview_type}_#{@image_preview.id}.#{@image_preview.image_type}"
-        @image_crop.image.attach(io: File.open(preview_file), filename: "#{@image_preview.file_name}", content_type: "image/#{@image_preview.image_type}")
+        @image_crop.image.attach(io: File.open(preview_file), filename: "#{@image_preview.source_file}", content_type: "image/#{@image_preview.image_type}")
         @image_crop.save
         flash[:success] = 'Image was successfully published.'
         format.html { redirect_to admin_image_publish_url(@image_publish) }

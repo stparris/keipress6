@@ -1,0 +1,18 @@
+<h4>Cropped Image</h4>
+<%= image_tag "/image_previews/crop_#{@image.id}.#{@image_crop.file_extention}?#{rand(10000000)}", class: 'img-fluid' %>
+<%= file_size_div(@image_crop.size, @image_crop.width) %>
+<h6>Dimensions: Width <%= @image_crop.width %>px, Height <%= @image_crop.height %>px</h6>
+<div class="image-buttons">
+  <%= link_to edit_admin_image_crop_path(@image_crop) do %>
+  <button type="button" class="btn btn-outline-secondary btn-sm"><icon class="icon-crop"></icon> Crop More</button>
+  <% end %>
+  <div style="display:none;">
+    <%= link_to new_admin_image_watermark_path(parent_id: @image_crop) do %>
+    <button type="button" class="btn btn-outline-secondary btn-sm"><icon class="icon-water"></icon> Watermark</button>
+    <% end %>
+  </div>
+  <%= link_to new_admin_image_optimization_path(parent_id: @image_crop.id) do %>
+    <button type="button" class="btn btn-outline-secondary btn-sm"><icon class="icon-ok"></icon> Optimize Image
+    </button>
+  <% end %>
+</div>

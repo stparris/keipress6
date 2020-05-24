@@ -41,10 +41,10 @@ class Admin::ContentGroupItemsController < AdminController
           format.html { redirect_to admin_content_group_item_url(@content_item) }
           format.json { render :show, status: :created, location: @content_item }
         end
-      rescue Exception, ContentGroupItem::ExclusiveArcError => e 
+      rescue Exception, ContentGroupItem::ExclusiveArcError => e
         flash[:danger] = "Error: #{e.message}"
         format.html { render :new }
-      end   
+      end
     end
   end
 
@@ -59,14 +59,14 @@ class Admin::ContentGroupItemsController < AdminController
           if params[:set_content_group_text_item]
             redirect_to admin_content_group_text_items_url
           else
-            redirect_to admin_content_group_item_url(@content_item) 
+            redirect_to admin_content_group_item_url(@content_item)
           end
         end
         format.json { render :show, status: :ok, location: @content_item }
-      rescue Exception, ContentGroupItem::ExclusiveArcError => e 
+      rescue Exception, ContentGroupItem::ExclusiveArcError => e
         flash[:danger] = "Error: #{e.message}"
         format.html { render :edit }
-      end   
+      end
     end
   end
 
@@ -74,16 +74,16 @@ class Admin::ContentGroupItemsController < AdminController
   # DELETE /content_group_items/1.json
   def destroy
     respond_to do |format|
-      begin  
+      begin
         if @content_item.destroy
           flash[:success] = 'Content item was successfully removed.'
           format.html { redirect_to admin_content_group_url(@content_group) }
           format.json { head :no_content }
         end
-      rescue Exception => e 
+      rescue Exception => e
         flash[:danger] = "Oops! Something went wrong: #{e.message}"
         format.html { render :new }
-      end      
+      end
     end
   end
 
@@ -96,7 +96,7 @@ class Admin::ContentGroupItemsController < AdminController
 
     def set_new
       @content_item = ContentGroupItem.new
-      @content_item.content_type = params[:content_type].present? ? params[:content_type] : nil 
+      @content_item.content_type = params[:content_type].present? ? params[:content_type] : nil
       content_id = params[:content_group_id].present? ? params[:content_group_id] : params[:content_id]
       @content_item.content_group = ContentGroup.find(content_id)
     end

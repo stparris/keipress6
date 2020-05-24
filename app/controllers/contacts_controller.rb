@@ -12,7 +12,7 @@ class ContactsController < ApplicationController
         html = html.gsub(/\{\{last_name\}\}/,@contact.last_name)
         text = text.gsub(/\{\{last_name\}\}/,@contact.last_name)
         mail_server = MailServer.find_by(site_id: @site.id, active: true)
-        UserContactJob.perform_later(mail_server,@user_template.from_email,@contact.email,@user_template.subject,html,text)
+        UserContactJob.perform_later(mail_server.id,@user_template.from_email,@contact.email,@user_template.subject,html,text)
         html = @admin_template.body_html.gsub(/\{\{first_name\}\}/,@contact.first_name)
         text = @admin_template.body_text.gsub(/\{\{first_name\}\}/,@contact.first_name)
         html = html.gsub(/\{\{last_name\}\}/,@contact.last_name)
@@ -22,13 +22,13 @@ class ContactsController < ApplicationController
         html = html.gsub(/\{\{details\}\}/,@contact.details)
         text = text.gsub(/\{\{details\}\}/,@contact.details)
 
-        AdminContactJob.perform_later(mail_server,@admin_template.from_email,@admin_template.subject,html,text)
+        AdminContactJob.perform_later(mail_server.id,@admin_template.from_email,@admin_template.subject,html,text)
         format.json { render json: return_doc.to_json }
       rescue Exception => e
         return_doc['success'] = 'false'
         return_doc['message'] = e.message
         render json: return_doc.to_json
-      end  
+      end
     end
 
   end

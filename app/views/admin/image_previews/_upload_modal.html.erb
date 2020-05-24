@@ -7,29 +7,27 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
+<%= form_for([:admin, @image_preview],:html => {multipart: true, :role => 'form', :class => "formFor"}) do |f| %>
       <div class="modal-body">
-        <%= form_for([:admin, ImagePreview.new],:html => {multipart: true, remote: true, :role => 'form', :class => "formFor"}) do |f| %>
-
-          <%= f.hidden_field :image_id, value: @image.id if @image %>
-          <div id="image_error" class="error" style="display: none;"></div>
-          <div id="upload_image" class="custom-file-container" data-upload-id="newImageUpload" style="max-width:500px;">
-              <label>Upload File <a href="javascript:void(0)" class="custom-file-container__image-clear" title="Clear Image"><icon class="icon-arrows-cw"></icon> Reset </a></label>
-              <label class="custom-file-container__custom-file" >
-                <input name="image_preview[upload_file]" type="file" class="custom-file-container__custom-file__custom-file-input" accept="image/*" aria-label="Choose File">
-                <input type="hidden" name="MAX_FILE_SIZE" value="2000000" />
-                <span class="custom-file-container__custom-file__custom-file-control"></span>
-              </label>
-              <div class="custom-file-container__image-preview" style="height: 333px;"></div>
-          </div>
+        <%= f.hidden_field :image_id, value: @image.id %>
+        <div id="image_error" class="error" style="display: none;"></div>
+        <div id="upload_image" class="custom-file-container" data-upload-id="newImageUpload" style="max-width:500px;">
+            <label>Upload File <a id="image_preview_reset" href="javascript:void(0)" class="custom-file-container__image-clear" title="Clear Image"><icon class="icon-arrows-cw"></icon> Reset </a></label>
+            <label class="custom-file-container__custom-file" >
+              <input id="image_preview_upload_file" name="image_preview[upload_file]" type="file" class="custom-file-container__custom-file__custom-file-input" accept="image/*" aria-label="Choose File">
+              <input type="hidden" name="MAX_FILE_SIZE" value="2000000" />
+              <span class="custom-file-container__custom-file__custom-file-control"></span>
+            </label>
+            <div class="custom-file-container__image-preview" style="height: 333px;"></div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <%= button_tag(type: 'submit', class:"btn  btn-outline-primary btn-med") do %>
-            <icon class="icon-upload"></icon>
-            Upload
-          <% end %>
-        </div>
-      <% end %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <%= button_tag(id: "submit_upload", type: 'submit', class:"btn  btn-outline-primary btn-med", disabled: true) do %>
+          <icon class="icon-upload"></icon> Upload
+        <% end %>
+      </div>
+<% end %>
     </div>
   </div>
 </div>

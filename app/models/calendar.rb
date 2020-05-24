@@ -12,10 +12,14 @@ class Calendar < ApplicationRecord
 	START_TIME = "T110000Z"
 	END_TIME = "T110000Z"
 
-	def booked(uuid = nil) 
+	def stale?
+		self.updated_at + 30.minutes < Time.now ? true : false
+	end
+
+	def booked(uuid = nil)
 		booked = ""
 		days = self.parse
-		days.each_key do |day| 
+		days.each_key do |day|
 			days[day]['events'].each do |event|
 				next if uuid && uuid == event['uid']
 				if event['summary'] =~ /\S+/
@@ -43,7 +47,7 @@ class Calendar < ApplicationRecord
 		stale_event = false
 		self.icalendar.split(/\n/).each do |line|
 			if line =~ /BEGIN:VEVENT/
-				got_event = true 
+				got_event = true
 				next
 			end
 			got_key = true if line =~ /#{uuid}/
@@ -52,20 +56,20 @@ class Calendar < ApplicationRecord
 			 	event[key_val[0]] = key_val[1]
 				if line =~ /END:VEVENT/
 					unless got_key
-						new_calendar += "BEGIN:VEVENT\n" 
+						new_calendar += "BEGIN:VEVENT\n"
 						event.each do |key,value|
 							new_calendar += "#{key}:#{value}\n"
 						end
 					end
 					event = {}
-					got_key = false		
-					got_event = false 
+					got_key = false
+					got_event = false
 				end
-			else 
+			else
 				new_calendar += "#{line}\n"
 			end
 		end
-		self.icalendar = new_calendar 
+		self.icalendar = new_calendar
 		self.save
 	end
 
@@ -75,7 +79,7 @@ class Calendar < ApplicationRecord
 		self.icalendar.split(/\n/).each do |line|
 			if line =~ /#{uuid}/
 				update_cal += "#{line}\nSTATUS:CANCELLED\n"
-			else 
+			else
 				update_cal += "#{line}\n"
 			end
 		end
@@ -115,7 +119,7 @@ class Calendar < ApplicationRecord
 		stale_event = false
 		self.icalendar.split(/\n/).each do |line|
 			if line =~ /BEGIN:VEVENT/
-				got_event = true 
+				got_event = true
 				next
 			end
 			got_key = true if line =~ /#{booking.uuid}/
@@ -123,9 +127,9 @@ class Calendar < ApplicationRecord
 			 	key_val = line.split(/:/)
 			 	event[key_val[0]] = key_val[1]
 				if line =~ /END:VEVENT/
-					new_calendar += "BEGIN:VEVENT\n" 
+					new_calendar += "BEGIN:VEVENT\n"
 					if event['DTSTAMP'] && booking.updated_at > Date.parse(event['DTSTAMP'])
-						stale_event = true 
+						stale_event = true
 					end
 					event.each do |key,value|
 						if key ==  'DESCRIPTION' && got_key && stale_event
@@ -143,15 +147,15 @@ class Calendar < ApplicationRecord
 						end
 					end
 					event = {}
-					got_key = false		
-					got_event = false 
+					got_key = false
+					got_event = false
 					stale_event = false
 				end
-			else 
+			else
 				new_calendar += "#{line}\n"
 			end
 		end
-		self.icalendar = new_calendar 
+		self.icalendar = new_calendar
 		self.save
 	end
 
@@ -160,7 +164,7 @@ class Calendar < ApplicationRecord
 		cal = cals.first
 		cal.add_event(event)
 		self.icalendar = cal.to_ical
-		self.save		
+		self.save
 	end
 
 	def set_export_url
@@ -200,7 +204,7 @@ class Calendar < ApplicationRecord
 			event['name'] = self.name
 			event['uid'] = e.uid
 			days[date_str]['events'] << event
-		# Loop to end date	
+		# Loop to end date
 			next_date = e.dtstart + 1.day
 			until next_date >= e.dtend do
 				date_str = next_date.strftime("%Y-%m-%d")
@@ -219,7 +223,7 @@ class Calendar < ApplicationRecord
 		last_date = sorted.last[0]
 		date = 1.week.ago
 		date_str = date.strftime("%Y-%m-%d")
-		until date_str == last_date do 
+		until date_str == last_date do
 			unless days[date_str]
 				days[date_str] = {}
 				days[date_str]['events'] = []
@@ -244,7 +248,7 @@ class Calendar < ApplicationRecord
 			return {'Start date must be before end date' => false, 'conflict' => true}
 		else
 			dates = {}
-			dates['conflict'] = false 
+			dates['conflict'] = false
 			dates['booked'] = []
 			dates['debug'] = ""
 			# dates['debug'] = ""
@@ -259,7 +263,7 @@ class Calendar < ApplicationRecord
 						dates['debug'] += "#{date_str} #{event['summary']}\n"
 					end
 					if dates[date_str] == false
-						dates['conflict'] = true 
+						dates['conflict'] = true
 						dates['booked'] << Date.parse(date_str).strftime("%-d %b %Y")
 					end
 				end

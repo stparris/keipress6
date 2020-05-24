@@ -4,6 +4,8 @@ import 'cropper/dist/cropper.min.css'
 $(document).on('turbolinks:load', function() {
   if ($("#image_crop").length) {
     var image_id = $('#image_id').attr('value')
+    var image_type = $('#image_type').attr('value')
+    var image_crop_id = $('#image_crop_id').attr('value')
     var $image = $('#image');
     var options = {
         aspectRatio: NaN,
@@ -76,32 +78,27 @@ $(document).on('turbolinks:load', function() {
 
     $('button#save').on('click', function (event) {
       $("#loadingModalTitle").html("Cropping image...");
-      //$("#loadingModal").modal('show');
+      $("#loadingModal").modal('show');
       event.preventDefault();
       $("#image").cropper('getCroppedCanvas').toBlob(function (blob) {
         var formData = new FormData();
         formData.append('image[blob]', blob);
-        $.ajax('/admin/image_crops/'+image_id, {
+        $.ajax('/admin/image_crops/'+image_crop_id, {
           method: "PUT",
+          dataType: 'json',
           data: formData,
           processData: false,
           contentType: false,
-          success() {
+          success: function(data) {
             $("#loadingModal").modal('hide');
-            $('#getCroppedCanvasModal').modal('show');
+            location.replace("/admin/image_crops/"+image_crop_id+"/edit");
           },
-          error() {
+          error: function(data) {
             $("#loadingModal").modal('hide');
-            alert('Upload error');
+            $("#modalMessage").html(data.error);
           },
         });
       }, 'image/jpeg',0.8);
-    });
-
-    $('#getCroppedCanvasModal').on('hidden.bs.modal', function () {
-      $("#loadingModalTitle").html("Reloading image...");
-      $("#loadingModal").modal('show');
-      location.reload();
     });
   }
 });

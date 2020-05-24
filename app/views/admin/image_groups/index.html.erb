@@ -16,7 +16,20 @@
 			<tbody>
 <% @site.image_groups.order('name asc').each do |image_group| %>
         <tr>
-        	<td><%= link_to image_tag(image_group.image_group_items.first.image.image.variant(resize: "100x100")), admin_image_group_path(image_group) %></td>
+        	<td>
+  <%
+    image_item = image_group.image_group_items.first
+    if image_item && image_item.image && image_item.image.image.attached?
+  %>
+            <%= link_to image_tag(image_group.image_group_items.first.image.image.variant(resize: "100x100")), admin_image_group_path(image_group) %>
+  <% elsif image_item && image_item.image && image_item.image.image_previews.any?
+    preview = ImagePreview.find_by(image_id: image_item.image.id,preview_type: 'original')
+  %>
+            <%= link_to image_tag("/image_previews/original_#{image_item.image.id}.#{preview.file_extention}", style: 'max-width: 100px'), admin_image_group_path(image_group) %>
+  <% else %>
+          No image uploaded
+  <% end %>
+          </td>
           <td><%= link_to raw(image_group.name), admin_image_group_path(image_group) %></td>
           <td><%= link_to raw('<i class="icon-zoom-in"></i>'), admin_image_group_path(image_group) %></td>
           <td><%= link_to raw('<i class="icon-pencil"></i>'), edit_admin_image_group_path(image_group) %></td>

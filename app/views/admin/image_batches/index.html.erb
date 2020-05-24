@@ -1,0 +1,33 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="page-header">
+      <h1>Image Batches</h1>
+    </div>
+    <table id="image_batch" class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Date</th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+<% @image_batches.each do |image_batch| %>
+        <tr>
+          <td><%= link_to raw(image_batch.name), admin_image_batch_path(image_batch) %></td>
+          <td><%= link_to image_batch.created_at.strftime("%Y-%m-%d"), admin_image_batch_path(image_batch) %></td>
+          <td><%= link_to raw('<i class="icon-zoom-in"></i>'), admin_image_batch_path(image_batch) %></td>
+          <td><%= link_to raw('<i class="icon-pencil"></i>'), edit_admin_image_batch_path(image_batch) %></td>
+          <td><%= link_to raw('<i class="icon-trash"></i>'), admin_image_batch_path(image_batch), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+<% end %>
+      <%= raw('<tr><td colspan="5">No images uploaded.</td></tr>') if @image_batches.count == 0 %>
+      </tbody>
+    </table>
+    <%= link_to new_admin_image_batch_path do %>
+      <button type="button" class="btn  btn-outline-secondary btn-med"><i class="icon-plus"></i> New Image Batch</button>
+    <% end %>
+  </div>
+</div>

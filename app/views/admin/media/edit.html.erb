@@ -1,9 +1,9 @@
 <div class="row">
 	<div class="col-md-9">
 		<div class="page-header">
-		  <h1>Edit <%= @medi %></h1>
+		  <h1>Edit <%= @medium.name %></h1>
 		</div>
-		<%= form_for([:admin, @medi],:html => {:role => 'form', :class => "formFor"}) do |f| %>
+		<%= form_for([:admin, @medium],:html => {:role => 'form', :class => "formFor"}) do |f| %>
 			<%= render partial: 'form', locals: {f:f} %>
 			<hr />
 			<%= button_tag(type: 'submit', class:"btn  btn-outline-secondary btn-med") do %>
@@ -12,10 +12,10 @@
 			<% end %>
 			<%= link_to(raw('<button type="button" class="btn  btn-outline-secondary btn-med btn-right">
 				<i class="icon-cancel"></i>
-		   	 	Cancel</button>'), admin_medi_path(@medi)) %>
+		   	 	Cancel</button>'), admin_medium_path(@medium)) %>
 		<% end %>
 	</div>
 	<div class="col-md-3">
-		<%= operations_menu(@medi) %>
+		<%= operations_menu(@medium,[]) %>
 	</div>
 </div>

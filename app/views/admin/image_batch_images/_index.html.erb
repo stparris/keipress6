@@ -1,0 +1,42 @@
+<div class="row">
+  <div class="col-md-12">
+<% if @image_batch.images.any? %>
+  <% i = 0; @image_batch.images.each do |image| %>
+    <% if i == 0 %>
+    <div class="row">
+    <% end %>
+      <div id="image_<%= image.id %>" class="col-md-4">
+    <%= render partial: 'admin/image_batch_images/show', locals: {image: image} %>
+      </div>
+    <% if i == 3 %>
+  </div>
+      <% i = 0 %>
+    <% else
+      i += 1
+     end %>
+  <% end %>
+<% else %>
+<div class="row">
+  <div class="col-md-12">
+    <%= form_for([:admin, ImageBatchUpload.new], html: {:role => 'form', :class => "formFor"}) do |f| %>
+      <%= f.hidden_field :image_batch_id, value: @image_batch.id %>
+      <div id="image_error" class="error" style="display: none;"></div>
+      <div id="upload_images" class="custom-file-container" data-upload-id="multipleImageUploads" style="max-width:500px;">
+          <label>Upload File <a id="image_preview_reset" href="javascript:void(0)" class="custom-file-container__image-clear" title="Clear Image"><icon class="icon-arrows-cw"></icon> Reset </a></label>
+          <label class="custom-file-container__custom-file" >
+            <%= f.file_field :upload_images, multiple: true, class: "custom-file-container__custom-file__custom-file-input", accept: 'image/*' %>
+            <input type="hidden" name="MAX_FILE_SIZE" value="4000000" />
+            <span class="custom-file-container__custom-file__custom-file-control"></span>
+          </label>
+          <div class="custom-file-container__image-preview" style="height: 333px;"></div>
+      </div>
+      <button type="submit" class="btn btn-primary">
+        <icon class="icon-upload"></icon>
+        Upload Images
+      </button>
+    <% end %>
+  </div>
+</div>
+<% end %>
+
+

@@ -5,6 +5,7 @@ class Container < ApplicationRecord
 	belongs_to :medium, optional: true
 	belongs_to :image, optional: true
 	belongs_to :carousel, optional: true
+	belongs_to :content, optional: true
 	belongs_to :content_group, optional: true
 	has_many :containers_pages
 	has_many :container_rows, -> { order('position ASC') }

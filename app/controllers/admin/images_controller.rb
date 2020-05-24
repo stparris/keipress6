@@ -13,6 +13,16 @@ class Admin::ImagesController < AdminController
   # GET /images/1
   # GET /images/1.json
   def show
+    unless @image.image.attached?
+      @image_preview = ImagePreview.find_by(image_id: @image.id, preview_type: 'original')
+      respond_to do |format|
+        if @image_preview
+          format.html { redirect_to admin_image_preview_url(@image) }
+        else
+          format.html { redirect_to new_admin_image_preview_url(image_id: @image.id) }
+        end
+      end
+    end
   end
 
   # GET /images/new
@@ -62,9 +72,11 @@ class Admin::ImagesController < AdminController
         if @image.update(image_params)
           flash[:success] = 'Image was successfully updated.'
           format.html { redirect_to admin_image_url(@image) }
+          format.js
           format.json { render :show, status: :ok, location: @image }
         else
           format.html { render :edit }
+          format.js
           format.json { render json: @image.errors, status: :unprocessable_entity }
         end
       rescue Exception => e
@@ -94,7 +106,8 @@ class Admin::ImagesController < AdminController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_image
-      @image = Image.find_by(id: params[:id],site_id: @site.id)
+      # @image = Image.find_by(id: params[:id],site_id: @site.id)
+      @image = Image.find(params[:id])
       redirect_to admin_errors_url(error_template: '403') unless @image
     end
 

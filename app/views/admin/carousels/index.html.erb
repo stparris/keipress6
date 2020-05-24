@@ -16,14 +16,22 @@
 			<tbody>
 <% Carousel.where(site_id: @site.id).order('name asc').each do |carousel| %>
         <tr>
-        	<td><%= link_to image_tag(carousel.carousel_slides.first.image.image.variant(resize: "100x100")), admin_carousel_path(carousel) %></td>
+        	<td>
+  <% if carousel.carousel_slides.any? &&
+    carousel.carousel_slides.first.image &&
+    carousel.carousel_slides.first.image.image.attached? %>
+      <%= link_to image_tag(carousel.carousel_slides.first.image.image.variant(resize: "100x100")), admin_carousel_path(carousel) %>
+  <% else %>
+            <div style="margin: 2px;padding: 20px;background-color: #f8f8f8;border: 1px solid #000;">No image to display</div>
+  <% end %>
+          </td>
           <td><%= link_to carousel.name, admin_carousel_path(carousel) %></td>
           <td><%= link_to raw('<i class="icon-zoom-in"></i>'), admin_carousel_path(carousel) %></td>
           <td><%= link_to raw('<i class="icon-pencil"></i>'), edit_admin_carousel_path(carousel) %></td>
           <td><%= link_to raw('<i class="icon-trash"></i>'), admin_carousel_path(carousel), method: :delete, data: { confirm: 'Are you sure?' } %></td>
         </tr>
 <% end %>
-				<%= raw('<tr><td colspan="5">No image groups defined.</td></tr>') if @carousels.count == 0 %>
+				<%= raw('<tr><td colspan="5">No carousels defined.</td></tr>') if @carousels.count == 0 %>
 			</tbody>
 		</table>
 		<%= link_to new_admin_carousel_path do %>

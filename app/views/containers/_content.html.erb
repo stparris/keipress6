@@ -1,0 +1,7 @@
+<div class="<%= container.css_classes %>">
+<% if container.content && container.content.content_items.any? %>
+  <% container.content.content_items.each do |content_item| %>
+  <%= render partial: 'content_items/show', locals: { content_item: content_item } %>
+  <% end %>
+<% end %>
+</div>

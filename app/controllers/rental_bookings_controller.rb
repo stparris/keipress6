@@ -27,7 +27,7 @@ class RentalBookingsController < ProductionController
           subject = mail_template.subject
           html = mail_template.body_html.gsub(/\{\{details\}\}/, e.message)
           text = mail_template.body_text.gsub(/\{\{details\}\}/, e.message)
-          AdminErrorJob.perform_later(mail_server,from_mail,subject,html,text)            
+          AdminErrorJob.perform_later(mail_server,from_mail,subject,html,text)
           render json: response_obj.to_json
         end
       end
@@ -109,25 +109,25 @@ class RentalBookingsController < ProductionController
           if response['error']
             @message = response['message']
             @errors = response['errors']
-          else  
-            @rental_booking.status = "confirmed_#{@rental_booking.payment_method.payment_type.payment_type}"   
+          else
+            @rental_booking.status = "confirmed_#{@rental_booking.payment_method.payment_type.payment_type}"
             @rental_booking.save!
             @booking_transaction.booking = @rental_booking
             @booking_transaction.details = "#{response['message']} #{card.display_number}"
             @booking_transaction.save!
           end
         elsif @rental_booking.payment_method.payment_type.payment_type == 'check'
-          @rental_booking.status = 'check'   
-          @rental_booking.save!     
+          @rental_booking.status = 'check'
+          @rental_booking.save!
         elsif @rental_booking.payment_method.payment_type.payment_type == 'invoice'
-          @rental_booking.status = 'invoice'   
-          @rental_booking.save!       
+          @rental_booking.status = 'invoice'
+          @rental_booking.save!
         else
-          @rental_booking.status = 'contact'   
+          @rental_booking.status = 'contact'
           @rental_booking.save!
         end
         if @errors
-          format.js { render 'error' }     
+          format.js { render 'error' }
         else
           # include MailTemplatesHelper
           mail_server = MailServer.find_by(site_id: @site.id, active: true)
@@ -138,26 +138,26 @@ class RentalBookingsController < ProductionController
           text = @rental_booking.process_macros(mail_template.body_text)
           html = html.gsub(/\{\{card_display\}\}/, card_display_number) if card_display_number
           text = text.gsub(/\{\{card_display\}\}/, card_display_number) if card_display_number
-          UserContactJob.perform_later(mail_server,mail_template.from_email,@user.email,subject,html,text)
-          
+          UserContactJob.perform_later(mail_server.id,mail_template.from_email,@user.email,subject,html,text)
+
           mail_template = @rental_booking.payment_method.admin_mail_template
           subject =  @rental_booking.process_macros(mail_template.subject)
           html = @rental_booking.process_macros(mail_template.body_html)
           text = @rental_booking.process_macros(mail_template.body_text)
           html = html.gsub(/\{\{card_display\}\}/, card_display_number) if card_display_number
           text = text.gsub(/\{\{card_display\}\}/, card_display_number) if card_display_number
-          AdminContactJob.perform_later(mail_server,mail_template.from_email,subject,html,text)
+          AdminContactJob.perform_later(mail_server.id,mail_template.from_email,subject,html,text)
           I18n.locale = @user.locale.to_sym
           format.js { render :show }
         end
-      rescue Exception, RentalBooking::RentalBookingConflict => e 
+      rescue Exception, RentalBooking::RentalBookingConflict => e
         @booking_error = "Problem with booking "
         error_text = "Problem with booking\n"
         if e.message.is_a?(Hash)
           @booking_error += "<ul class=\"error-list\"><li><strong>Date conflict</strong></li>"
           e.message.each do |key,value|
             next if key == 'conflict'
-            @booking_error += "<li><i class=\"icon #{value == true ? 'icon-ok' : 'icon-cancel'}\"></i> #{key} #{'conflict' if value == false}</li>" 
+            @booking_error += "<li><i class=\"icon #{value == true ? 'icon-ok' : 'icon-cancel'}\"></i> #{key} #{'conflict' if value == false}</li>"
             error_text += "#{key} #{'conflict' if value == false}\n"
           end
           @booking_error += "</ul>"
@@ -172,11 +172,11 @@ class RentalBookingsController < ProductionController
         subject = mail_template.subject
         html = mail_template.body_html.gsub(/\{\{details\}\}/, @booking_error)
         text = mail_template.body_text.gsub(/\{\{details\}\}/, error_text)
-        AdminErrorJob.perform_later(mail_server,from_mail,subject,html,text)          
+        AdminErrorJob.perform_later(mail_server,from_mail,subject,html,text)
         format.js { render :error }
-      end    
+      end
     end #end respond_to
-  end 
+  end
 
   # PATCH/PUT /bookings/1
   # PATCH/PUT /bookings/1.json
@@ -204,7 +204,7 @@ class RentalBookingsController < ProductionController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_new 
+    def set_new
       @rental_booking = RentalBooking.new(site_id: @site.id)
     end
 
@@ -220,8 +220,8 @@ class RentalBookingsController < ProductionController
     end
 
     def set_user
-      if params[:user].present? && params[:user][:email].present? 
-        @user = User.find_by_email(params[:user][:email]) 
+      if params[:user].present? && params[:user][:email].present?
+        @user = User.find_by_email(params[:user][:email])
         @user = @user ? @user : User.new(user_params)
       else
         @user = User.new
@@ -252,7 +252,7 @@ class RentalBookingsController < ProductionController
         :marketing,
         :status)
     end
-    
+
     def user_address_params
       params.require(:user_address).permit(
         :address1,
@@ -287,7 +287,7 @@ class RentalBookingsController < ProductionController
         :alternative_phone,
         :state_id,
         :country_id)
-    end    
+    end
 
     def user_shipping_address_params
       params.require(:user_shipping_address).permit(
@@ -303,13 +303,13 @@ class RentalBookingsController < ProductionController
 
     def payment_card_params
       params.require(:payment_card).permit(
-        :first_name, 
-        :last_name, 
-        :brand, 
-        :card_number, 
-        :expiration_month, 
-        :expiration_year, 
-        :card_verification, 
+        :first_name,
+        :last_name,
+        :brand,
+        :card_number,
+        :expiration_month,
+        :expiration_year,
+        :card_verification,
         :ip_address)
     end
 

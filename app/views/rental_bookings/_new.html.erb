@@ -24,7 +24,7 @@
 <% if @rental_booking.start_date && @rental_booking.end_date %>
 <defaultDate name="min-days" id="defaultDate" value="['<%= start_str %>>,'<%= end_str %>'] "></defaultDate>
 <% end %>
-<calendarStatus name="calendarStatus" id="calendarStatus" value="<%= @rental_booking.rental.calendar.updated_at > 30.minutes.ago ? 'stale' : 'good' %>"></calendarStatus>
+<calendarStatus name="calendarStatus" id="calendarStatus" value="<%= @rental_booking.rental.calendar.stale? ? 'stale' : 'good' %>"></calendarStatus>
 <calendarId name="calendarId" id="calendarId" value="<%= @rental_booking.rental.calendar.id %>"></calendarId>
 <session_expitation name="session_expitation" id="session_expitation" value="<%= 30.minutes.from_now %>"></session_expitation>
 
@@ -39,7 +39,6 @@
 	<%= f.hidden_field :site_id, value: @site.id %>
 	<%= f.hidden_field :rental_id %>
 	<%= f.hidden_field :payment_method_id %>
-	<%= hidden_field_tag :authenticity_token, form_authenticity_token %>
 	<div class="form-group">
 		<label><%= t('bookings.date_range') %></label>
 		<%= date_field_tag :date_range %>
@@ -72,13 +71,13 @@
 				<tr>
 					<td><%= t('bookings.amount') %>:</td><td> <%= raw(@currency_label) %><span id="booking_amount"></span></td>
 				</tr>
-				<tr>
+				<tr id="row_booking_tax">
 					<td><%= t('bookings.tax') %>:</td><td> <%= raw(@currency_label) %><span id="booking_tax"></span></td>
 				</tr>
 				<tr>
 					<td><%= t('bookings.total') %>:</td><td> <%= raw(@currency_label) %><span id="booking_total"></span></td>
 				</tr>
-				<tr>
+				<tr id="row_booking_deposit">
 					<td><%= t('bookings.deposit') %>:</td><td> <%= raw(@currency_label) %><span id="booking_deposit"></span></td>
 				</tr>
 			</tbody>

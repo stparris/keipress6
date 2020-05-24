@@ -1,0 +1,20 @@
+<div class="row">
+  <div class="col-md-9">
+    <div class="page-headerr">
+      <h1>New Image Batch</h1>
+    </div>
+    <%= form_for([:admin, @image_batch],:html => {:role => 'form', :class => "formFor"}) do |f| %>
+      <%= render partial: 'form', locals: {f:f} %>
+      <hr />
+      <%= button_tag(type: 'submit', class:"btn  btn-outline-secondary btn-med") do %>
+        Next <icon class="icon-right-big"></icon>
+      <% end %>
+      <%= link_to(raw('<button type="button" class="btn  btn-outline-secondary btn-med btn-right">
+        <i class="icon-cancel"></i>
+          Cancel</button>'), admin_image_batches_path) %>
+    <% end %>
+  </div>
+  <div class="col-md-3">
+    <%= operations_menu(@image_batch,[]) %>
+  </div>
+</div>

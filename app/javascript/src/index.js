@@ -34,3 +34,4 @@ import "./theme_colors.js";
 import "./themes.js";
 import "./tooltip.js";
 import "./users.js";
+import "./videos.js";

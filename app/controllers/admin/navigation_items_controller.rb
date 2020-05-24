@@ -64,7 +64,6 @@ class Admin::NavigationItemsController < AdminController
     respond_to do |format|
       if params[:link_text].present?
         @navigation_item.link_text.update!(link_text_params)
-logger.info   "========\n#{link_text_params}"
       end
       if params[:dropdown].present?
         @navigation_item.dropdown.update!(dropdown_params)

@@ -1,92 +1,89 @@
-class Admin::VideoController < AdminController
-  before_action :set_video, only: [:show, :edit, :upload, :update, :destroy]
+class Admin::VideosController < AdminController
+  before_action :set_medium, only: [:show, :edit, :update, :destroy]
 
   layout 'admins'
 
-  # GET /images
-  # GET /images.json
+  # GET /media
+  # GET /media.json
   def index
-    @images = Image.all
+    @media = Medium.all
   end
 
-  # GET /images/1
-  # GET /images/1.json
+  # GET /media/1
+  # GET /media/1.json
   def show
   end
 
-  # GET /images/new
+  # GET /media/new
   def new
-    @image = Image.new
+    @medium = Medium.new
   end
 
-  # GET /images/1/edit
+  # GET /media/1/edit
   def edit
   end
 
-  def upload
-  end  
-
-  # POST /images
-  # POST /images.json
+  # POST /media
+  # POST /media.json
   def create
-    @image = Image.new(image_params)
+    @medium = Medium.new(medium_params)
+
     respond_to do |format|
-      if @image.save
-        flash[:success] = 'Image was successfully created.'
-        format.html { redirect_to admin_image_url(@image) }
-        format.json { render :show, status: :created, location: @image }
+      if @medium.save
+        format.html { redirect_to admin_medium_url(@medium) }
+        format.json { render :show, status: :created, location: @medium }
       else
         format.html { render :new }
-        format.json { render json: @image.errors, status: :unprocessable_entity }
+        format.json { render json: @medium.errors, status: :unprocessable_entity }
       end
     end
   end
 
-  # PATCH/PUT /images/1
-  # PATCH/PUT /images/1.json
+  # PATCH/PUT /media/1
+  # PATCH/PUT /media/1.json
   def update
     respond_to do |format|
-      begin
-        if @image.update(image_params)
-          flash[:success] = 'Image was successfully updated.'
-          format.html { redirect_to admin_image_url(@image) }
-          format.json { render :show, status: :ok, location: @image }
-        else
-          format.html { render :edit }
-          format.json { render json: @image.errors, status: :unprocessable_entity }
-        end
-      rescue Exception => e 
-        flash[:danger] = "Oops! Something went wrong: #{e.message}"
+      if @medium.update(medium_params)
+        format.html { redirect_to admin_medium_url(@medium) }
+        format.json { render :show, status: :ok, location: @medium }
+      else
         format.html { render :edit }
+        format.json { render json: @medium.errors, status: :unprocessable_entity }
       end
     end
   end
 
-  # DELETE /images/1
-  # DELETE /images/1.json
+  # DELETE /media/1
+  # DELETE /media/1.json
   def destroy
+    @medium.destroy
     respond_to do |format|
-      begin
-        if @image.destroy      
-          flash[:success] = 'Image was successfully removed.'
-          format.html { redirect_to admin_images_url }
-          format.json { head :no_content }
-        end
-      rescue Exception => e 
-        flash[:danger] = "Oops! Something went wrong: #{e.message}"
-        format.html { render :new }
-      end
+      format.html { redirect_to admin_media_url, notice: 'Medium was successfully deleted.' }
+      format.json { head :no_content }
     end
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_image
-      @image = Image.find(params[:id])
+    def set_medium
+      @medium = Medium.find_by(id: params[:id],site_id: @site.id)
+      redirect_to admin_errors_url(error_template: '403') unless @medium
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
-    def image_params
-      params.require(:image).permit(:site_id,:name,:caption,:copyright,:description,:image)
+    def medium_params
+      params.require(:video).permit(
+        :name,
+        :type,
+        :caption,
+        :copyright_year,
+        :copyright_by,
+        :description,
+        :image_id,
+        :image_variant,
+        :site_id)
     end
 end
+
+
+

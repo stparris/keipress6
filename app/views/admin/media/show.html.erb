@@ -1,17 +1,17 @@
 <div class="row">
 	<div class="col-md-9">
 		<div class="page-header">
-			<h1><%= @medi.name %></h1>
-		</div>	
-		<%= object_table(@medi) %>
-		<%= link_to edit_admin_medi_path(@medi) do %>
+			<h1><%= @medium.name %></h1>
+		</div>
+		<%= object_table(@medium) %>
+		<%= link_to edit_admin_medium_path(@medium) do %>
 			<button type="submit" class="btn  btn-outline-secondary"><i class="icon-pencil"></i> Edit</button>
 		<% end %>
-		&nbsp;&nbsp;<%= link_to admin_medi_path(@medi), method: :delete, data: { confirm: "Delete medi?" } do %>
+		&nbsp;&nbsp;<%= link_to admin_medium_path(@medium), method: :delete, data: { confirm: "Delete medi?" } do %>
 			<button type="submit" class="btn btn-danger"><i class="icon-trash"></i> Delete</button>
 		<% end %>
 	</div>
 	<div class="col-md-3">
-		<%= operations_menu(@medi) %>
+		<%= operations_menu(@medium,[]) %>
 	</div>
 </div>
