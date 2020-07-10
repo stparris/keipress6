@@ -20,6 +20,8 @@
   <%= render partial: "form_image_grid_fixed", locals: {f:f} %>
 <% elsif @row_column.content_type =~ /image_grid_masonry/ %>
   <%= render partial: "form_image_grid_masonry", locals: {f:f} %>
+<% elsif @row_column.content_type =~ /article|blog/ %>
+  <%= render partial: "form_placeholder", locals: {f:f} %>
 <% else %>
   <%= render partial: "form_#{@row_column.content_type}", locals: {f:f} %>
 <% end %>

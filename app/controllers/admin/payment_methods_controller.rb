@@ -6,7 +6,7 @@ class Admin::PaymentMethodsController < AdminController
   # GET /payment_methods
   # GET /payment_methods.json
   def index
-    @payment_methods = PaymentMethod.all
+    @payment_methods = PaymentMethod.where(site_id: @site.id)
   end
 
   # GET /payment_methods/1

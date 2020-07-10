@@ -2,6 +2,7 @@ class Admin < ApplicationRecord
 
   has_many :admins_sites
   has_many :sites, through: :admins_sites
+  belongs_to :content_admins, optional: true
 
   attr_accessor :new_password
 

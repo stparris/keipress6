@@ -16,19 +16,15 @@
 	<%= f.text_field :css_classes, :class => "form-control" %>
 </div>
 <div class="form-group">
-  <%= f.label :include_caption %>
-  <%= f.select :include_caption, {'No'=>'false','Yes'=>'true'}, {}, :class => "form-control" %>
+  <%= f.label :name %>
+  <%= f.text_field :name, :class => "form-control" %>
 </div>
 <div class="form-group">
-  <%= f.label :include_copyright %>
-  <%= f.select :include_copyright, {'No'=>'false','Yes'=>'true'}, {}, :class => "form-control" %>
+  <%= f.label :caption %>
+  <%= f.text_field :caption, :class => "form-control" %>
 </div>
 <div class="form-group">
-  <%= f.label :include_description %>
-  <%= f.select :include_description, {'No'=>'false','Yes'=>'true'}, {}, :class => "form-control" %>
+  <%= f.label :body %>
+  <%= f.text_field :body, :class => "form-control" %>
 </div>
-<div class="form-group">
-  <%= f.label :image_id %>
-  <%= f.hidden_field :image_id, id: "hidden_image_field" %>
-  <p>Selected: <span id="image_text"><%= @image_group_item.image ? @image_group_item.image.name : "not selected" %></span></p>
-</div>
+

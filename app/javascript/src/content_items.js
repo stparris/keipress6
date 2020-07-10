@@ -1,6 +1,6 @@
 jQuery(function() {
   var post_url;
-  if ($('#content_items')) {
+  if ($('#content_items').length) {
     post_url = $('#content_items').data('sort-items-url');
     return $('#content_items').sortable({
       axis: 'y',

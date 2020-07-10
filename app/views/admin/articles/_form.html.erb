@@ -19,13 +19,24 @@
   <%= f.text_field :name, :class => "form-control" %>
     <div class="input-group-append">
       <span class="input-group-text" id="inputGroup-sizing-default">Article</span>
-    </div>    
+    </div>
   </div>
 </div>
 <div class="form-group">
+  <label for="content_url"><%= f.label :content_url, "URL friendly name" %></label>
+  <%= f.text_field :content_url, :class => "form-control" %>
+</div>
+<div class="form-group">
+  <%= f.label :page %>
+  <%= f.select :page_id, Page.where(site_id: @site.id).order('name asc').collect { |c| [c.name, c.id] }, {prompt: 'Optional'}, :class => "form-control" %>
+</div>
+
+
+
+<div class="form-group">
   <label for="content_item_css"><%= f.label :css_classes, "CSS space separated class names" %></label>
   <%= f.text_field :css_classes, :class => "form-control" %>
-</div>  
+</div>
 <div class="form-group">
   <%= f.label :published %>
   <%= f.select :published, {'No'=>'false','Yes'=>'true'}, {}, :class => "form-control" %>

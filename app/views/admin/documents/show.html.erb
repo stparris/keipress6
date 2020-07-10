@@ -1,0 +1,11 @@
+<div class="container-fluid keidoc">
+  <div class="row no-gutters ">
+    <div class="col-md-8 offset-md-2">
+<% @document.content_items.order("position asc").each do |content_item| %>
+      <div id="article_post_<%= content_item.id %>" class="article-post article-post-<%= content_item.content_type.gsub(/_/,'-') %> <%= " #{content_item.css_classes}" if content_item.css_classes %>">
+        <%= render partial: "application/#{content_item.content_type}", locals: { obj: content_item } %>
+      </div>
+<% end %>
+    </div>
+  </div>
+</div>

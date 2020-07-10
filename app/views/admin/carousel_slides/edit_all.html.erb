@@ -27,16 +27,21 @@
         <tr id="slide_<%= slide.id %>">
           <%= form_for([:admin, slide], remote: true) do |f| %>
           <td>
+  <% if slide.image && slide.image.image.attached? %>
             <%= image_tag url_for(slide.image.image.variant(resize: "100x100")), style: 'max-width: 100px;' %>
+  <% else %>
+            <div style="border: solid 1px #000;margin: 2px;padding: 5px;">no image</div>
+  <% end %>
           </td>
           <td>
-            <%= f.text_field :name, placeholder: 'Name', class: 'form-control form-control-sm' %>
+            <%= f.text_field :name, id: "#{rand(1000000)}", value: "#{slide.name =~ /\S+/ ? slide.name : slide.image.name}", class: 'form-control form-control-sm' %>
           </td>
           <td>
-            <%= f.text_field :caption, placeholder: 'Caption', class: 'form-control form-control-sm' %>
+            <%= f.text_field :caption, id: "#{rand(1000000)}", value: "#{slide.caption =~ /\S+/ ? slide.caption :
+            slide.image ? slide.image.caption : ''}", class: 'form-control form-control-sm' %>
           </td>
           <td>
-            <%= button_tag(type: 'submit', class:"btn  btn-outline-secondary btn-sm") do %>
+            <%= button_tag(type: 'submit', class:"btn btn-outline-secondary btn-sm") do %>
               <i class="icon-ok"></i> Update
             <% end %>
           </td>

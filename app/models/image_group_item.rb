@@ -2,7 +2,9 @@ class ImageGroupItem < ApplicationRecord
 	belongs_to :image_group
 	belongs_to :image
 
-	after_create :reset_positions
+  attr_accessor :category_id
+
+  after_create :reset_positions
 	after_destroy :reset_positions
 
   def reset_positions

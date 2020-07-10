@@ -1,2 +1,2 @@
-<%= render partial: 'application/carousel_gallery', locals: {carousel: container.carousel}  %>
-<%-# render partial: 'application/carousel', locals: {carousel: container.carousel}  %>
+<%= render partial: "application/#{container.carousel.carousel_type}", locals: {obj: container}  %>
+

@@ -21,7 +21,7 @@
 						<icon class="icon-globe-1" style="color: #99ddff;"></icon>	<%= link_to 'Sites', admin_sites_path %>
 <% end %>
 						<icon class="icon-sun-inv"></icon>
-						<%= @site ? link_to(@site.name,admin_site_path(@site)) : @admin ? 'Select Site' : 'Please Sign In' %>
+						<%= @site && @site.persisted? ? link_to(@site.name,admin_site_path(@site)) : @admin ? 'Select Site' : 'Please Sign In' %>
 					</div>
 					<div class="keipress-sign-out">
 <% if @admin %>

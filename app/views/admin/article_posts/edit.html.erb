@@ -1,21 +1,30 @@
 <div class="row">
 	<div class="col-md-9">
 		<div class="page-header">
-		  <h1>Edit <%= @content_item.name %></h1>
+		  <h1>Edit <%= @article_post.name %></h1>
 		</div>
-		<%= form_for([:admin, @content_item],:html => {:role => 'form', :class => "formFor"}) do |f| %>
+<%= form_for([:admin, @article_post],:html => {:role => 'form', :class => "formFor"}) do |f| %>
 			<%= render partial: 'form', locals: {f:f} %>
-			<hr />
-			<%= button_tag(type: 'submit', class:"btn  btn-outline-secondary btn-med") do %>
-				<i class="icon-ok"></i>
-				Save
-			<% end %>
-			<%= link_to(raw('<button type="button" class="btn  btn-outline-secondary btn-med btn-right">
-				<i class="icon-cancel"></i>
-		   	 	Cancel</button>'), admin_article_post_path(@content_item)) %>
-		<% end %>
+
 	</div>
 	<div class="col-md-3">
-		<%= operations_menu(@content_item,[@content_group]) %>
+		<%= operations_menu(@article_post,[@article]) %>
 	</div>
 </div>
+<div class="row">
+	<div class="col-md-12">
+<% if @article_post.content_type == 'image' %>
+		<%= render partial: 'admin/images/image_select_table', locals: {f: f,content: @article_post} %>
+<% end %>
+		<hr/>
+		<%= button_tag(type: 'submit', class:"btn btn-outline-secondary btn-sm") do %>
+				<i class="icon-ok"></i>
+				Save
+		<% end %>
+			&nbsp;&nbsp;
+		<%= link_to admin_article_path(@article) do %>
+				<button type="button" class="btn btn-outline-secondary btn-sm"><i class="icon-cancel"></i> Cancel</button>
+		<% end %>
+	</div>
+</div>
+<% end %>

@@ -20,9 +20,9 @@
 <div class="form-group">
   <label for="content_item_css"><%= f.label :css_classes, "CSS space separated class names" %></label>
   <%= f.text_field :css_classes, :class => "form-control" %>
-</div>  
-<div class="form-group"> 
-  <label for="content_css">Owned by</label>
+</div>
+<div class="form-group">
+  <label for="admin">Owned by</label>
   <%= f.select :admin_id, Admin.where("id in (select admin_id from admins_sites where site_id = ?)",@site.id).order('first_name asc,last_name asc').collect  { |c| [c.full_name, c.id] }, { }, :class => "form-control" %>
 </div>
 

@@ -1,0 +1,23 @@
+<% containers.order('position asc').each do |container| %>
+  <% if container.container_type =~ /nav/ %>
+<%= render partial: 'navigations/show', locals: { navigation: container.navigation } %>
+  <% elsif container.container_type == 'grid' %>
+    <% if container.container_rows.any? %>
+<div class="<%= container.css_classes %>">
+  <%= render partial: "row_columns/index", locals: { container: container } %>
+</div>
+    <% else %>
+<div class="row">
+  <div class="col">
+    <p>Grid container <%= container.name %> doesn't have any rows defined</p>
+  </div>
+</div>
+    <% end %>
+  <% elsif container.container_type =~ /jumbotron/ %>
+<%= render partial: "containers/jumbotron", locals: { container: container } %>
+  <% else %>
+<div class="<%= container.css_classes %>">
+  <%= render partial: "containers/#{container.container_type}", locals: { container: container } %>
+</div>
+  <% end %>
+<% end %>

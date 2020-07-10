@@ -1,6 +1,6 @@
 class Admin::CarouselsController < AdminController
   before_action :set_carousel, only: [:show, :edit, :update, :destroy]
- 
+
   layout 'admins'
 
   # GET /carousels
@@ -40,10 +40,10 @@ class Admin::CarouselsController < AdminController
           format.html { render :new }
           format.json { render json: @carousel.errors, status: :unprocessable_entity }
         end
-      rescue Exception => e 
+      rescue Exception => e
         flash[:danger] = "Oops! Something went wrong: #{e.message}"
         format.html { render :new }
-      end        
+      end
     end
   end
 
@@ -64,7 +64,7 @@ class Admin::CarouselsController < AdminController
           format.html { render :edit }
           format.json { render json: @carousel.errors, status: :unprocessable_entity }
         end
-      rescue Exception => e 
+      rescue Exception => e
         flash[:danger] = "Oops! Something went wrong: #{e.message}"
         format.html { render :new }
       end
@@ -75,13 +75,13 @@ class Admin::CarouselsController < AdminController
   # DELETE /carousels/1.json
   def destroy
     respond_to do |format|
-      begin  
+      begin
         if @carousel.destroy
           flash[:success] = ' group was successfully removed.'
           format.html { redirect_to admin_carousels_url }
           format.json { head :no_content }
         end
-      rescue Exception => e 
+      rescue Exception => e
         flash[:danger] = "Oops! Something went wrong: #{e.message}"
         format.html { render :new }
       end
@@ -97,6 +97,16 @@ class Admin::CarouselsController < AdminController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def carousel_params
-      params.require(:carousel).permit(:name,:description,:css_classes,:with_controls,:with_indicators,:with_captions,:with_pause,:with_ride,:interval,:site_id,:image_variant)
+      params.require(:carousel).permit(
+        :name,:description,
+        :css_classes,
+        :with_controls,
+        :with_indicators,
+        :with_captions,
+        :with_copyrights,
+        :with_pause,
+        :with_ride,
+        :interval,
+        :site_id)
     end
 end

@@ -4,15 +4,14 @@ class CreateImagePreviews < ActiveRecord::Migration[6.0]
       t.references :image
       t.integer :parent_id, default: 0
       t.string :preview_type
-      t.string :file_name
-      t.string :file_type
-      t.integer :file_size
-      t.string :crop_info
-      t.string :optimization_info
-      t.boolean :published, default: false, null: false
+      t.string :source_file
+      t.string :content_type
+      t.integer :size, default: 0
+      t.integer :width, default: 0
+      t.integer :height, default: 0
+      t.integer :quality, default: 100
       t.timestamps
     end
-
     add_foreign_key :image_previews, :images, on_delete: :cascade
   end
 end

@@ -17,19 +17,19 @@
 			<tbody id="blog_posts" data-sort-items-url="<%= sort_admin_blog_posts_url %>">
 <% @blog.blog_posts.each do |blog_post| %>
         <tr class="blog_posts" id="blog_post_<%= blog_post.id %>">
-        	<td><span class="handle"><i class="icon-up-hand"></i></span></td>	
+        	<td><span class="handle"><i class="icon-up-hand"></i></span></td>
           <td><%= link_to raw(blog_post.name), admin_blog_post_path(blog_post) %></td>
           <td><%= raw(truncate_with_tags(blog_post.body) )%></td>
           <td><%= link_to blog_post.created_at.strftime("%Y-%m-%d"), admin_blog_post_path(blog_post) %></td>
           <td><%= link_to raw('<i class="icon-zoom-in"></i>'), admin_blog_post_path(blog_post) %></td>
-          <td><%= link_to raw('<i class="icon-pencil"></i>'), edit_admin_blog_post_path(blog_post) %></td>
+          <td><%= link_to raw('<i class="icon-pencil"></i>'), edit_admin_blog_post_path(blog_post), "data-turbolinks"=>"false" %></td>
           <td><%= link_to raw('<i class="icon-trash"></i>'), admin_blog_post_path(blog_post), method: :delete, data: { confirm: 'Are you sure?' } %></td>
         </tr>
 <% end %>
 				<%= raw('<tr><td colspan="5">No content has been defined.</td></tr>') if @blog.blog_posts.count == 0 %>
 			</tbody>
 		</table>
-		<%= link_to new_admin_blog_post_path(content_id: @blog.id) do %>
+		<%= link_to new_admin_blog_post_path(content_id: @blog.id), :"data-turbolinks"=>"false" do %>
 			<button type="button" class="btn  btn-outline-secondary btn-med"><i class="icon-plus"></i> New Blog Post</button>
 		<% end %>
 	</div>

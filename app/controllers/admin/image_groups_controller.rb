@@ -38,7 +38,7 @@ class Admin::ImageGroupsController < AdminController
           format.html { render :new }
           format.json { render json: @image_group.errors, status: :unprocessable_entity }
         end
-      rescue Exception => e 
+      rescue Exception => e
         flash[:danger] = "Oops! Something went wrong: #{e.message}"
         format.html { render :new }
       end
@@ -58,7 +58,7 @@ class Admin::ImageGroupsController < AdminController
           format.html { render :edit }
           format.json { render json: @image_group.errors, status: :unprocessable_entity }
         end
-      rescue Exception => e 
+      rescue Exception => e
         flash[:danger] = "Oops! Something went wrong: #{e.message}"
         format.html { render :new }
       end
@@ -75,11 +75,11 @@ class Admin::ImageGroupsController < AdminController
           format.html { redirect_to admin_image_groups_url }
           format.json { head :no_content }
         end
-      rescue Exception => e 
+      rescue Exception => e
         flash[:danger] = "Oops! Something went wrong: #{e.message}"
         format.html { render :new }
       end
-    end  
+    end
   end
 
   private
@@ -90,6 +90,12 @@ class Admin::ImageGroupsController < AdminController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def image_group_params
-      params.require(:image_group).permit(:site_id,:name,:display_type)
+      params.require(:image_group).permit(
+          :name,
+          :description,
+          :css_classes,
+          :image_group_type,
+          :site_id,
+          :image_id)
     end
 end

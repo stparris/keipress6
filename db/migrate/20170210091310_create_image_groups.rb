@@ -4,8 +4,10 @@ class CreateImageGroups < ActiveRecord::Migration[5.2]
     	t.string :name
       t.text :description
       t.string :css_classes
-      t.string :image_variant
       t.string :image_group_type
+      t.boolean :include_caption, default: false
+      t.boolean :include_copyright, default: false
+      t.boolean :include_body, default: false
       t.references :site, index: true
       t.references :image
       t.timestamps null: false

@@ -1,0 +1,7 @@
+<div class="<%= @page && @page.theme ? @page.theme.css_class : '' %>">
+<% if @page && @page.containers.any? %>
+    <%= render partial: 'containers/index', locals: {containers: @page.containers} %>
+<% else %>
+    <%= render 'errors/404' %>
+<% end %>
+</div>

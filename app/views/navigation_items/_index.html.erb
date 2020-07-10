@@ -1,0 +1,5 @@
+<ul class="navbar-nav">
+<% navigation.navigation_items.order(position: 'asc').each do |navigation_item| %>
+  <%= render partial: 'navigation_items/show', locals: { navigation_item: navigation_item } %>
+<% end %>
+</ul>

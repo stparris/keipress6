@@ -51,6 +51,9 @@ $(document).on('turbolinks:load', function() {
     $("#image_select_"+data[0]).addClass('image-selected');
     $("#image_text").text(data[2]);
     $("#hidden_image_field").val(data[0]);
+    let new_src = $("#image_"+data[0]).attr('src');
+    $("#image_selected").attr('src', new_src);
+    $("#image_selected").show();
   });
   $('#page_index').dataTable({
     columnDefs: [
@@ -130,6 +133,15 @@ $(document).on('turbolinks:load', function() {
     sPaginationType: "full_numbers"
   });
   $('#carousel_index').dataTable({
+    columnDefs: [
+      { orderable: false, targets: 0 },
+      { orderable: false, targets: 2 },
+      { orderable: false, targets: 3 },
+      { orderable: false, targets: 4 }
+    ],
+    sPaginationType: "full_numbers"
+  });
+  $('#image_group_index').dataTable({
     columnDefs: [
       { orderable: false, targets: 0 },
       { orderable: false, targets: 2 },

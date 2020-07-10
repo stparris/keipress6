@@ -80,7 +80,6 @@ class Admin::VideosController < AdminController
         :copyright_by,
         :description,
         :image_id,
-        :image_variant,
         :site_id)
     end
 end

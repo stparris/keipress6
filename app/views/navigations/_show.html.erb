@@ -1,0 +1,17 @@
+<% if navigation.nav_type == 'navbar' %>
+<nav class="<%= navigation.main_css_classes %>">
+  <% if navigation.brand %>
+  <a class="navbar-brand" href="/"><%= raw(navigation.brand) %></a>
+  <% end %>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar<%= navigation.id %>" aria-controls="navbar<%= navigation.id %>" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="<%= navigation.list_css_classes %>" id="navbar<%= navigation.id %>">
+    <%= render partial: 'navigation_items/index', locals: { navigation: navigation } %>
+  </div>
+</nav>
+<% elsif navigation.nav_type == 'nav' %>
+<div class="<%= navigation.main_css_classes %>" id="navbar<%= navigation.id %>">
+  <%= render partial: 'navigation_items/index', locals: { navigation: navigation } %>
+</div>
+<% end %>

@@ -1,5 +1,6 @@
 class ImageGroup < ApplicationRecord
 	belongs_to :site
+	belongs_to :image, optional: true
 	has_many :row_columns
   has_many :image_group_items, -> { order('position ASC') }
   has_many :image_batches

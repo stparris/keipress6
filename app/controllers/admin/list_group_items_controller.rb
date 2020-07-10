@@ -15,7 +15,6 @@ class Admin::ListGroupItemsController < AdminController
   # GET /list_group_items
   # GET /list_group_items.json
   def index
-    @list_group_items = ListGroupItem.all
   end
 
   # GET /list_group_items/1
@@ -57,7 +56,7 @@ class Admin::ListGroupItemsController < AdminController
   # PATCH/PUT /list_group_items/1.json
   def update
     respond_to do |format|
-      begin 
+      begin
         @list_group_item.update!(list_group_item_params)
         if @list_group_item.item_type == 'external_link'
           @list_group_item.link_text.update(link_text_params)
@@ -93,7 +92,7 @@ class Admin::ListGroupItemsController < AdminController
 
     def set_new
       @list_group_item = ListGroupItem.new
-      @list_group_item.item_type = params[:item_type].present? ? params[:item_type] : nil 
+      @list_group_item.item_type = params[:item_type].present? ? params[:item_type] : nil
       @list_group_item.list_group = ListGroup.find(params[:list_group_id])
       if @list_group_item.item_type && (@list_group_item.item_type == 'external_link' || @list_group_item.item_type == 'plain_text')
         @list_group_item.link_text = @list_group_item.item_type == 'external_link' ? LinkText.new(http_https: 'https') : LinkText.new

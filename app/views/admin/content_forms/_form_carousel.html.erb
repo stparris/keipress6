@@ -2,9 +2,9 @@
   <div class="form-group">
     <label for="content_item_css"><%= f.label :css_classes, "CSS space separated class names" %></label>
     <%= f.text_field :css_classes, :class => "form-control" %>
-  </div>  
-  <div class="form-group"> 
+  </div>
+  <div class="form-group">
     <%= f.label :carousel_id %>
-    <%= f.select :carousel_id, Carousel.where(site_id: @site.id).order('name asc').collect { |c| [c.name, c.id] }, @content_item.carousel_id), {prompt: 'Please Select'}, :class => "form-control" %>
+    <%= f.select :carousel_id, Carousel.where(site_id: @site.id).order('name asc').collect { |c| [c.name, c.id] }, {prompt: 'Please Select'}, :class => "form-control" %>
   </div>
 </div>

@@ -1,3 +1,0 @@
-class Author < Admin
-
-end

@@ -1,10 +1,10 @@
-<% if @content_item.errors.any? %>
+<% if @article_post.errors.any? %>
 <div id="error_explanation">
   <div class="alert alert-danger">
-		<%= pluralize(@content_item.errors.count, "error") %> prohibited this page from being saved:
+		<%= pluralize(@article_post.errors.count, "error") %> prohibited this page from being saved:
 	</div>
   <ul>
-  <% @content_item.errors.full_messages.each do |msg| %>
+  <% @article_post.errors.full_messages.each do |msg| %>
     <li><%= msg %></li>
   <% end %>
   </ul>
@@ -18,4 +18,4 @@
 	<%= f.text_field :name, :class => "form-control" %>
 </div>
 
-<%= render partial: "admin/content_forms/form_#{@content_item.content_type}", locals: {f:f} %>
+<%= render partial: "admin/content_forms/form_#{@article_post.content_type}", locals: {f: f,content_item: @article_post} %>

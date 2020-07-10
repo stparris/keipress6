@@ -6,7 +6,7 @@ class Admin::PaymentGatewaysController < AdminController
   # GET /payment_gateways
   # GET /payment_gateways.json
   def index
-    @payment_gateways = PaymentGateway.all
+    @payment_gateways = PaymentGateway.where(site_id: @site.id)
   end
 
   # GET /payment_gateways/1

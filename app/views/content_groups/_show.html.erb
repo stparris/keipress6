@@ -1,5 +1,0 @@
-<% if content_group.content_group_items.any? %>
-	<% content_group.content_group_items.each do |content_item| %>
-<%= render partial: 'content_items/show', locals: { content_item: content_item } %> 
-	<% end %>
-<% end %>

@@ -166,15 +166,12 @@ module AdminsHelper
           include_icon_modal = true
         end
       end
-      if action_name =~ /edit/ and not controller_name =~ /content_group_text_items/
+      if action_name == 'edit' && obj_controller == 'videos'
+        html += '
+        <li class="nav-item">' + link_to(raw("<icon class=\"icon-zoom-in\"></icon> #{obj_name}"), "/admin/media/#{obj.id}") + '</li>'
+      elsif action_name =~ /edit/ and not controller_name =~ /content_group_text_items/
         html += '
         <li class="nav-item">' + link_to(raw("<icon class=\"icon-zoom-in\"></icon> #{obj_name}"), "/admin/#{obj_controller}/#{obj.id}") + '</li>'
-      # elsif action_name == 'show' && content_item_controllers.include?(controller_name)
-      #     html += '
-      #   <li class="nav-item">' + link_to(raw("<i class=\"icon-plus\"></i> New #{obj_text}"), "/admin/#{obj_controller}/new?#{parents.first.class.name.underscore}_id=#{parents.first.id}") + '</li>'
-      # elsif action_name == 'show' && controller_name == 'user_addresses'
-      #    html += '
-      #   <li class="nav-item">' + link_to(raw("<i class=\"icon-plus\"></i> New #{obj_text}"), "/admin/#{obj_controller}/new?user_id=#{parents.first.id}") + '</li>'
       elsif action_name == 'show' && parents.any?
         html += '
         <li class="nav-item">' + link_to(raw("<i class=\"icon-plus\"></i> New #{obj_text}"), "/admin/#{obj_controller}/new?#{parents.last.class.name.underscore}_id=#{parents.last.id}") + '</li>'
@@ -218,11 +215,11 @@ module AdminsHelper
   end
 
   def content_subs
-    ['categories','content_groups','content_group_clones','content_group_items','content_group_text_items','articles','article_posts','blogs','blog_posts']
+    ['categories','content_groups','content_group_items','content_group_clones','content_group_text_items','articles','content_admins','article_posts','blogs','blog_posts']
   end
 
   def people_subs
-    ['admins','authors','author_articles','artists','artist_media','users','user_addresses']
+    ['admins','admins_sites','users']
   end
 
   def booking_subs

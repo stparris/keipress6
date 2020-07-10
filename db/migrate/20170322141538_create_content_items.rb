@@ -2,7 +2,7 @@
 # Using Exclusive Belongs To (AKA Exclusive Arc)
 # https://hashrocket.com/blog/posts/modeling-polymorphic-associations-in-a-relational-database#exclusive-belongs-to-aka-exclusive-arc-
 #
-# Takes advantage of Postgres check constraint and unique indexes 
+# Takes advantage of Postgres check constraint and unique indexes
 #
 
 class CreateContentItems < ActiveRecord::Migration[5.2]
@@ -14,7 +14,6 @@ class CreateContentItems < ActiveRecord::Migration[5.2]
       t.references :content, index: true
       t.string :content_type, null: false
       t.references :image
-      t.string :image_variant
       t.references :carousel
       t.references :image_group
       t.references :medium
@@ -32,12 +31,12 @@ class CreateContentItems < ActiveRecord::Migration[5.2]
       t.timestamps null: false
     end
     execute <<-SQL
-      ALTER TABLE 
-        content_items 
+      ALTER TABLE
+        content_items
       ADD CONSTRAINT check_content_item_exclusive_arc
-        check(((image_id is not null)::integer + 
-        (carousel_id is not null)::integer + 
-        (image_group_id is not null)::integer + 
+        check(((image_id is not null)::integer +
+        (carousel_id is not null)::integer +
+        (image_group_id is not null)::integer +
         (medium_id is not null)::integer +
         (list_group_id is not null)::integer +
         (link_text_id is not null)::integer +

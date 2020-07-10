@@ -13,7 +13,7 @@ class Admin::ArticlesController < AdminController
   # GET /articles/1
   # GET /articles/1.json
   def show
-   
+
   end
 
   # GET /articles/new
@@ -54,7 +54,7 @@ class Admin::ArticlesController < AdminController
           format.html { render :new }
           format.json { render json: @article.errors, status: :unprocessable_entity }
         end
-      rescue Exception => e 
+      rescue Exception => e
         flash[:danger] = "Oops! Something went wrong: #{e.message}"
         format.html { render :new }
       end
@@ -74,7 +74,7 @@ class Admin::ArticlesController < AdminController
           format.html { render :edit }
           format.json { render json: @article.errors, status: :unprocessable_entity }
         end
-      rescue Exception => e 
+      rescue Exception => e
         flash[:danger] = "Oops! Something went wrong: #{e.message}"
         format.html { render :new }
       end
@@ -91,7 +91,7 @@ class Admin::ArticlesController < AdminController
           format.html { redirect_to admin_articles_url }
           format.json { head :no_content }
         end
-      rescue Exception => e 
+      rescue Exception => e
         flash[:danger] = "Oops! Something went wrong: #{e.message}"
         format.html { render :new }
       end
@@ -105,11 +105,17 @@ class Admin::ArticlesController < AdminController
     end
 
     def set_category
-      @category = params[:category_id].present? ? Category.find(params[:category_id]) : nil 
+      @category = params[:category_id].present? ? Category.find(params[:category_id]) : nil
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def article_params
-      params.require(:article).permit(:site_id,:name,:nice_url,:description,:theme_id,:assignment)
+      params.require(:article).permit(
+        :site_id,
+        :name,
+        :content_url,
+        :page_id,
+        :css_classes,
+        :published)
     end
 end

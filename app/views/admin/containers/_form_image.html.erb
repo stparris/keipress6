@@ -12,12 +12,7 @@
       </div>
       <%= f.text_field :css_classes, value: @container.css_classes ? @container.added_css_classes : '', :class => "form-control" %>
     </div>
-  </div>  
-	<div class="form-group">
-	  <%= f.label :image_id %>
-    <%= f.hidden_field :image_id, id: "hidden_image_field" %>
-    <p>Selected: <span id="image_text"><%= @container.image ? @container.image.name : "not selected" %></span></p>
-	</div>
+  </div>
 </div>
 
 

@@ -1,6 +1,8 @@
+<% video = obj.video %>
 <div id="youtube_image_<%= video.id %>" class="youtube-image">
-  <%= src_sets(video.image) %>
-  <div class="play-button"><i class="far fa-play-circle"></i></div>
+  <%= src_sets(video.image,video) %>
+  <div class="play-button"><i class="fab fa-youtube"></i></div>
+  <div class="play-button-background">&nbsp;</div>
 </div>
 
 <!-- video modal -->
@@ -31,6 +33,6 @@
 
 <videotitle id="youtube_title_<%= video.id %>" value="<%= raw(video.name) %>" />
 <videosrc id="youtube_src_<%= video.id %>" value="<%= video.description %>" />
-<videocaption id="youtube_caption_<%= video.id %>" value="<%= video.caption && item.include_caption ? raw(video.caption) : raw('&nbsp;') %>" />
-<videocaption id="youtube_copyright_<%= video.id %>" value="<%= item.include_copyright ? "#{raw(copyright(video))}" : raw('&nbsp;') %>" />
+<videocaption id="youtube_caption_<%= video.id %>" value="<%= video.caption && obj.include_caption ? raw(video.caption) : raw('&nbsp;') %>" />
+<videocaption id="youtube_copyright_<%= video.id %>" value="<%= obj.include_copyright ? "#{raw(copyright(video))}" : raw('&nbsp;') %>" />
 

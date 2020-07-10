@@ -1,7 +1,7 @@
 <div class="row">
 	<div class="col-md-9">
 		<div class="page-header">
-		  <h1>New Clone of <%= @content_group.name %> Content Group</h1>
+		  <h1>New Clone of <%= @content_group.name %></h1>
 		</div>
 		<%= form_for([:admin, ContentGroupClone.new],:html => {:role => 'form', :class => "formFor"}) do |f| %>
 			<%= render partial: 'form', locals: {f:f} %>

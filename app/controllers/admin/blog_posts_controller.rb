@@ -34,21 +34,22 @@ class Admin::BlogPostsController < AdminController
   # POST /blog_posts
   # POST /blog_posts.json
   def create
-    @content_item = BlogPost.new(blog_post_params)
+    @blog_post = BlogPost.new(blog_post_params)
+    @blog = @blog_post.blog
     respond_to do |format|
       begin
-        if @content_item.save
+        if @blog_post.save
           flash[:success] = 'Post was successfully created.'
-          format.html { redirect_to admin_blog_post_url(@content_item) }
-          format.json { render :show, status: :created, location: @content_item }
+          format.html { redirect_to admin_blog_post_url(@blog_post) }
+          format.json { render :show, status: :created, location: @blog_post }
         else
           format.html { render :new }
-          format.json { render json: @content_item.errors, status: :unprocessable_entity }
+          format.json { render json: @blog_post.errors, status: :unprocessable_entity }
         end
-      rescue Exception => e 
+      rescue Exception => e
         flash[:danger] = "Oops! Something went wrong: #{e.message}"
         format.html { render :new }
-      end   
+      end
     end
   end
 
@@ -57,18 +58,18 @@ class Admin::BlogPostsController < AdminController
   def update
     respond_to do |format|
       begin
-        if @content_item.update(blog_post_params)
+        if @blog_post.update(blog_post_params)
           flash[:success] = 'Post was successfully updated.'
-          format.html { redirect_to admin_blog_post_url(@content_item) }
-          format.json { render :show, status: :ok, location: @content_item }
+          format.html { redirect_to admin_blog_post_url(@blog_post) }
+          format.json { render :show, status: :ok, location: @blog_post }
         else
           format.html { render :edit }
-          format.json { render json: @content_item.errors, status: :unprocessable_entity }
+          format.json { render json: @blog_post.errors, status: :unprocessable_entity }
         end
-      rescue Exception => e 
+      rescue Exception => e
         flash[:danger] = "Oops! Something went wrong: #{e.message}"
         format.html { render :new }
-      end   
+      end
     end
   end
 
@@ -76,31 +77,32 @@ class Admin::BlogPostsController < AdminController
   # DELETE /blog_posts/1.json
   def destroy
     respond_to do |format|
-      begin  
-        if @content_item.destroy
+      begin
+        if @blog_post.destroy
           flash[:success] = 'Post was successfully removed.'
           format.html { redirect_to admin_blog_url(@blog) }
           format.json { head :no_content }
         end
-      rescue Exception => e 
+      rescue Exception => e
         flash[:danger] = "Oops! Something went wrong: #{e.message}"
         format.html { render :new }
-      end      
+      end
     end
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_blog_post
-      @content_item = BlogPost.find(params[:id])
-      @blog = @content_item.blog
+      @blog_post = BlogPost.find(params[:id])
+      @blog = @blog_post.blog
     end
 
     def set_new
-      @content_item = BlogPost.new
-      @content_item.content_type = params[:content_type].present? ? params[:content_type] : nil 
-      @content_item.blog = @blog || params[:content_id].present? ? Blog.find(params[:content_id]) :nil
-      @content_item.admin = @admin
+      @blog_post = BlogPost.new
+      @blog_post.content_type = params[:content_type].present? ? params[:content_type] : nil
+      @blog = Blog.find(params[:content_id])
+      @blog_post.blog = @blog
+      @blog_post.admin = @admin
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

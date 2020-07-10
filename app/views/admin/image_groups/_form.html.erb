@@ -19,10 +19,15 @@
   <%= f.text_field :name, value: @image_group.name ? @image_group.clear_group : '', :class => "form-control" %>
     <div class="input-group-append">
       <span class="input-group-text" id="inputGroup-sizing-default">Group</span>
-    </div>    
+    </div>
   </div>
 </div>
 <div class="form-group">
-  <%= f.label :image_variant %>
-  <%= f.text_field :image_variant, :class => "form-control" %>
+  <label for="css_classes"><%= f.label :css_classes, "CSS space separated class names" %></label>
+  <%= f.text_field :css_classes, :class => "form-control" %>
 </div>
+<div class="form-group">
+  <%= f.label :image_group_type %>
+  <%= f.select :image_group_type, {'Fixed Grid'=>'image_grid_fixed','Masonry Grid'=>'image_grid_masonry'}, {}, :class => "form-control" %>
+</div>
+

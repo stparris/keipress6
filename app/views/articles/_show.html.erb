@@ -1,0 +1,5 @@
+<% if @article && @article.content_items.any? %>
+<%= raw("<div class=\"#{@article.css_classes}\">") if @article.css_classes %>
+  <%= render partial: 'articles/article_posts' %>
+<%= raw("</div>") if @article.css_classes %>
+<% end %>

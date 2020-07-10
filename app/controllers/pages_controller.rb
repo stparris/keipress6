@@ -30,12 +30,8 @@ class PagesController < ProductionController
             @page = nil
           end
         end
-        @page = Page.find_by(site_id: @site.id, assignment: 'home') unless @page
-        @muparams = params[:muparams].present? ? params[:muparams] : nil
       end
-      unless @page
-        @page = Page.find_by(site_id: @site.id, assignment: 'home')
-      end
+      @page = Page.find_by(site_id: @site.id, assignment: 'home') unless @page
     end
 end
 

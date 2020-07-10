@@ -1,8 +1,8 @@
 <div class="row">
 	<div class="col-md-9">
 		<div class="page-header">
-			<h1><%= @image_group_item.image.name %></h1>
-		</div>	
+			<h1>Image Group Item: <%= @image_group_item.image.name %></h1>
+		</div>
 		<%= object_table(@image_group_item) %>
 		<%= link_to edit_admin_image_group_item_path(@image_group_item) do %>
 			<button type="submit" class="btn  btn-outline-secondary"><i class="icon-pencil"></i> Edit</button>

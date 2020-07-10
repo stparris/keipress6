@@ -1,5 +1,5 @@
 class Image < ApplicationRecord
-
+  belongs_to :site
 	has_many :containers
 	has_many :carousel_slides
 	has_many :image_group_items

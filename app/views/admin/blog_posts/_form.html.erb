@@ -1,10 +1,10 @@
-<% if @content_item.errors.any? %>
+<% if @blog_post.errors.any? %>
 <div id="error_explanation">
   <div class="alert alert-danger">
-		<%= pluralize(@content_item.errors.count, "error") %> prohibited this page from being saved:
+		<%= pluralize(@blog_post.errors.count, "error") %> prohibited this page from being saved:
 	</div>
   <ul>
-  <% @content_item.errors.full_messages.each do |msg| %>
+  <% @blog_post.errors.full_messages.each do |msg| %>
     <li><%= msg %></li>
   <% end %>
   </ul>
@@ -16,9 +16,9 @@
 	<%= f.label :name %>
 	<%= f.text_field :name, :class => "form-control" %>
 </div>
-<div class="form-group"> 
+<div class="form-group">
   <%= f.label :admin_id %>
-  <%= f.select :admin_id, Admin.where("id in (select admin_id from admins_sites where site_id = ?)",@site.id).order('first_name asc,last_name asc').collect { |c| [c.name, c.id] }, { }, :class => "form-control" %>
+  <%= f.select :admin_id, Admin.where("id in (select admin_id from admins_sites where site_id = ?)",@site.id).order('first_name asc,last_name asc').collect { |c| [c.full_name, c.id] }, { }, :class => "form-control" %>
 </div>
 <div class="form-group">
   <%= f.label :include_admin_handle %>
@@ -28,4 +28,4 @@
   <%= f.label :include_update_time %>
   <%= f.select :include_update_time, {'No'=>'false','yes'=>'true'}, {}, :class => "form-control" %>
 </div>
-<%= render partial: "admin/content_forms/form_#{@content_item.content_type}", locals: {f:f} %>
+<%= render partial: "admin/content_forms/form_#{@blog_post.content_type}", locals: {f:f,blog_post: @blog_post} %>

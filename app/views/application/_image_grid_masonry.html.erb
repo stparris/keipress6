@@ -1,0 +1,45 @@
+<% height = col.content_type.split(/_/)[3] %>
+<style>
+img {
+  vertical-align: middle;
+  max-width: 100%;
+}
+
+.masonry {
+  display: flex;
+  width: 100%;
+}
+
+.masonry--h {
+  flex-flow: row wrap;
+  margin-left: -8px; /* Adjustment for the gutter */
+  counter-reset: brick;
+}
+
+.masonry-brick {
+  overflow: hidden;
+  margin: 0 0 8px 8px;  /* Some Gutter */
+  position: relative;
+}
+
+.masonry-brick--h {
+  flex: auto;
+  height: <%= "#{height}px" %>;
+  width: auto;
+}
+
+.masonry-img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+</style>
+
+<div class="masonry masonry--h">
+<% col.image_group.image_group_items.each do |img_item| %>
+  <% if img_item.image && img_item.image.image.attached? %>
+	<figure class="masonry-brick masonry-brick--h"><%= src_sets(img_item.image,img_item,'masonry-img') %></figure>
+  <% end %>
+<% end %>
+</div>
+

@@ -90,9 +90,9 @@ module ImagesHelper
  		return options
   end
 
-	def src_sets(image,parent=nil,img_class=nil)
-		alt = parent ? parent.name : image.name
-		title = parent ? parent.caption : image.caption
+	def src_sets(image,parent,img_class=nil)
+		alt = parent && parent.name =~ /\S+/ ? parent.name : image.name
+		title = parent && parent.caption =~ /\S+/ ? parent.caption : image.caption
 		if image && image.image.attached?
 			css = img_class ? img_class : 'img-fluid'
 			srcset = []
@@ -108,7 +108,7 @@ module ImagesHelper
 				srcset << [url_for(image.image.variant(resize: '1024x1024')), "1024w"]
 			end
 			srcset << [url_for(image.image.variant(resize: '768x768')), "768w"]
-			srcset << [url_for(image.image.variant(resize: '640x640')), "640w"]
+			srcset << [url_for(image.image.variant(resize: '576x576')), "576w"]
 			image_tag(img_src, srcset: srcset, alt: "#{alt}", title: "#{title}",  class: css )
 		end
 	end

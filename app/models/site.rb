@@ -27,6 +27,8 @@ class Site < ApplicationRecord
 	has_many :admins_sites
 	has_many :admins, through: :admins_sites
 
+  has_many :site_tags
+
 #	has_and_belongs_to_many :admins
 
 	validates :name, presence: true

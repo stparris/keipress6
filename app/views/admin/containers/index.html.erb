@@ -22,7 +22,7 @@
           <td><%= link_to raw(container.container_type), admin_container_path(container) %></td>
           <td><%= link_to raw(container.css_classes), admin_container_path(container) %></td>
           <td><%= link_to raw('<i class="icon-zoom-in"></i>'), admin_container_path(container) %></td>
-          <td><%= link_to raw('<i class="icon-pencil"></i>'), edit_admin_container_path(container) %></td>
+          <td><%= link_to raw('<i class="icon-pencil"></i>'), edit_admin_container_path(container), "data-turbolinks"=>"false" %></td>
           <td><%= link_to raw('<i class="icon-docs"></i>'), new_admin_container_clone_path(container_id: container.id), method: :get %></td>
           <td><%= link_to raw('<i class="icon-trash"></i>'), admin_container_path(container), method: :delete, data: { confirm: 'Are you sure?' } %></td>
         </tr>

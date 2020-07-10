@@ -1,5 +1,5 @@
-<ul class="list-group <%= list_group.css_classes %>">
-<% list_group.list_group_items.order("position asc").each do |item| %>
+<ul class="list-group <%= obj.list_group.css_classes %>">
+<% obj.list_group.list_group_items.order("position asc").each do |item| %>
 	<li class="<%= item.css_classes %>">
 	<% if item.item_type == 'plain_text' %>
 		<%= raw(item.label) %>
@@ -13,5 +13,5 @@
 		<%= link_to raw(item.label), "/#{item.category.nice_url}" %>
 	<% end %>
 	</li>
-<% end %> 
+<% end %>
 </ul>

@@ -1,2 +1,0 @@
-module BookingPaymentOptionsHelper
-end

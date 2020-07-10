@@ -4,7 +4,7 @@
 			<h1><%= @medium.name %></h1>
 		</div>
 		<%= object_table(@medium) %>
-		<%= link_to edit_admin_medium_path(@medium) do %>
+		<%= link_to edit_admin_medium_path(@medium), "data-turbolinks"=>"false" do %>
 			<button type="submit" class="btn  btn-outline-secondary"><i class="icon-pencil"></i> Edit</button>
 		<% end %>
 		&nbsp;&nbsp;<%= link_to admin_medium_path(@medium), method: :delete, data: { confirm: "Delete medi?" } do %>

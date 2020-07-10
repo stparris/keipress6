@@ -1,13 +1,30 @@
 class Admin::MediaController < AdminController
   before_action :set_medium, only: [:show, :edit, :update, :destroy]
+  before_action :set_category, only: [:category]
 
   layout 'admins'
 
   # GET /media
   # GET /media.json
   def index
-    @media = Medium.all
+    @media = Medium.where(site_id: @site.id).order('name asc')
   end
+
+
+  def category
+    respond_to do |format|
+      format.js do
+        if @category
+          if @medium.categories.include?(@category)
+            @medium.categories.delete(@category)
+          else
+            @medium.categories << @category
+          end
+        end
+      end
+    end
+  end
+
 
   # GET /media/1
   # GET /media/1.json
@@ -70,6 +87,10 @@ class Admin::MediaController < AdminController
       redirect_to admin_errors_url(error_template: '403') unless @medium
     end
 
+    def set_category
+      @category = params[:category_id].present? ? Category.find(params[:category_id]) : nil
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def medium_params
       params.require(:medium).permit(
@@ -80,7 +101,6 @@ class Admin::MediaController < AdminController
         :copyright_by,
         :description,
         :image_id,
-        :image_variant,
         :site_id)
     end
 end

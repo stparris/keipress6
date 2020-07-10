@@ -1,1 +1,1 @@
-json.array! @content_items, partial: 'article_posts/article_post', as: :article_post
+json.array! @article_posts, partial: 'article_posts/article_post', as: :article_post

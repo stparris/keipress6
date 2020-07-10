@@ -1,0 +1,31 @@
+<% container.container_rows.each do |row| %>
+  <% if row.row_columns.any? %>
+<div class="<%= row.css_classes ? row.css_classes : 'row' %>">
+    <% row.row_columns.each do |col| %>
+      <% if col.content_type =~ /image_grid/ %>
+  <div class="<%= col.css_classes ? col.css_classes : 'col' %>">
+    <%= render partial: "row_columns/image_group", locals: { row: row, col: col, image_group: col.image_group } %>
+  </div>
+      <% elsif col.content_type == 'article' %>
+  <div class="<%= col.css_classes ? col.css_classes : 'col' %>">
+    <%= render partial: "articles/show" %>
+  </div>
+      <% elsif col.content_type == 'content_group' %>
+  <div class="<%= col.css_classes ? col.css_classes : 'col' %>">
+    <%= render partial: "contents/show", locals: { content: col.content } %>
+  </div>
+      <% else %>
+  <div class="<%= col.css_classes ? col.css_classes : 'col' %>">
+    <%= render partial: "application/#{col.content_type}", locals: { obj: col } %>
+  </div>
+      <% end %>
+    <% end %>
+</div>
+  <% else %>
+<div class="row">
+  <div class="col">
+    <p>Row <%= row.position %> for container <%= container.name %> doesn't have any columns defined</p>
+  </div>
+</div>
+  <% end %>
+<% end %>

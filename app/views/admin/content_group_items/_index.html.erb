@@ -41,7 +41,7 @@
   <% end %>
         	</td>
           <td><%= link_to raw('<i class="icon-zoom-in"></i>'), admin_content_group_item_path(content_group_item) %></td>
-          <td><%= link_to raw('<i class="icon-pencil"></i>'), edit_admin_content_group_item_path(content_group_item) %></td>
+          <td><%= link_to raw('<i class="icon-pencil"></i>'), edit_admin_content_group_item_path(content_group_item), "data-turbolinks"=>"false" %></td>
           <td><%= link_to raw('<i class="icon-trash"></i>'), admin_content_group_item_path(content_group_item), method: :delete, data: { confirm: 'Are you sure?' } %></td>
         </tr>
 <% end %>

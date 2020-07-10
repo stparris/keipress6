@@ -1,0 +1,50 @@
+<%
+	columns = col.content_type.split(/_/)[4].to_i
+	css_hash = {'4'=>'3','3'=>'4','2'=>'6','1'=>'12'}
+	break_point = col.content_type.split(/_/)[3]
+	break_point = "-#{break_point}" unless break_point == 'none'
+	i = 1
+	j = 1
+	images = col.image_group.image_group_items.count
+	col.image_group.image_group_items.each do |img_item| %>
+		<% if i > columns
+			i = 1
+		%>
+		<% end %>
+		<% if (i == 1 && j < images) %>
+	<div class="<%= row.css_classes %>">
+	<% end %>
+	<% if j <= images %>
+		<div class="col<%= break_point %>-<%= css_hash[columns.to_s] %><%= " #{col.css_classes}" if col.css_classes =~ /\S+/ %>">
+		  <div class="card">
+		<% if img_item.image && img_item.image.image.attached? %>
+		    <%= src_sets(img_item.image,img_item,'card-img-top') %>
+		<% end %>
+		<% if image_group.include_caption || image_group.include_copyright %>
+		    <div class="card-body">
+		  <% if image_group.include_caption %>
+		      <h5 class="card-title"><%= img_item.image.caption %></h5>
+		  <% end %>
+		  <% if image_group.include_description %>
+		      <p class="card-text"><%= img_item.image.description %></p>
+		  <% end %>
+		  <% if image_group.include_copyright %>
+		      <p class="card-text"><%= img_item.image.include_copyright %></p>
+		  <% end %>
+		    </div>
+		<% end %>
+		  </div>
+		</div>
+	<% end %>
+	<% if i == columns || j == images %>
+	</div>
+	<% end %>
+	<%
+		if i == columns
+			i = 1
+		else
+			i += 1
+		end
+		j += 1
+	%>
+<% end %>

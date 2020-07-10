@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_25_191222) do
+ActiveRecord::Schema.define(version: 2020_05_27_153858) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -168,7 +168,6 @@ ActiveRecord::Schema.define(version: 2020_01_25_191222) do
     t.string "name"
     t.text "description"
     t.string "css_classes"
-    t.string "image_variant"
     t.boolean "with_controls", default: false
     t.boolean "with_indicators", default: false
     t.boolean "with_captions", default: false
@@ -178,6 +177,7 @@ ActiveRecord::Schema.define(version: 2020_01_25_191222) do
     t.bigint "site_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "with_copyrights", default: false
     t.index ["site_id"], name: "index_carousels_on_site_id"
   end
 
@@ -261,7 +261,6 @@ ActiveRecord::Schema.define(version: 2020_01_25_191222) do
     t.bigint "content_id"
     t.string "content_type", null: false
     t.bigint "image_id"
-    t.string "image_variant"
     t.bigint "carousel_id"
     t.bigint "image_group_id"
     t.bigint "medium_id"
@@ -393,14 +392,43 @@ ActiveRecord::Schema.define(version: 2020_01_25_191222) do
     t.index ["site_id"], name: "index_events_on_site_id"
   end
 
+  create_table "image_batch_images", force: :cascade do |t|
+    t.bigint "image_batch_id"
+    t.bigint "image_id"
+    t.boolean "published", default: false, null: false
+    t.index ["image_batch_id"], name: "index_image_batch_images_on_image_batch_id"
+    t.index ["image_id"], name: "index_image_batch_images_on_image_id"
+  end
+
+  create_table "image_batches", force: :cascade do |t|
+    t.string "name"
+    t.string "caption"
+    t.integer "copyright_year"
+    t.string "copyright_by"
+    t.string "naming_method"
+    t.string "naming_prefix"
+    t.integer "naming_sequence", default: 1
+    t.text "description"
+    t.integer "quality"
+    t.boolean "publish", default: false, null: false
+    t.bigint "image_group_id"
+    t.bigint "category_id"
+    t.bigint "site_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["category_id"], name: "index_image_batches_on_category_id"
+    t.index ["image_group_id"], name: "index_image_batches_on_image_group_id"
+    t.index ["site_id"], name: "index_image_batches_on_site_id"
+  end
+
   create_table "image_group_items", force: :cascade do |t|
     t.bigint "image_group_id"
     t.bigint "image_id"
     t.string "css_classes"
-    t.boolean "include_caption", default: false
-    t.boolean "include_copyright", default: false
-    t.boolean "include_description", default: false
     t.integer "position"
+    t.string "name"
+    t.string "caption"
+    t.text "body"
     t.index ["image_group_id"], name: "index_image_group_items_on_image_group_id"
     t.index ["image_id"], name: "index_image_group_items_on_image_id"
   end
@@ -409,12 +437,14 @@ ActiveRecord::Schema.define(version: 2020_01_25_191222) do
     t.string "name"
     t.text "description"
     t.string "css_classes"
-    t.string "image_variant"
     t.string "image_group_type"
     t.bigint "site_id"
     t.bigint "image_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "include_caption", default: false
+    t.boolean "include_copyright", default: false
+    t.boolean "include_body", default: false
     t.index ["image_id"], name: "index_image_groups_on_image_id"
     t.index ["site_id"], name: "index_image_groups_on_site_id"
   end
@@ -423,12 +453,12 @@ ActiveRecord::Schema.define(version: 2020_01_25_191222) do
     t.bigint "image_id"
     t.integer "parent_id", default: 0
     t.string "preview_type"
-    t.string "file_name"
-    t.string "file_type"
-    t.integer "file_size"
-    t.string "crop_info"
-    t.string "optimization_info"
-    t.boolean "published", default: false, null: false
+    t.string "source_file"
+    t.string "content_type"
+    t.integer "size", default: 0
+    t.integer "width", default: 0
+    t.integer "height", default: 0
+    t.integer "quality", default: 100
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["image_id"], name: "index_image_previews_on_image_id"
@@ -524,7 +554,6 @@ ActiveRecord::Schema.define(version: 2020_01_25_191222) do
     t.string "copyright_by"
     t.text "description"
     t.bigint "image_id"
-    t.string "image_variant"
     t.bigint "site_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -727,6 +756,16 @@ ActiveRecord::Schema.define(version: 2020_01_25_191222) do
     t.index ["site_id"], name: "index_site_includes_on_site_id"
   end
 
+  create_table "site_tags", force: :cascade do |t|
+    t.bigint "site_id"
+    t.string "name"
+    t.string "tag_type"
+    t.string "value"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["site_id"], name: "index_site_tags_on_site_id"
+  end
+
   create_table "sites", force: :cascade do |t|
     t.string "name"
     t.string "description"
@@ -895,6 +934,11 @@ ActiveRecord::Schema.define(version: 2020_01_25_191222) do
   add_foreign_key "dropdowns", "sites", on_delete: :cascade
   add_foreign_key "events", "calendars", on_delete: :nullify
   add_foreign_key "events", "sites", on_delete: :cascade
+  add_foreign_key "image_batch_images", "image_batches", on_delete: :cascade
+  add_foreign_key "image_batch_images", "images", on_delete: :cascade
+  add_foreign_key "image_batches", "categories", on_delete: :nullify
+  add_foreign_key "image_batches", "image_groups", on_delete: :nullify
+  add_foreign_key "image_batches", "sites", on_delete: :cascade
   add_foreign_key "image_group_items", "image_groups", on_delete: :cascade
   add_foreign_key "image_group_items", "images", on_delete: :cascade
   add_foreign_key "image_groups", "images", on_delete: :nullify
@@ -940,6 +984,7 @@ ActiveRecord::Schema.define(version: 2020_01_25_191222) do
   add_foreign_key "row_columns", "list_groups", on_delete: :nullify
   add_foreign_key "site_includes", "pages", on_delete: :nullify
   add_foreign_key "site_includes", "sites", on_delete: :nullify
+  add_foreign_key "site_tags", "sites", on_delete: :cascade
   add_foreign_key "sites", "countries", on_delete: :nullify
   add_foreign_key "states", "countries", on_delete: :cascade
   add_foreign_key "theme_colors", "palette_colors", on_delete: :cascade

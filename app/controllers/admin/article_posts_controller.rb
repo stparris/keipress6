@@ -1,7 +1,7 @@
 class Admin::ArticlePostsController < AdminController
   before_action :set_article_post, only: [:show, :edit, :update, :destroy]
   before_action :set_new, only: [:new]
-  
+
   layout 'admins'
 
   def sort
@@ -31,24 +31,22 @@ class Admin::ArticlePostsController < AdminController
   def edit
   end
 
+
   # POST /article_posts
   # POST /article_posts.json
   def create
-    @content_item = ArticlePost.new(article_post_params)
+    @article_post = ArticlePost.new(article_post_params)
+    @article = @article_post.article
     respond_to do |format|
       begin
-        if @content_item.save
-          flash[:success] = 'Post was successfully created.'
-          format.html { redirect_to admin_article_post_url(@content_item) }
-          format.json { render :show, status: :created, location: @content_item }
-        else
-          format.html { render :new }
-          format.json { render json: @content_item.errors, status: :unprocessable_entity }
-        end
-      rescue Exception => e 
+        @article_post.save
+        flash[:success] = 'Post was successfully created.'
+        format.html { redirect_to admin_article_url(@article) }
+        format.json { render :show, status: :created, location: @article_post }
+      rescue Exception => e
         flash[:danger] = "Oops! Something went wrong: #{e.message}"
         format.html { render :new }
-      end   
+      end
     end
   end
 
@@ -57,18 +55,13 @@ class Admin::ArticlePostsController < AdminController
   def update
     respond_to do |format|
       begin
-        if @content_item.update(article_post_params)
-          flash[:success] = 'Post was successfully updated.'
-          format.html { redirect_to admin_article_post_url(@content_item) }
-          format.json { render :show, status: :ok, location: @content_item }
-        else
-          format.html { render :edit }
-          format.json { render json: @content_item.errors, status: :unprocessable_entity }
-        end
-      rescue Exception => e 
+        @article_post.update(article_post_params)
+        flash[:success] = 'Post was successfully updated.'
+        format.html { redirect_to admin_article_url(@article_post.article) }
+      rescue Exception => e
         flash[:danger] = "Oops! Something went wrong: #{e.message}"
-        format.html { render :new }
-      end   
+        format.html { render :edit }
+      end
     end
   end
 
@@ -76,30 +69,31 @@ class Admin::ArticlePostsController < AdminController
   # DELETE /article_posts/1.json
   def destroy
     respond_to do |format|
-      begin  
-        if @content_item.destroy
+      begin
+        if @article_post.destroy
           flash[:success] = 'Post was successfully removed.'
           format.html { redirect_to admin_article_url(@article) }
           format.json { head :no_content }
         end
-      rescue Exception => e 
+      rescue Exception => e
         flash[:danger] = "Oops! Something went wrong: #{e.message}"
         format.html { render :new }
-      end      
+      end
     end
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_article_post
-      @content_item = ArticlePost.find(params[:id])
-      @article = @content_item.article
+      @article_post = ArticlePost.find(params[:id])
+      @article = @article_post.article
     end
 
     def set_new
-      @content_item = ArticlePost.new
-      @content_item.content_type = params[:content_type].present? ? params[:content_type] : nil 
-      @content_item.article = @article || params[:content_id].present? ? Article.find(params[:content_id]) : nil
+      @article_post = ArticlePost.new
+      @article_post.content_type = params[:content_type].present? ? params[:content_type] : nil
+      @article = Article.find(params[:content_id])
+      @article_post.article = @article
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

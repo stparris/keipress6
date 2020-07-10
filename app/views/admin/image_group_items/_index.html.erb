@@ -7,9 +7,10 @@
 			<thead>
 				<tr>
 					<th>Position</th>
-					<th>Name</th>
 					<th>Image</th>
-					<th>Published?</th>
+					<th>Name</th>
+          <th>Caption</th>
+					<th></th>
           <th></th>
 					<th></th>
 				</tr>
@@ -19,7 +20,6 @@
   <% published = image_group_item.image.image.attached? ? true : false %>
         <tr id="image_group_item_<%= image_group_item.id %>">
         	<td><span class="handle"><i class="icon-up-hand"></i></span></td>
-          <td><%= link_to raw(image_group_item.image.name), admin_image_group_item_path(image_group_item) %></td>
           <td>
   <% if published %>
   					<%= image_tag url_for(image_group_item.image.image.variant(resize: '100x100')), class: 'img-fluid' %>
@@ -29,19 +29,31 @@
           	<%= link_to image_tag("/image_previews/original_#{preview.image_id}.#{preview.file_extention}", style: 'max-width: 100px'), admin_image_path(image_group_item.image) %>
   <% end %>
           </td>
-          <td><%= published ? 'Yes' : 'No' %></td>
+          <td><%= link_to raw(image_group_item.name), admin_image_group_item_path(image_group_item) %></td>
+          <td><%= link_to raw(image_group_item.caption), admin_image_group_item_path(image_group_item) %></td>
           <td>
   					<%= link_to raw('<i class="icon-zoom-in"></i>'), admin_image_group_item_path(image_group_item) %>
   				</td>
+          <td>
+            <%= link_to raw('<i class="icon-pencil"></i>'), edit_admin_image_group_item_path(image_group_item), "data-turbolinks"=>"false" %>
+          </td>
           <td><%= link_to raw('<i class="icon-trash"></i>'), admin_image_group_item_path(image_group_item), method: :delete, data: { confirm: 'Are you sure?' } %></td>
         </tr>
 <% end %>
 				<%= raw('<tr><td colspan="5">No image items defined.</td></tr>') if @image_group.image_group_items.count == 0 %>
 			</tbody>
 		</table>
-		<%= link_to new_admin_image_group_item_path(image_group_id: @image_group.id) do %>
-			<button type="button" class="btn  btn-outline-secondary btn-med"><i class="icon-plus"></i> New Item</button>
-		<% end %>
+    <div class="image-buttons">
+  		<%= link_to new_admin_image_group_item_path(image_group_id: @image_group.id) do %>
+  			<button type="button" class="btn  btn-outline-secondary btn-med"><i class="icon-plus"></i> New Item</button>
+  		<% end %>
+          <%= link_to new_admin_image_group_item_path(image_group_id: @image_group.id, new_from_category: 'true') do %>
+        <button type="button" class="btn btn-outline-secondary btn-med"><i class="icon-plus"></i> New Items From Category</button>
+      <% end %>
+      <%= link_to edit_all_admin_image_group_items_path(image_group_id: @image_group.id), :"data-turbolinks"=>"false" do %>
+        <button type="button" class="btn btn-outline-secondary btn-med"><i class="icon-pencil"></i> Edit All</button>
+      <% end %>
+    </div>
 	</div>
 	<div class="col-md-2">&nbsp;</div>
 </div>

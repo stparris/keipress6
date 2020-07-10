@@ -4,7 +4,7 @@
 			<h1>Item: <%= @content_item.name %></h1>
 		</div>
 		<%= object_table(@content_item) %>
-		<%= link_to edit_admin_content_group_item_path(@content_item) do %>
+		<%= link_to edit_admin_content_group_item_path(@content_item), "data-turbolinks"=>"false" do %>
 			<button type="submit" class="btn  btn-outline-secondary"><i class="icon-pencil"></i> Edit</button>
 		<% end %>
 		&nbsp;&nbsp;<%= link_to admin_content_group_item_path(@content_item), method: :delete, data: { confirm: "Delete content_group_item?" } do %>

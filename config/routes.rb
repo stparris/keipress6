@@ -23,6 +23,8 @@ Rails.application.routes.draw do
   namespace :admin do
     get '/' => 'admins#index'
     get 'login' => 'admin_sessions#new'
+    get 'documents/(:document_url)' => 'documents#show', :document_url => /\S+/
+    get 'documents' => 'documents#index'
     resources :admin_addresses
     resources :admins
     resources :admins_sites
@@ -63,6 +65,9 @@ Rails.application.routes.draw do
       collection do
         post 'sort'
       end
+      collection do
+        get 'edit_all'
+      end
     end
     resources :categories do
       member do
@@ -76,6 +81,11 @@ Rails.application.routes.draw do
     resources :content_groups do
       member do
         patch 'category'
+      end
+    end
+    resources :content_admins do
+      collection do
+        post 'sort'
       end
     end
     resources :content_group_items do
@@ -114,14 +124,21 @@ Rails.application.routes.draw do
         patch 'category'
       end
     end
+    resources :image_batches
+    resources :image_batch_images
+    resources :image_batch_uploads, only: [:create]
     resources :image_crops
     resources :image_optimizations
     resources :image_previews
+    resources :image_publishes, only: [:create]
     resources :image_watermarks
     resources :image_groups
     resources :image_group_items do
       collection do
         post 'sort'
+      end
+      collection do
+        get 'edit_all'
       end
     end
     resources :image_group_uploads
@@ -163,6 +180,7 @@ Rails.application.routes.draw do
         post 'sort'
       end
     end
+    resources :site_tags
     resources :sites
     resources :songs
     resources :themes do
@@ -187,8 +205,6 @@ Rails.application.routes.draw do
   # end admin namespace
   #####################################
 
-  get '/articles/(:nice_url)' => 'articles#show', :nice_url => /\S+/
-  get '/blogs/(:nice_url)' => 'blogs#show', :nice_url => /\S+/
   resources :media
   resources :posts
   resources :artists
@@ -204,7 +220,10 @@ Rails.application.routes.draw do
   put '/rails/active_storage/disk/:encoded_token(.:format)' => 'active_storage/disk#update'
   post '/rails/active_storage/direct_uploads(.:format)' => 'active_storage/direct_uploads#create'
   get '/.well-known/acme-challenge/:id' => 'pages#letsencrypt'
-
+  get '/articles' => 'articles#index'
+  get '/articles/(:content_url)' => 'articles#show', :content_url => /\S+/
+  get '/image_previews/*' => 'pages#static_asset'
+  get '/documents/*' => 'pages#static_asset'
   get '/(:nice_url)' => 'pages#show', :nice_url => /\S+/
   root 'pages#show'
 

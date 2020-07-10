@@ -44,13 +44,14 @@ class Admin::RowColumnsController < AdminController
   # POST /row_columns.json
   def create
     @row_column = RowColumn.new(row_column_params)
+    @container_row = @row_column.container_row
     respond_to do |format|
-      begin 
+      begin
         @row_column.save
         flash[:success] = 'Column was successfully created.'
         format.html { redirect_to admin_row_column_url(@row_column) }
         format.json { render :show, status: :created, location: @row_column }
-      rescue Exception, RowColumn::ExclusiveArcError => e 
+      rescue Exception, RowColumn::ExclusiveArcError => e
         flash[:danger] = "Error: #{e.message}"
         format.html { render :new }
         format.json { render json: @row_column.errors, status: :unprocessable_entity }
@@ -62,7 +63,7 @@ class Admin::RowColumnsController < AdminController
   # PATCH/PUT /row_columns/1.json
   def update
     respond_to do |format|
-      begin  
+      begin
         @row_column.update(row_column_params)
         flash[:success] = 'Column was successfully updated.'
         if @page
@@ -71,7 +72,7 @@ class Admin::RowColumnsController < AdminController
           format.html { redirect_to admin_row_column_url(@row_column)  }
         end
         format.json { render :show, status: :ok, location: @row_column }
-      rescue Exception, RowColumn::ExclusiveArcError => e 
+      rescue Exception, RowColumn::ExclusiveArcError => e
         flash[:danger] = "Error: #{e.message}"
         format.html { render :edit }
         format.json { render json: @row_column.errors, status: :unprocessable_entity }
@@ -101,7 +102,7 @@ class Admin::RowColumnsController < AdminController
       @container_row = ContainerRow.find(params[:container_row_id])
       @row_column = RowColumn.new
       @row_column.container_row = @container_row
-      @row_column.content_type = params[:content_type].present? ? params[:content_type] : nil   
+      @row_column.content_type = params[:content_type].present? ? params[:content_type] : nil
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
@@ -117,7 +118,8 @@ class Admin::RowColumnsController < AdminController
         :list_group_id,
         :grid_columns,
         :grid_image_height,
-        :grid_break_point)
+        :grid_break_point,
+        :placeholder_flag)
     end
 
 end

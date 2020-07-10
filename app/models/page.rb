@@ -5,10 +5,8 @@ class Page < ApplicationRecord
 	has_many :containers, through: :containers_pages
 
 	validates :name, presence: true
-	validates :name, uniqueness: { scope: :site_id }	
+	validates :name, uniqueness: { scope: :site_id }
 	validates :nice_url, uniqueness: { scope: :site_id }
-
-	attr_accessor :muparams
 
 	before_save :gen_nice_url
 

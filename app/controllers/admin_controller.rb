@@ -9,7 +9,8 @@ class AdminController < ApplicationController
       elsif session[:site_id].present?
         @site = Site.find_by_id(session[:site_id])
       else
-        @site = Site.joins(:domains).where("domains.name = ?", request.domain).first
+        # @site = Site.joins(:domains).where("domains.name = ?", request.domain).first
+        @site = @admin.sites.first
       end
     end
 
@@ -19,6 +20,7 @@ class AdminController < ApplicationController
         if @admin
           if @admin.sites.any? || @admin.role == 1
             set_admin_site
+logger.info "\n============\n#{@admin.inspect} #{@site.inspect}\n\n"
             unless (@site && (@admin.sites.include?(@site)) || @admin.role == 1)
               redirect_to admin_errors_url(error_template: '403')
             end

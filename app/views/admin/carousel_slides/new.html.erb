@@ -16,19 +16,16 @@
 				<%= f.select :image_group_id, ImageGroup.where(site_id: @site.id).order('name asc').collect  { |c| [c.name, c.id] }, {prompt: 'Please Select'}, :class => "form-control" %>
 			</div>
 <% else %>
-			<%= render partial: 'admin/images/image_select_table', locals: {selected_id: nil } %>
-			<hr />
-		  <%= f.hidden_field :image_id, id: "hidden_image_field" %>
-		  <h4>Selected: <span id="image_text"><%= @carousel_slide.image ? @carousel_slide.image.name : "not selected" %></span></h4>
+			<%= render partial: 'admin/images/image_select_table', locals: {f: f,content: @carousel_slide} %>
 <% end %>
 		  <hr/>
-			<%= button_tag(type: 'submit', class:"btn  btn-outline-secondary btn-sm") do %>
+			<%= button_tag(type: 'submit', class:"btn btn-outline-secondary btn-sm") do %>
 				<i class="icon-ok"></i>
 				Create
 			<% end %>
 			&nbsp;&nbsp;
 			<%= link_to admin_carousel_path(@carousel) do %>
-				<button type="button" class="btn  btn-outline-secondary btn-sm" style="float:right;"><i class="icon-cancel"></i> Cancel</button>
+				<button type="button" class="btn btn-outline-secondary btn-sm"><i class="icon-cancel"></i> Cancel</button>
 			<% end %>
 		<% end %>
 	</div>

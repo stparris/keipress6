@@ -1,6 +1,6 @@
 class Admin::ContentGroupsController < AdminController
   before_action :set_content_group, only: [:show, :edit, :update, :destroy]
- 
+
   layout 'admins'
 
   # GET /content_groups
@@ -39,10 +39,10 @@ class Admin::ContentGroupsController < AdminController
           format.html { render :new }
           format.json { render json: @content_group.errors, status: :unprocessable_entity }
         end
-      rescue Exception => e 
+      rescue Exception => e
         flash[:danger] = "Oops! Something went wrong: #{e.message}"
         format.html { render :new }
-      end        
+      end
     end
   end
 
@@ -59,7 +59,7 @@ class Admin::ContentGroupsController < AdminController
           format.html { render :edit }
           format.json { render json: @content_group.errors, status: :unprocessable_entity }
         end
-      rescue Exception => e 
+      rescue Exception => e
         flash[:danger] = "Oops! Something went wrong: #{e.message}"
         format.html { render :new }
       end
@@ -70,13 +70,13 @@ class Admin::ContentGroupsController < AdminController
   # DELETE /content_groups/1.json
   def destroy
     respond_to do |format|
-      begin  
+      begin
         if @content_group.destroy
-                    flash[:success] = 'Content group was successfully removed.'
+          flash[:success] = 'Content group was successfully removed.'
           format.html { redirect_to admin_content_groups_url }
           format.json { head :no_content }
         end
-      rescue Exception => e 
+      rescue Exception => e
         flash[:danger] = "Oops! Something went wrong: #{e.message}"
         format.html { render :new }
       end
@@ -86,8 +86,7 @@ class Admin::ContentGroupsController < AdminController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_content_group
-      @content_group = ContentGroup.find_by(id: params[:id],site_id: @site.id)
-      redirect_to admin_errors_url(error_template: '403') unless @content_group
+      @content_group = ContentGroup.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

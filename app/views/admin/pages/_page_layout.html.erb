@@ -3,13 +3,13 @@
 <% @page.containers.order('position asc').each do |container| %>
 	<div class="container-layout">
 		<p><%= container.container_type.capitalize %> Container: <%= container.name %>
-			<%= link_to raw("<icon class=\"icon-pencil\"></icon>"), edit_admin_container_path(container, page_id: @page.id) %>
+			<%= link_to raw("<icon class=\"icon-pencil\"></icon>"), edit_admin_container_path(container, page_id: @page.id), "data-turbolinks"=>"false" %>
 		</p>
 		<%= raw("<p>CSS: #{container.css_classes}</p>") if container.css_classes.match /\S+/ %>
 	<% if container.container_type.match /navbar|nav/ %>
 		<div class="navigation-layout">
 			<p>Navigation: <%= container.navigation.name %>
-				<%= link_to raw("<icon class=\"icon-pencil\"></icon>"), edit_admin_navigation_path(container.navigation, page_id: @page.id) %>
+				<%= link_to raw("<icon class=\"icon-pencil\"></icon>"), edit_admin_navigation_path(container.navigation, page_id: @page.id), "data-turbolinks"=>"false" %>
 			</p>
 			<p>
 				CSS: <%= container.navigation.main_css_classes %> <%= container.navigation.main_css_classes %>
@@ -17,7 +17,7 @@
 		<% container.navigation.navigation_items.order('position asc').each do |item| %>
 			<div class="col-layout">
 				<p>Item: <%= item.name %>
-					<%= link_to raw("<icon class=\"icon-pencil\"></icon>"), edit_admin_navigation_item_path(item, page_id: @page.id) %>
+					<%= link_to raw("<icon class=\"icon-pencil\"></icon>"), edit_admin_navigation_item_path(item, page_id: @page.id), "data-turbolinks"=>"false" %>
 				</p>
 				<p>CSS: <%= item.css_classes %></p>
 			</div>
@@ -45,14 +45,14 @@
 		<% container.container_rows.order('position asc').each do |row| %>
 		<div class="row-layout">
 			<p>Row: <%= row.position %>
-				<%= link_to raw("<icon class=\"icon-pencil\"></icon>"), edit_admin_container_row_path(row.id, page_id: @page.id) %>
+				<%= link_to raw("<icon class=\"icon-pencil\"></icon>"), edit_admin_container_row_path(row.id, page_id: @page.id), "data-turbolinks"=>"false" %>
 			</p>
 			<p>CSS: <%= row.css_classes %></p>
 
 			<% row.row_columns.order('position asc').each do |col| %>
 			<div class="col-layout">
 				<p>Column: <%= col.position %>
-					<%= link_to raw("<icon class=\"icon-pencil\"></icon>"), edit_admin_row_column_path(col.id, page_id: @page.id) %>
+					<%= link_to raw("<icon class=\"icon-pencil\"></icon>"), edit_admin_row_column_path(col.id, page_id: @page.id), "data-turbolinks"=>"false" %>
 				</p>
 				<%= raw("<p>CSS: #{col.css_classes}</p>") if col.css_classes =~ /\S+/ %>
 				<div class="content-layout">
@@ -64,7 +64,7 @@
 					<% col.content.content_items.order('position asc').each do |item| %>
 					<div class="item-layout">
 						<p><%= item.content_type %>: <%= item.name.capitalize %> <%= item.name %>
-							<%= link_to raw("<icon class=\"icon-pencil\"></icon>"), edit_admin_content_group_item_path(item) %>
+							<%= link_to raw("<icon class=\"icon-pencil\"></icon>"), edit_admin_content_group_item_path(item), "data-turbolinks"=>"false" %>
 						</p>
 						<% if item.content_type == "text" %>
 							<%= raw(truncate_with_tags(item.body)) %>
@@ -93,9 +93,10 @@
 					<%= link_to raw("<icon class=\"icon-zoom-in\"></icon>"), admin_carousel_path(col.carousel_id) %>
 					</p>
 					<% if col.carousel.carousel_slides.any?
-					 if	col.carousel.carousel_slides.first.image && col.carousel.carousel_slides.first.image.image.attached?
+						slide = col.carousel.carousel_slides.first
+						if slide.image && slide.image.image.attached?
 					%>
-					<%= image_tag(url_for(col.carousel.carousel_slides.first.image.image.variant(resize: '150x150')), class: 'img-fluid') %>
+					<%= image_tag(url_for(slide.image.image.variant(resize: '150x150')), class: 'img-fluid') %>
 					<% end
 						end %>
 				<% elsif col.content_type == 'list_group' %>

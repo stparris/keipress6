@@ -11,7 +11,7 @@ class ArticlePost < ContentItem
 	before_create :set_position
 
 	def set_position
-		self.position = ArticlePost.where(content_id: self.content_id).count + 1
+		self.position = ArticlePost.where(content_id: self.content_id).count + 1 unless self.position
 	end
-	
+
 end

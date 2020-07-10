@@ -1,0 +1,11 @@
+<% content_items.order("position asc").each do |content_item| %>
+<%= raw("<div class=\"#{content_item.css_classes}\">") if content_item.css_classes =~ /\S+/  %>
+  <% if @page.assignment =~ /booking-\S{2}-rental/ && content_item.body =~ /BOOKING_FORM/ %>
+  <%= render partial: 'rental_bookings/new', locals: {content_item: content_item} %>
+  <% else %>
+  <%= render partial: "application/#{content_item.content_type}", locals: {obj: content_item} %>
+  <% end %>
+<%= raw("</div>") if content_item.css_classes =~ /\S+/ %>
+<% end %>
+
+

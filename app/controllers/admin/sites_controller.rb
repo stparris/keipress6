@@ -1,5 +1,6 @@
 class Admin::SitesController < AdminController
   before_action :set_site, only: [:show, :edit, :update, :destroy]
+  before_action :set_new, only: [:new]
 
   layout 'admins'
 
@@ -8,7 +9,7 @@ class Admin::SitesController < AdminController
   def index
     @sites = @admin.role == 1 ? Site.all : @admin.sites
       @site = nil
-      session[:site_id] = nil 
+      session[:site_id] = nil
     end
 
   # GET /sites/1
@@ -16,7 +17,7 @@ class Admin::SitesController < AdminController
   def show
     unless @site
       @error = Error.new(error_template: '403')
-      render 'admin/errors/show' 
+      render 'admin/errors/show'
     end
   end
 
@@ -43,7 +44,7 @@ class Admin::SitesController < AdminController
           format.html { render :new }
           format.json { render json: @site.errors, status: :unprocessable_entity }
         end
-      rescue Exception => e 
+      rescue Exception => e
         flash[:danger] = "Oops! Something went wrong: #{e.message}"
         format.html { render :new }
       end
@@ -63,7 +64,7 @@ class Admin::SitesController < AdminController
           format.html { render :edit }
           format.json { render json: @site.errors, status: :unprocessable_entity }
         end
-      rescue Exception => e 
+      rescue Exception => e
         flash[:danger] = "Oops! Something went wrong: #{e.message}"
         format.html { render :new }
       end
@@ -81,7 +82,7 @@ class Admin::SitesController < AdminController
           format.html { redirect_to admin_sites_url }
           format.json { head :no_content }
         end
-      rescue Exception => e 
+      rescue Exception => e
         flash[:danger] = "Oops! Something went wrong: #{e.message}"
         format.html { render :new }
       end
@@ -97,6 +98,10 @@ class Admin::SitesController < AdminController
         @site = @admin.sites.find_by_id(params[:id])
       end
       session[:site_id] = @site.id if @site
+    end
+
+    def set_new
+      @site = Site.new
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

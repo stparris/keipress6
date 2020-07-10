@@ -1,0 +1,5 @@
+<% if content.content_items.any? %>
+<%= raw("<div class=\"#{content.css_classes}\">") if content.css_classes =~ /\S+/  %>
+  <%= render partial: 'content_items/index', locals: { content_items: content.content_items } %>
+<%= raw("</div>") if content.css_classes =~ /\S+/  %>
+<% end %>

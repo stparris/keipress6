@@ -15,20 +15,20 @@ end
 
 def walter_text
 "<h2>Walter White Says</h2>
-<p>A business big enough that it could be listed on the NASDAQ goes belly up. Disappears! It ceases to exist without me. No, you clearly don't know who you're talking to, so let me clue you in. I am not in danger, Skyler. I AM the danger! A guy opens his door and gets shot and you think that of me? No. I am the one who knocks! 
+<p>A business big enough that it could be listed on the NASDAQ goes belly up. Disappears! It ceases to exist without me. No, you clearly don't know who you're talking to, so let me clue you in. I am not in danger, Skyler. I AM the danger! A guy opens his door and gets shot and you think that of me? No. I am the one who knocks!
 </p>
-<p>Did he speak to you? Would you just answer? What things? What people? A month ago, Gus was trying to kill both of us. And now, he pulls you out of the lab and employs you as... what... a, an assistant gunman? A tough guy? Does that make any sense to you? He says he sees something in you. What kind of game is he playing. Does he think you're that naïve? He can't truly think that you'd forget... let alone Gale, let alone Victor... and all the horror that goes along with all of that. 
+<p>Did he speak to you? Would you just answer? What things? What people? A month ago, Gus was trying to kill both of us. And now, he pulls you out of the lab and employs you as... what... a, an assistant gunman? A tough guy? Does that make any sense to you? He says he sees something in you. What kind of game is he playing. Does he think you're that naïve? He can't truly think that you'd forget... let alone Gale, let alone Victor... and all the horror that goes along with all of that.
 </p>
-<p>It's enough. This is still the best way. You go after him with a gun, you'll never get out of it alive. But with this... you slip it into his food or drink, there shouldn't be any taste or smell... thirty-six hours later... poof. A man his age, working as hard as he does... no one will be surprised. Mike can have his suspicions, but that's all they'll be. Please, one homicidal maniac at a time. 
+<p>It's enough. This is still the best way. You go after him with a gun, you'll never get out of it alive. But with this... you slip it into his food or drink, there shouldn't be any taste or smell... thirty-six hours later... poof. A man his age, working as hard as he does... no one will be surprised. Mike can have his suspicions, but that's all they'll be. Please, one homicidal maniac at a time.
 </p>
-<p>Look, I'll give you Jesse Pinkman, OK? Like you said, he's the problem, he's always been the problem and without him, we would... and he's in town, alright? He's not in Virginia or wherever the hell you're looking for him. He's right here in Albuquerque and I can take you to him, I'll take you right to him. What do you say? 
+<p>Look, I'll give you Jesse Pinkman, OK? Like you said, he's the problem, he's always been the problem and without him, we would... and he's in town, alright? He's not in Virginia or wherever the hell you're looking for him. He's right here in Albuquerque and I can take you to him, I'll take you right to him. What do you say?
 </p>
 "
 end
 
 def pinkman_text
 "<h2>Jesse Pinkman Says</h2>
-<p>Where's my money... bitch? WHERE'S my money. Where's my. Where's MY money, bitch? Huh? Bitch? Where's my money, bitch? Oh that's good... where's my money. Where's my money, bitch. Bitch, where's my money. I will mess you... up. That how you wanna play this?  Huh, Your call, your funeral Jack. Hey, do not mess with me I will bury you cause I'm crazy. You know, yeah... mucho loco. Do not... test me.</p> 
+<p>Where's my money... bitch? WHERE'S my money. Where's my. Where's MY money, bitch? Huh? Bitch? Where's my money, bitch? Oh that's good... where's my money. Where's my money, bitch. Bitch, where's my money. I will mess you... up. That how you wanna play this?  Huh, Your call, your funeral Jack. Hey, do not mess with me I will bury you cause I'm crazy. You know, yeah... mucho loco. Do not... test me.</p>
 <p>Where's my money, bitch?! I ain't gonna keep asking nice. Yo, alright? I want my money and my dope. Come on! What, what! What do you wanna say? Shut up! Shut... up! </p>
 <p>What business? The business you put me on, asshole! What, you already forgot? THIS business. Huh? That uh jog your memory, son of a bitch? Hey, you said... you said handle it, so you know what, I handled it. Didn't mean to kill somebody? Well, too late you know cause, dude's dead. Way dead. Oh, and hey, hey. Here's your money. Yeah, forty-six hundred and sixty bucks. Your half. Spend it in good health, you miserable son of bitch. </p>
 <p>I didn't say I killed him. Dude's wife crushed his head with an ATM machine. Crushed his head... with an ATM machine... right in front of me. I mean, crushed it like... Oh my god, the sound... it's still in my ears. You know and the the blood, like everywhere. Like there was so much you would not believe. Man will you just please give me... just give me my weed alright? It helps with my nausea.</p>
@@ -38,21 +38,21 @@ end
 def goodman_text
 "<h2>Saul Goodman Says</h2>
 <p>Better safe than sorry. That's my motto. Yeah, you do seem to have a little 'shit creek' action going. You know, FYI, you can buy a paddle. Did you not plan for this contingency? I mean the Starship Enterprise had a self-destruct button. I'm just saying.</p>
-<p>Look, let's start with some tough love, alright? Ready for this? Here it goes: you two suck at peddling meth. Period. Good! 'Oh boo-hoo, I won't cook meth anymore!' You're a crybaby! Who needs you?! Hey, I'm unplugging the website, so no more money laundering! How do you like that?!</p> 
-<p>Great, perfect you know... this is just. I told her you were my A Team. Oh, hello Mrs. White, the good news is the IRS has been paid off, the bad news is... ach, Jesus!</p> 
+<p>Look, let's start with some tough love, alright? Ready for this? Here it goes: you two suck at peddling meth. Period. Good! 'Oh boo-hoo, I won't cook meth anymore!' You're a crybaby! Who needs you?! Hey, I'm unplugging the website, so no more money laundering! How do you like that?!</p>
+<p>Great, perfect you know... this is just. I told her you were my A Team. Oh, hello Mrs. White, the good news is the IRS has been paid off, the bad news is... ach, Jesus!</p>
 <p>What am I eighth grade hall monitor? Current whereabouts? Let me tell you something, Mike. There are rules to this lawyer thing. Attorney client privilege, that's a big one. That's something I provide for you! If I give up Pinkman, then you're gonna be asking, old Saul gives 'em up pretty easy what's to keep him from giving me up? You see, so then, where's the trust?</p>
 "
 end
 
 def mike_text
 "<h2>Mike Ehrmantraut Says</h2>
-<p>Goodbye, Walter.  I don't owe you a damn thing.  All of this -- falling apart like this -- is on YOU.  We had a good thing, you stupid son of a bitch!  We had Fring.  We had a lab.  We had everything we needed and it all ran like clockwork.  You could've shut your mouth, cooked, and made as much money as you ever needed.  It was perfect.  But no!  You just had to blow it up.  YOU!  And your pride and your ego.  You just had to be the man.  If you'd done your job, known your place, we'd all be fine right now. 
+<p>Goodbye, Walter.  I don't owe you a damn thing.  All of this -- falling apart like this -- is on YOU.  We had a good thing, you stupid son of a bitch!  We had Fring.  We had a lab.  We had everything we needed and it all ran like clockwork.  You could've shut your mouth, cooked, and made as much money as you ever needed.  It was perfect.  But no!  You just had to blow it up.  YOU!  And your pride and your ego.  You just had to be the man.  If you'd done your job, known your place, we'd all be fine right now.
 </p>
-<p>Any other drugs in the house? Think hard; your freedom depends on it. What about guns, you got any guns in the house? Here's your story - You woke up, you found her, that's all you know. Say it. Say it, please. I woke up I found her that's all I know. Say it. I woke up I found her, that's all I know. Again. Again. Again. 
+<p>Any other drugs in the house? Think hard; your freedom depends on it. What about guns, you got any guns in the house? Here's your story - You woke up, you found her, that's all you know. Say it. Say it, please. I woke up I found her that's all I know. Say it. I woke up I found her, that's all I know. Again. Again. Again.
 </p>
-<p>Once you call it in, the people who show up with be with the office of medical investigations. it's primarily who you'll talk to. Police officers may arrive they may not, depends on how busy a morning they're having. Typically ODs are not a high priority call. There's nothing here to incriminate you, so I'd be amazed if you got placed under arrest. However, if you do, you say nothing. You tell them you just want your lawyer. And you call Saul Goodman. 
+<p>Once you call it in, the people who show up with be with the office of medical investigations. it's primarily who you'll talk to. Police officers may arrive they may not, depends on how busy a morning they're having. Typically ODs are not a high priority call. There's nothing here to incriminate you, so I'd be amazed if you got placed under arrest. However, if you do, you say nothing. You tell them you just want your lawyer. And you call Saul Goodman.
 </p>
-<p>And do I need to state the obvious? I was not here. You put on a long sleeve shirt and cover those track marks on your arm. Count down from twenty, and then you dial. Hang tough, you're in the home stretch. 
+<p>And do I need to state the obvious? I was not here. You put on a long sleeve shirt and cover those track marks on your arm. Count down from twenty, and then you dial. Hang tough, you're in the home stretch.
 </p>
 "
 end
@@ -283,7 +283,7 @@ i = 1
 	i += 1
 end
 
-#blues 
+#blues
 blues = Palette.where(name: 'blues').first_or_create
 i = 1
 ['e6e6ff',
@@ -443,7 +443,7 @@ ISO3166::Country.all.each do |c|
     eu: c.in_eu? ? true : false
   ).first_or_create
 	if c.states.any?
-		c.states.each_key do |s| 
+		c.states.each_key do |s|
 			State.where(
 				name: c.states[s].name,
 				abbr: s,
@@ -456,7 +456,7 @@ ISO3166::Country.all.each do |c|
 end
 sites = []
 site = Site.where(
-				name: 'Local Host', 
+				name: 'Local Host',
 				description: 'A simple content management system based on Ruby on Rails with PosgreSQL and Twitter Bootstrap.',
 				country_id: Country.find_by(iso: "US").id,
 				favicon: 'keipress',
@@ -466,7 +466,7 @@ admin.sites << site
 sites << site
 
 site = Site.where(
-				name: 'Keipress', 
+				name: 'Keipress',
 				description: 'A simple content management system based on Ruby on Rails with PosgreSQL and Twitter Bootstrap.',
 				country_id: Country.find_by(iso: "US").id,
 				favicon: 'keipress',
@@ -476,7 +476,7 @@ admin.sites << site
 sites << site
 
 site = Site.where(
-				name: 'STParris', 
+				name: 'STParris',
 				description: 'A simple content management system based on Ruby on Rails with PosgreSQL and Twitter Bootstrap.',
 				country_id: Country.find_by(iso: "US").id,
 				favicon: 'keipress',
@@ -489,7 +489,7 @@ sites.each do |site|
 	header_group = ContentGroup.where(name: 'Header Group', site_id: site.id).first_or_create
 	header_content = ContentGroupItem.where(name: 'My New Website', content_type: "text", content_id: header_group.id).first
 	unless header_content
-		header_content = ContentGroupItem.create(name: 'My New Website', content_type: "text", content_id: header_group.id, text_html: 1, body: '<h1>##TODAY##</h1>')
+		header_content = ContentGroupItem.create(name: 'My New Website', content_type: "text", content_id: header_group.id, text_html: 1, body: '<h1>{{TODAY}}</h1>')
 	end
 	header_container = Container.where(name: 'Header',site_id: site.id,container_type: 'grid', rows_flag: 1,css_classes: 'banner').first_or_create
 	row = ContainerRow.where(container_id: header_container.id,css_classes: '',position: 1).first_or_create
@@ -501,7 +501,7 @@ sites.each do |site|
 	footer_group = ContentGroup.where(name: 'Footer Group',site_id: site.id).first_or_create
 	footer_content = ContentGroupItem.where(name: 'Copyright', content_type: "text", content_id: footer_group.id).first
 	unless footer_content
-		footer_content = ContentGroupItem.create(name: 'Copyright', content_type: "text", content_id: footer_group.id, text_html: 1, body: "<p><icon class=\"icon-copyright\"></icon> ##YEAR## #{site.name}</p>", position: 1)
+		footer_content = ContentGroupItem.create(name: 'Copyright', content_type: "text", content_id: footer_group.id, text_html: 1, body: "<p><icon class=\"icon-copyright\"></icon> {{YEAR}} #{site.name}</p>", position: 1)
 	end
 	footer_container = Container.where(name: 'Footer',site_id: site.id,container_type: 'grid', rows_flag: 1,css_classes: 'footer').first_or_create
 	row = ContainerRow.where(container_id: footer_container.id,css_classes: '',position: 1).first_or_create
@@ -566,7 +566,7 @@ sites.each do |site|
 		page = Page.where(
 			name: page_name.capitalize,
 			site_id: site.id,
-			theme_id: themes[toggle_theme], 
+			theme_id: themes[toggle_theme],
 			assignment: page_name
 		).first_or_create!
 		NavigationItem.where(
@@ -574,14 +574,14 @@ sites.each do |site|
 			label: page_name.capitalize,
 			item_type: 'page_link',
 			navigation_id: navigation.id,
-			page_id: page.id, 
+			page_id: page.id,
 			position: i).first_or_create!
-		
-		
+
+
 		ContainersPage.where(container_id: header_container.id,page_id: page.id,position: 1).first_or_create
 		ContainersPage.where(container_id: navigation_container.id,page_id: page.id,position: 2).first_or_create
 		body = walter_text if i == 1
-		body = pinkman_text if i == 2	
+		body = pinkman_text if i == 2
 		body = goodman_text if i == 3
 		body = mike_text if i == 4
 		body = '' if i == 5
@@ -605,14 +605,14 @@ sites.each do |site|
 									name: 'Shiprock',
 									caption: 'Shiprock New Mexico',
 									site_id: site.id,
-									copyright_year: 2018, 
+									copyright_year: 2018,
 									copyright_by: 'V. Van Gough').first_or_create!
 
 	image2 = Image.where(
 									name: 'Canyonlands',
 									caption: 'Canyonlands NP',
 									site_id: site.id,
-									copyright_year: 2018, 
+									copyright_year: 2018,
 									copyright_by: 'V. Van Gough').first_or_create!
 
 	image_group = ImageGroup.where(
@@ -624,12 +624,12 @@ sites.each do |site|
 	ImageGroupItem.where(
 			image_group_id: image_group.id,
 			image_id: image1.id
-		).first_or_create	
+		).first_or_create
 
 	ImageGroupItem.where(
 			image_group_id: image_group.id,
 			image_id: image2.id
-		).first_or_create	
+		).first_or_create
 
 	blog = Blog.where(
 			name: 'My Blog',
@@ -677,7 +677,7 @@ sites.each do |site|
 				name: "My Article #{i + 1}",
 				site_id: site.id,
 				published: true
-		).first_or_create!			
+		).first_or_create!
 		4.times do |j|
 			post = ArticlePost.where(
 						content_id: article.id,

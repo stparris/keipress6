@@ -23,7 +23,7 @@
       <td><%= link_to raw('<i class="icon-trash"></i>'), admin_user_address_path(address), method: :delete, data: { confirm: 'Are you sure?' } %></td>
     </tr>
 <% end %>
-    <%= raw('<tr><td colspan="5">No items for this list</td></tr>') unless @user.user_addresses.count > 0 %>
+    <%= raw('<tr><td colspan="7">No items for this list</td></tr>') unless @user.user_addresses.count > 0 %>
   </tbody>
 </table>
 <%= link_to new_admin_user_address_path(user_id: @user.id) do %>

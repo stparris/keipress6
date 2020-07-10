@@ -1,4 +1,4 @@
-<% 
+<%
 active = {}
 active['sites'] = 'inactive'
 active['pages'] = 'inactive'
@@ -8,32 +8,35 @@ active['media'] = 'inactive'
 active['bookings'] = 'inactive'
 active['design'] = 'inactive'
 active['people'] = 'inactive'
+active['documents'] = 'inactive'
 
 if admin_subs.include?(controller_name)
 	active['sites'] = 'active'
-elsif site_subs.include?(controller_name) 
+elsif site_subs.include?(controller_name)
 	active['sites'] = 'active'
-elsif page_subs.include?(controller_name) 
+elsif page_subs.include?(controller_name)
 	active['pages'] = 'active'
 elsif container_subs.include?(controller_name)
 	active['containers'] = 'active'
 elsif navigation_list_subs.include?(controller_name)
 	active['navigations'] = 'active'
-elsif content_subs.include?(controller_name) 
+elsif content_subs.include?(controller_name)
 	active['contents'] = 'active'
 elsif media_subs.include?(controller_name)
 	active['media'] = 'active'
-elsif people_subs.include?(controller_name) 	
+elsif people_subs.include?(controller_name)
 	active['people'] = 'active'
-elsif booking_subs.include?(controller_name) 	
+elsif booking_subs.include?(controller_name)
 	active['bookings'] = 'active'
-elsif design_subs.include?(controller_name) 	
+elsif design_subs.include?(controller_name)
 	active['design'] = 'active'
+elsif controller_name == 'documents'
+	active['documents'] = 'active'
 end
 %>
 
 
-<div class="navbar navbar-expand-sm navbar-dark bg-dark navbar-fixed-top" role="navigation">	
+<div class="navbar navbar-expand-sm navbar-dark bg-dark navbar-fixed-top" role="navigation">
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-main" aria-controls="navbar-main"  aria-expanded="false" aria-label="Toggle navigation">
    		<span class="navbar-toggler-icon"></span>
  		</button>
@@ -44,7 +47,7 @@ end
 				<li class="<%= active['sites'] %>"><%= link_to raw("<icon class=\"icon-cog\"></icon> Sites"), admin_sites_path, :class => 'nav-link', title: 'Configuration' %></li>
 	<% if @site %>
 				<li class="<%= active['pages'] %>"><%= link_to raw("<icon class=\"icon-doc\"></icon> Pages"), admin_pages_path, :class => 'nav-link', title: 'Pages' %></li>
-				<li class="<%= active['containers'] %>"><%= link_to raw("<icon class=\"icon-th-large\"></icon> Containers"), admin_containers_path, :class => 'nav-link', title: 'Containers' %></li>				
+				<li class="<%= active['containers'] %>"><%= link_to raw("<icon class=\"icon-th-large\"></icon> Containers"), admin_containers_path, :class => 'nav-link', title: 'Containers' %></li>
 				<li class="<%= active['navigations'] %>"><%= link_to raw("<icon class=\"icon-th-list\"></icon> Navs/lists"), admin_navigations_path, :class => 'nav-link', title: 'Navigations/lists' %></li>
 				<li class="<%= active['contents'] %>"><%= link_to raw("<icon class=\"icon-doc-text\"></icon> Content"), admin_content_groups_path, :class => 'nav-link', title: 'Content' %></li>
 				<li class="<%= active['media'] %>"><%= link_to raw("<icon class=\"icon-picture\"></icon> Media"), admin_images_path, :class => 'nav-link', title: 'Media' %></li>
@@ -55,7 +58,9 @@ end
 <% else %>
 				<li class="nav-link"></li>
 <% end %>
+				<li class="<%= active['documents'] %>"><%= link_to raw("<icon class=\"icon-help\"></icon> Help"), admin_documents_path, :class => 'nav-link', title: 'Help' %></li>
+				</li>
 			</ul>
-	
+
 	</div>
 </div>

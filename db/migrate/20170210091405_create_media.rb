@@ -6,9 +6,8 @@ class CreateMedia < ActiveRecord::Migration[5.2]
     	t.string :caption
       t.integer :copyright_year
       t.string :copyright_by
-      t.text :description  
-      t.references :image    
-      t.string :image_variant
+      t.text :description
+      t.references :image
       t.references :site, index: true
       t.timestamps null: false
     end

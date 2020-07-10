@@ -150,6 +150,23 @@ if design_subs.include?(controller_name)
 	sub_navs << fonts
 	sub_navs << icons
 end
+
+if controller_name == 'documents'
+	documentation = {}
+	documentation['name'] = 'Documentation'
+	documentation['controller'] = 'documents'
+	documentation['id'] = 'kei-press-documentation'
+	documentation['active'] = request.fullpath =~ /kei-press-documentation/ ? 'active' : 'inactive'
+	sub_navs << documentation
+
+	how_tos = {}
+	how_tos['name'] = 'How Tos'
+	how_tos['controller'] = 'documents'
+	how_tos['id'] = 'kei-press-how-tos'
+	how_tos['active'] = request.fullpath =~ /kei-press-how-tos/ ? 'active' : 'inactive'
+	sub_navs << how_tos
+
+end
 %>
 
 <nav class="navbar navbar-expand-sm navbar-light bg-light navbar-fixed-top" role="navigation">
@@ -168,6 +185,13 @@ end
 	<% sub_nav['name'] = 'Videos' if sub_nav['name'] == 'Media' %>
 			<li class="nav-item <%= sub_nav['active'] %>">
 				<%= link_to sub_nav['name'], "/admin/#{sub_nav['controller']}#{id_str}#{params}", :class => 'nav-link' %>
+			</li>
+<% end %>
+<% if @site && @site.persisted? && controller_name != 'documents' %>
+			<li class="nav-item">
+				<%= link_to raw('<icon class="icon-docs"></icon> Documentation'),
+				"/articles/kei-press-documentation?section=#{controller_name}",
+				remote: true, :"data-turbolinks"=>"false",  :class => 'nav-link' %>
 			</li>
 <% end %>
 		</ul>

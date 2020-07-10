@@ -3,10 +3,26 @@
 		<div class="page-header">
 		  <h1>New <%= @content_item.content_type.gsub(/_/,' ').capitalize if @content_item.content_type %> Item</h1>
 		</div>
-
-<% if @content_item.content_type %>
+<% unless @content_item.content_type %>
+		<h3>Item types</h3>
+		<%= render partial: "admin/content_forms/content_types", locals: {obj_class: 'content_group_item',content_obj: @content_item.content_group} %>
+		<hr/>
+		<%= link_to admin_content_group_path(@content_item.content_group) do %>
+			<button type="button" class="btn  btn-outline-secondary btn-med btn-right"><i class="icon-cancel"></i> Cancel</button>
+		<% end %>
+<% else %>
 		<%= form_for([:admin, @content_item],:html => {:role => 'form', :class => "formFor"}) do |f| %>
 			<%= render partial: 'form', locals: {f:f} %>
+	</div>
+	<div class="col-md-3">
+		<%= operations_menu(@content_item,[@content_item.content_group]) %>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-12">
+	<% if @content_item.content_type == 'image' %>
+		<%= render partial: 'admin/images/image_select_table', locals: {f: f,content: @content_item} %>
+	<% end %>
 			<hr />
 			<%= button_tag(type: 'submit', class:"btn  btn-outline-secondary btn-sm") do %>
 				<i class="icon-ok"></i>
@@ -14,23 +30,10 @@
 			<% end %>
 			&nbsp;&nbsp;
 			<%= link_to new_admin_content_group_item_path(content_id: @content_item.content_group.id) do %>
-				<button type="button" class="btn  btn-outline-secondary btn-sm" style="float:right;"><i class="icon-cancel"></i> Cancel</button>
+				<button type="button" class="btn  btn-outline-secondary btn-sm"><i class="icon-cancel"></i> Cancel</button>
 			<% end %>
-		<% end %>
-<% else %>
-		<div class="">
-			<h3>Item types</h3>
-			<%= render partial: "admin/content_forms/content_types", locals: {obj_class: 'content_group_item',content_obj: @content_item.content_group} %>
-			<hr/>
-		<%= link_to admin_content_group_path(@content_item.content_group) do %>
-			<button type="button" class="btn  btn-outline-secondary btn-med btn-right"><i class="icon-cancel"></i> Cancel</button>
+
 		<% end %>
 <% end %>
-	</div>
-	<div class="col-md-3">
-		<%= operations_menu(@content_item,[@content_item.content_group]) %>
 	</div>
 </div>
-<% if @content_item.content_type == 'image' %>
-<%= render partial: 'admin/images/image_select', locals: {selected_id:  @content_item.image ? @content_item.image.id : nil} %>
-<% end %>

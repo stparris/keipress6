@@ -1,0 +1,5 @@
+<div id="content_group_select" class="form-group">
+  <%= f.hidden_field :placeholder_flag, value: 1 %>
+  <%= f.label :content_type %>
+  <%= f.select :content_type, {'Article'=>'article','Blog'=>'blog'}, {prompt: 'Please Select'}, :class => "form-control" %>
+</div>

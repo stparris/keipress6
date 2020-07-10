@@ -2,7 +2,7 @@
 	<div class="col-md-9">
 		<div class="page-header">
 			<h1><%= @article.name %></h1>
-		</div>	
+		</div>
 		<%= object_table(@article) %>
 		<%= link_to edit_admin_article_path(@article) do %>
 			<button type="submit" class="btn  btn-outline-secondary"><i class="icon-pencil"></i> Edit</button>
@@ -14,6 +14,9 @@
 	<div class="col-md-3">
 		<%= operations_menu(@article,@page ? [@page] : []) %>
 	</div>
+</div>
+<div id="authors">
+	<%= render partial: 'admin/content_admins/index', locals: {content: @article} %>
 </div>
 <hr/>
 <%= render partial: 'admin/article_posts/index' %>

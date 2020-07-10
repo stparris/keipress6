@@ -1,24 +1,30 @@
-<div id="carousel-<%= carousel.id %>" class="carousel slide"<%= ' data-ride="carousel" ' if carousel.with_ride == true %>>
+<% carousel = obj.carousel %>
+<div id="carousel_<%= carousel.id %>" class="carousel slide">
 <% if carousel.with_indicators == true %>
   <ol class="carousel-indicators">
   <% carousel.carousel_slides.each_with_index do |slide,index| %>
     <li data-target="#carousel_<%= carousel.id %>" data-slide-to="<%= index %>"<%= 'class="active"' if index == 1 %>></li>
-  <% end %>  
+  <% end %>
   </ol>
 <% end %>
   <div class="carousel-inner">
 <% carousel.carousel_slides.each_with_index do |slide,index| %>
     <div class="carousel-item<%= ' active' if index == 0 %>">
-      <%= src_sets(slide.image) %>
+      <%= src_sets(slide.image,slide) if slide.image && slide.image.image.attached? %>
+  <% if carousel.with_captions %>
+      <div class="carousel-caption d-none d-md-block">
+        <%= raw(slide.caption) %>
+      </div>
+  <% end %>
     </div>
 <% end %>
   </div>
 <% if carousel.with_controls == true %>
-  <a class="carousel-control-prev" href="#carouselIndicators<%= carousel.id %>" role="button" data-slide="prev">
+  <a class="carousel-control-prev" href="#carousel_<%= carousel.id %>" role="button" data-slide="prev">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
     <span class="sr-only">Previous</span>
   </a>
-  <a class="carousel-control-next" href="#carouselIndicators<%= carousel.id %>" role="button" data-slide="next">
+  <a class="carousel-control-next" href="#carousel_<%= carousel.id %>" role="button" data-slide="next">
     <span class="carousel-control-next-icon" aria-hidden="true"></span>
     <span class="sr-only">Next</span>
   </a>
@@ -28,9 +34,11 @@
 <% if carousel.with_captions == true %>
 <carousel id="" name="" value="" />
 <% end %>
-<% if carousel.with_pause == true %>
-<carousel id="" name="" value="" />
-<% end %>
+
 <script>
-$('.carousel').carousel();
+$('#carousel_<%= carousel.id %>').carousel({
+  interval: <%= carousel.interval > 0 ? carousel.interval : 'false' %>,
+  pause: <%= raw(carousel.with_pause == true ? '\'hover\'' : 'false') %>,
+  ride: <%= carousel.with_ride %>
+});
 </script>

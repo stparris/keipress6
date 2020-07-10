@@ -1,0 +1,2 @@
+<%= src_sets(obj.image,obj.attributes.include?('caption') ? obj : nil) if obj.image && obj.image.image.attached? %>
+<%= raw("<div class=\"caption\">#{obj.image.caption}</div>") if obj.attributes.include?('include_caption') && obj.include_caption %>

@@ -13,7 +13,7 @@
 				Create
 			<% end %>
 			&nbsp;&nbsp;
-			<%= link_to new_admin_row_column_path do %>
+			<%= link_to admin_container_row_path(@container_row) do %>
 				<button type="button" class="btn  btn-outline-secondary btn-med btn-right"><i class="icon-cancel"></i> Cancel</button>
 			<% end %>
 		<% end %>
@@ -26,43 +26,50 @@
 					<button type="button" class="btn  btn-outline-secondary btn-med"><i class="icon-plus"></i> New Content Group Column</button>
 				<% end %>
 			</div>
-			<hr/>	
+			<hr/>
 			<div><strong>Caregory: </strong>Assigns a Category to the column.
 				<br/><br/>
 				<%= link_to new_admin_row_column_path(container_row_id: @container_row.id, content_type: 'category') do %>
 					<button type="button" class="btn  btn-outline-secondary btn-med"><i class="icon-plus"></i> New Category Column</button>
 				<% end %>
 		 	</div>
-		 	<hr/>	
+		 	<hr/>
 			<div><strong>Fixed Image Grid: </strong>Assigns an Image Group to the column to create an image grid with fixed spaces.
-				<br/><br/> 
+				<br/><br/>
 				<%= link_to new_admin_row_column_path(container_row_id: @container_row.id, content_type: 'image_grid_fixed') do %>
 					<button type="button" class="btn  btn-outline-secondary btn-med"><i class="icon-plus"></i> New Fixed Image Grid Column</button>
 				<% end %>
 		 	</div>
-		 	<hr/>	
+		 	<hr/>
 			<div><strong>Masonry Image Grid: </strong>Assigns an Image Group to the column to create and image grid with fixed heights and fluid widths.
-				<br/><br/> 
+				<br/><br/>
 				<%= link_to new_admin_row_column_path(container_row_id: @container_row.id, content_type: 'image_grid_masonry') do %>
 					<button type="button" class="btn  btn-outline-secondary btn-med"><i class="icon-plus"></i> New Masonry Image Grid Column</button>
 				<% end %>
 		 	</div>
-		 	<hr/>	
+		 	<hr/>
 			<div><strong>Carousel: </strong>Assigns an Carousel to the column.
 				<br/><br/>
 				<%= link_to new_admin_row_column_path(container_row_id: @container_row.id, content_type: 'carousel') do %>
 					<button type="button" class="btn  btn-outline-secondary btn-med"><i class="icon-plus"></i> New Carousel Column</button>
 				<% end %>
 		 	</div>
-		 	<hr/>	
+		 	<hr/>
 			<div><strong>List Group: </strong>Assigns a List Group to the column.
 				<br/><br/>
 				<%= link_to new_admin_row_column_path(container_row_id: @container_row.id, content_type: 'list_group') do %>
 					<button type="button" class="btn  btn-outline-secondary btn-med"><i class="icon-plus"></i> New List Group Column</button>
 				<% end %>
 		 	</div>
-		</div>	
-	 	<hr/>	
+		 	<hr />
+			<div><strong>Articles & Blogs: </strong>Creates a landing column for Articles & Blogs.
+				<br/><br/>
+				<%= link_to new_admin_row_column_path(container_row_id: @container_row.id, content_type: 'placeholder') do %>
+					<button type="button" class="btn  btn-outline-secondary btn-med"><i class="icon-plus"></i> New Articles & Blogs Column</button>
+				<% end %>
+		 	</div>
+		</div>
+	 	<hr/>
 		<%= link_to admin_container_row_path(@row_column.container_row) do %>
 			<button type="button" class="btn  btn-outline-secondary btn-med btn-right"><i class="icon-cancel"></i> Cancel</button>
 		<% end %>

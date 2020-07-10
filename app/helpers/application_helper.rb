@@ -6,10 +6,14 @@ module ApplicationHelper
     return "<icon class=\"icon-copyright\"></icon> #{years} #{by}"
   end
 
-  def process_macros(text)
-    text = text.gsub(/{{year}}/,Time.now.year.to_s)
-    text = text.gsub(/{{today}}/,Time.now.strftime("%-d %B %Y"))
-    text = text.gsub(/{{today-us}}/,Time.now.strftime("%B %-d, %Y"))
+  def process_macros(text, obj=nil)
+    text = text.gsub(/{{year}}/i,Time.now.year.to_s)
+    text = text.gsub(/{{today}}/i,Time.now.strftime("%-d %B %Y"))
+    text = text.gsub(/{{today-us}}/i,Time.now.strftime("%B %-d, %Y"))
+    if obj && obj.class.name == 'ArticlePost'
+      text = text.gsub(/{{article-title}}/i, obj.article.name)
+      text = text.gsub(/{{authors}}/i, obj.article.content_admins.order('position asc').map {|cd| cd.admin.full_name.upcase}.join('& '))
+    end
     return text
   end
 

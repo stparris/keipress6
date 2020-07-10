@@ -15,7 +15,7 @@
 			<tbody id="dropdown_items" data-sort-items-url="<%= sort_admin_dropdown_items_url %>">
 <% @dropdown_items.order('position asc').each do |dropdown_item| %>
         <tr class="dropdown_items" id="dropdown_item_<%= dropdown_item.id %>">
-        	<td><span class="handle"><i class="icon-up-hand"></i></span></td>	
+        	<td><span class="handle"><i class="icon-up-hand"></i></span></td>
           <td><%= link_to raw(dropdown_item.name), admin_dropdown_item_path(dropdown_item) %></td>
           <td><%= link_to dropdown_item.item_type.capitalize.sub(/_/,' '), admin_dropdown_item_path(dropdown_item) %></td>
           <td><%= link_to raw('<i class="icon-zoom-in"></i>'), admin_dropdown_item_path(dropdown_item) %></td>
@@ -32,18 +32,3 @@
 	</div>
 </div>
 
-<script>
-jQuery(function() {
-  var post_url;
-  if ($('#dropdown_items')) {
-    post_url = $('#dropdown_items').data('sort-items-url');
-    return $('#dropdown_items').sortable({
-      axis: 'y',
-      handle: '.handle',
-      update: function() {
-        return $.post(post_url, $(this).sortable('serialize'));
-      }
-    });
-  }
-});
-</script>

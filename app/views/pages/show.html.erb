@@ -1,24 +1,7 @@
-<% containers = @page ? @page.containers.includes(container_rows: [:row_columns]) : [] %>
-	<div class="<%= @page && @page.theme ? @page.theme.css_class : '' %>">
-<% if containers.any? %>
-	<% containers.each do |container| %>
-		<% if container.container_type == 'navbar' %>
-			<% # navigation = Navigation.find_by_id(container.navigation_id).includes(:navigation_items) %>
-	<%= render partial: 'layouts/navigation', locals: { navigation: container.navigation } %>
-		<% elsif container.container_type == 'grid' %>
-	<div class="<%= container.css_classes %>">
-		<%= render partial: "containers/grid", locals: { container: container } %>
-	</div>
-		<% else %>
-	<%= render partial: "containers/#{container.container_type}", locals: { container: container } %>
-		<% end %>
-	<% end %>
+<div class="<%= @page && @page.theme ? @page.theme.css_class : '' %>">
+<% if @page && @page.containers.any? %>
+	<%= render partial: 'containers/index', locals: {containers: @page.containers} %>
 <% else %>
 	<%= render 'errors/404' %>
 <% end %>
 </div>
-<% if @muparams %>
-	<% @muparams.each do |name,value| %>
-<muparam name="<%= name %>" id="<%= name %>" value="<%= value %>" />
-	<% end %>
-<% end %>

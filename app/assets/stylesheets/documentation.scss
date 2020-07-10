@@ -1,0 +1,75 @@
+.keidoc {
+  margin-left: auto;
+  margin-right: auto;
+  // padding:10px;
+  h1,h2,h3 {
+    color: #ff4000;
+  }
+  h4 {
+
+  }
+  a.toc-link {
+    color: #008080 !important;
+  }
+  a.toc-link:hover {
+    background-color: transparent;
+  }
+  a.bs-link {
+    color: #008080 !important;
+  }
+  a.top-link, a.back-link {
+    color: #ff4000 !important;
+    cursor: pointer;
+    font-size: .75em;
+  }
+  a.top-link:hover {
+    text-decoration-line: underline;
+    background-color: transparent;
+  }
+  .caption {
+    color: #ff4000;
+  }
+  p {
+    font-size: .85em;
+  }
+  span {
+    font-size: .75em;
+  }
+  img {
+    border: solid 1px #e6e6e6;
+  }
+  .article-post {
+    padding: 10px 0 10px 0;
+
+  }
+  .chapter-list {
+    cursor: pointer;
+    a:hover {
+      text-decoration-line: underline;
+    }
+  }
+  .section-list {
+    cursor: pointer;
+    list-style-type:lower-roman;
+    a:hover {
+      text-decoration-line: underline;
+    }
+  }
+  .chapter-title {
+    float: left;
+    width: 80%;
+    border-top: dotted 1px #ff4000;
+  }
+  .chapter-top {
+    float: right;
+    text-align: right;
+    width: 20%;
+    border-top: dotted 1px #ff4000;
+  }
+  .post-tip {
+    padding: 10px;
+    margin-bottom: 20px;
+    border: dotted 1px #000;
+    background-color: #f2f2f2;
+  }
+}
