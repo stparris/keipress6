@@ -1,0 +1,37 @@
+<div class="modal fade" id="publishImage" tabindex="-1" role="dialog" aria-labelledby="publishImageLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="publishImageLabel"><icon class="icon-picture"></icon> Publish Image</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <%= form_for([:admin, ImagePublish.new],:html => {:role => 'form', :class => "formFor"}) do |f| %>
+        <div class="modal-body">
+          <%= f.hidden_field :parent_id, value: image_publish.id %>
+          <%= image_tag "/image_previews/#{image_publish.preview_type}_#{@image.id}.#{image_publish.file_extention}?#{rand(10000000)}",  class: "image-fluid modal-image", style: 'max-width: 300px; max-height: 300px;' %>
+
+<% if image_publish.preview_type == 'original' %>
+          <h6>Warning! You are about to replace the current image with this preview image, and the current workspace will be reset. (You can always upload a new version.)</h6>
+          <p>Please note this image has not been optimized to reduce the file size.</p>
+<% elsif image_publish.preview_type == 'crop' %>
+          <h6>Warning! You are about to replace the current image with this cropped image, and the current workspace will be reset. (You can always upload a new version.)</h6>
+          <p>Please note this image has not been optimized to reduce the file size.</p>
+<% else %>
+          <h6>Warning! You are about to replace the current image with this optimized image, and the current workspace will be reset. (You can always upload a new version.)</h6>
+<% end %>
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary btn-med" data-dismiss="modal">Close</button>
+          <%= button_tag(type: 'submit', class:"btn  btn-danger btn-med") do %>
+            <icon class="icon-attention-alt"></icon>
+            Publish
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+

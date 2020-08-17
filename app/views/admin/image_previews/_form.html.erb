@@ -68,10 +68,17 @@
 <% end %>
 <% if @image_crop %>
     <%= render partial: 'admin/image_crops/show' %>
+    <% image_publish = @image_crop %>
 <% end %>
 <% if @image_optimization %>
     <%= render partial: 'admin/image_optimizations/show' %>
+    <% image_publish = @image_optimization %>
 <% end %>
+  </div>
   <div class="col-md-3"></div>
 </div>
+<% if @image_preview.source_file =~ /\S+/ %>
+<%= render partial: 'admin/image_publishes/new' %>
+<%= render partial: 'admin/image_publishes/form', locals: { image_publish: image_publish ? image_publish : @image_preview } %>
+<% end %>
 <%= render partial: 'admin/image_previews/upload_modal' %>

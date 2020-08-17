@@ -29,9 +29,20 @@ class ArticlesController < ProductionController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_article
-      @article = Article.find_by(content_url: params[:content_url].split(/\?/)[0], site_id: @site.id) if params[:content_url].present?
-      @section = params[:section].present? ? params[:section] : nil
-      @article = Article.find(params[:id]) if params[:id].present?
+      if params[:content_url].present? && params[:content_url] =~ /kei-press-documentation/
+        @article = Article.find_by(content_url: params[:content_url].split(/\?|\#/)[0], site_id: 2)
+        @section = params[:section].present? ? params[:section] : nil
+      elsif params[:content_url].present? && params[:content_url] =~ /kei-press-how-tos/
+        @article = Article.find_by(content_url: params[:content_url].split(/\?/)[0], site_id: 2)
+      elsif params[:id].present?
+        @article = Article.find(params[:id])
+      elsif params[:content_url].present?
+        @article = Article.find_by(content_url: params[:content_url].split(/\?/)[0], site_id: @site.id)
+      elsif params[:id].present?
+        @article = Article.find(params[:id])
+      else
+        @article = nil
+      end
     end
 
     def set_page

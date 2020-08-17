@@ -45,7 +45,7 @@
           <td><%= link_to raw('<i class="icon-trash"></i>'), admin_article_post_path(article_post), method: :delete, data: { confirm: 'Are you sure?' } %></td>
         </tr>
 <% end %>
-				<%= raw('<tr><td colspan="5">No content has been defined.</td></tr>') if @article.article_posts.count == 0 %>
+				<%= raw('<tr><td colspan="7">No content has been defined.</td></tr>') if @article.article_posts.count == 0 %>
 			</tbody>
 		</table>
 		<%= link_to new_admin_article_post_path(content_id: @article.id) do %>
