@@ -180,7 +180,11 @@ Rails.application.routes.draw do
         post 'sort'
       end
     end
-    resources :site_tags
+    resources :site_tags do
+      collection do
+        post 'sort'
+      end
+    end
     resources :sites
     resources :songs
     resources :themes do
@@ -199,6 +203,7 @@ Rails.application.routes.draw do
     resources :user_addresses
     resources :users
     resources :videos
+    resources :watermarks
   end
 
   #####################################

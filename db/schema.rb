@@ -2,15 +2,15 @@
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 #
-# This file is the source Rails uses to define your schema when running `rails
-# db:schema:load`. When creating a new database, `rails db:schema:load` tends to
+# This file is the source Rails uses to define your schema when running `bin/rails
+# db:schema:load`. When creating a new database, `bin/rails db:schema:load` tends to
 # be faster and is potentially less error prone than running all of your
 # migrations from scratch. Old migrations may fail to apply correctly if those
 # migrations use external dependencies or application code.
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_25_000020) do
+ActiveRecord::Schema.define(version: 2021_03_27_163153) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,7 +33,14 @@ ActiveRecord::Schema.define(version: 2021_03_25_000020) do
     t.bigint "byte_size", null: false
     t.string "checksum", null: false
     t.datetime "created_at", null: false
+    t.string "service_name", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "active_storage_variant_records", force: :cascade do |t|
+    t.bigint "blob_id", null: false
+    t.string "variation_digest", null: false
+    t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
   create_table "admin_addresses", force: :cascade do |t|
@@ -129,6 +136,7 @@ ActiveRecord::Schema.define(version: 2021_03_25_000020) do
     t.index ["site_id"], name: "index_bookings_on_site_id"
     t.index ["tour_id"], name: "index_bookings_on_tour_id"
     t.index ["user_id"], name: "index_bookings_on_user_id"
+    t.check_constraint "((((rental_id IS NOT NULL))::integer + ((tour_id IS NOT NULL))::integer) + ((event_id IS NOT NULL))::integer) = 1", name: "check_booking_exclusive_arc"
   end
 
   create_table "calendars", force: :cascade do |t|
@@ -238,6 +246,7 @@ ActiveRecord::Schema.define(version: 2021_03_25_000020) do
     t.index ["medium_id"], name: "index_containers_on_medium_id"
     t.index ["navigation_id"], name: "index_containers_on_navigation_id"
     t.index ["site_id"], name: "index_containers_on_site_id"
+    t.check_constraint "(((((((navigation_id IS NOT NULL))::integer + ((content_id IS NOT NULL))::integer) + ((medium_id IS NOT NULL))::integer) + ((image_id IS NOT NULL))::integer) + ((carousel_id IS NOT NULL))::integer) + ((rows_flag IS NOT NULL))::integer) = 1", name: "check_container_exclusive_arc"
   end
 
   create_table "containers_pages", force: :cascade do |t|
@@ -294,6 +303,7 @@ ActiveRecord::Schema.define(version: 2021_03_25_000020) do
     t.index ["link_text_id"], name: "index_content_items_on_link_text_id"
     t.index ["list_group_id"], name: "index_content_items_on_list_group_id"
     t.index ["medium_id"], name: "index_content_items_on_medium_id"
+    t.check_constraint "((((((((image_id IS NOT NULL))::integer + ((carousel_id IS NOT NULL))::integer) + ((image_group_id IS NOT NULL))::integer) + ((medium_id IS NOT NULL))::integer) + ((list_group_id IS NOT NULL))::integer) + ((link_text_id IS NOT NULL))::integer) + ((text_html_flag IS NOT NULL))::integer) = 1", name: "check_content_item_exclusive_arc"
   end
 
   create_table "contents", force: :cascade do |t|
@@ -366,6 +376,7 @@ ActiveRecord::Schema.define(version: 2021_03_25_000020) do
     t.index ["id", "page_id"], name: "dropdown_items_id_page_id_idx", unique: true, where: "(page_id IS NOT NULL)"
     t.index ["link_text_id"], name: "index_dropdown_items_on_link_text_id"
     t.index ["page_id"], name: "index_dropdown_items_on_page_id"
+    t.check_constraint "((((link_text_id IS NOT NULL))::integer + ((page_id IS NOT NULL))::integer) + ((category_id IS NOT NULL))::integer) = 1", name: "check_dropdown_item_exclusive_arc"
   end
 
   create_table "dropdowns", force: :cascade do |t|
@@ -517,6 +528,7 @@ ActiveRecord::Schema.define(version: 2021_03_25_000020) do
     t.index ["link_text_id"], name: "index_list_group_items_on_link_text_id"
     t.index ["list_group_id"], name: "index_list_group_items_on_list_group_id"
     t.index ["page_id"], name: "index_list_group_items_on_page_id"
+    t.check_constraint "((((link_text_id IS NOT NULL))::integer + ((page_id IS NOT NULL))::integer) + ((category_id IS NOT NULL))::integer) = 1", name: "check_list_group_item_exclusive_arc"
   end
 
   create_table "list_groups", force: :cascade do |t|
@@ -591,6 +603,7 @@ ActiveRecord::Schema.define(version: 2021_03_25_000020) do
     t.index ["link_text_id"], name: "index_navigation_items_on_link_text_id"
     t.index ["navigation_id"], name: "index_navigation_items_on_navigation_id"
     t.index ["page_id"], name: "index_navigation_items_on_page_id"
+    t.check_constraint "(((((link_text_id IS NOT NULL))::integer + ((page_id IS NOT NULL))::integer) + ((category_id IS NOT NULL))::integer) + ((dropdown_id IS NOT NULL))::integer) = 1", name: "check_navigation_item_exclusive_arc"
   end
 
   create_table "navigations", force: :cascade do |t|
@@ -756,6 +769,7 @@ ActiveRecord::Schema.define(version: 2021_03_25_000020) do
     t.index ["id", "placeholder_flag"], name: "row_columns_id_placeholder_flag_idx", unique: true, where: "(placeholder_flag IS NOT NULL)"
     t.index ["image_group_id"], name: "index_row_columns_on_image_group_id"
     t.index ["list_group_id"], name: "index_row_columns_on_list_group_id"
+    t.check_constraint "(((((((content_id IS NOT NULL))::integer + ((category_id IS NOT NULL))::integer) + ((image_group_id IS NOT NULL))::integer) + ((carousel_id IS NOT NULL))::integer) + ((list_group_id IS NOT NULL))::integer) + ((placeholder_flag IS NOT NULL))::integer) = 1", name: "check_row_column_exclusive_arc"
   end
 
   create_table "site_includes", force: :cascade do |t|
@@ -909,6 +923,7 @@ ActiveRecord::Schema.define(version: 2021_03_25_000020) do
     t.index ["site_id"], name: "index_watermarks_on_site_id"
   end
 
+  add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "admin_addresses", "admins", on_delete: :cascade
   add_foreign_key "admin_addresses", "countries", on_delete: :nullify
   add_foreign_key "admin_addresses", "states", on_delete: :nullify
