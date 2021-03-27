@@ -126,6 +126,17 @@ $(document).on('turbolinks:load', function() {
   $('#image_index').dataTable({
     columnDefs: [
       { orderable: false, targets: 0 },
+      { orderable: false, targets: 6 },
+      { orderable: false, targets: 7 },
+      { orderable: false, targets: 8 }
+    ],
+    sPaginationType: "full_numbers"
+  });
+  $('#watermarks_index').dataTable({
+    columnDefs: [
+      { orderable: false, targets: 2 },
+      { orderable: false, targets: 3 },
+      { orderable: false, targets: 4 },
       { orderable: false, targets: 5 },
       { orderable: false, targets: 6 },
       { orderable: false, targets: 7 }

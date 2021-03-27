@@ -155,7 +155,7 @@ module AdminsHelper
       obj_controller = obj_controller.sub(/ys$/,'ies') unless obj_controller == 'payment_gateways'
       obj_name = obj.has_attribute?('name') ? obj.name : obj_text
       obj_name = "Column #{obj.position}" if obj.class.name == 'RowColumn'
-      if action_name =~ /edit|new/
+      if action_name == /edit|new/
         if (obj.has_attribute?('content_type') && obj.content_type =~ /text|html/) ||
           (obj.has_attribute?('item_type') && obj.item_type)
           include_macro_modal = true
@@ -169,7 +169,7 @@ module AdminsHelper
       if action_name == 'edit' && obj_controller == 'videos'
         html += '
         <li class="nav-item">' + link_to(raw("<icon class=\"icon-zoom-in\"></icon> #{obj_name}"), "/admin/media/#{obj.id}") + '</li>'
-      elsif action_name =~ /edit/ and not controller_name =~ /content_group_text_items/
+      elsif action_name =~ /edit/ and not controller_name =~ /content_group_text_items|image_group_items/
         html += '
         <li class="nav-item">' + link_to(raw("<icon class=\"icon-zoom-in\"></icon> #{obj_name}"), "/admin/#{obj_controller}/#{obj.id}") + '</li>'
       elsif action_name == 'show' && parents.any?
@@ -199,7 +199,7 @@ module AdminsHelper
   end
 
   def media_subs
-    ['images','image_batches','image_previews','image_crops','image_watermarks','image_optimizations','image_groups','image_group_items','carousels','carousel_slides','media']
+    ['watermarks','images','image_batches','image_previews','image_crops','image_watermarks','image_optimizations','image_groups','image_group_items','carousels','carousel_slides','media']
   end
 
   def page_subs

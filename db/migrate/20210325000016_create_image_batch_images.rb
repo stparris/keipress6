@@ -9,3 +9,5 @@ class CreateImageBatchImages < ActiveRecord::Migration[6.0]
     add_foreign_key :image_batch_images, :images, on_delete: :cascade
   end
 end
+
+

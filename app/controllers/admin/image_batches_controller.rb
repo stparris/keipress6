@@ -63,9 +63,10 @@ class Admin::ImageBatchesController < AdminController
     respond_to do |format|
       begin
         # image batch options? remove all images?
-        if @image_batch.images.any?
+        if @image_batch.images.any? && params[:delete_all].present?
           @image_batch.images.each do |image|
             FileUtils.rm Dir.glob("#{Rails.root}/public/image_previews/*_#{image.id}.*")
+            image.destroy
           end
         end
         if @image_batch.destroy

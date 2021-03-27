@@ -28,6 +28,7 @@ class Site < ApplicationRecord
 	has_many :admins, through: :admins_sites
 
   has_many :site_tags
+  has_many :watermarks
 
 #	has_and_belongs_to_many :admins
 

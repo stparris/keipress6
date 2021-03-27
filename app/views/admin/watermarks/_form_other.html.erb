@@ -1,0 +1,8 @@
+<div class="form-group">
+  <%= f.label :margin %>
+  <%= f.number_field :margin, :class => "form-control" %>
+</div>
+<div class="form-group">
+  <%= f.label :orientation %>
+  <%= f.select :orientation, {'north-west'=>'north-west','north-east'=>'north-east','center'=>'centre','south-west'=>'south-west','south-east'=>'south-east'}, {prompt: 'Please select'}, :class => "form-control" %>
+</div>

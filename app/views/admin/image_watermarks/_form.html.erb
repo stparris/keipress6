@@ -1,0 +1,64 @@
+<div class="row">
+  <div id="image_crop" class="col-md-9">
+    <div class="page-header align-center">
+      <h1><icon class="icon-water"></icon> Watermark <%= @image_watermark.image.name %></h1>
+    </div>
+<% if @image_watermark.watermark %>
+    <%= image_tag "/image_previews/watermark_#{@image_watermark.image.id}.#{@image_watermark.file_extention}?#{rand(10000000)}", class: 'img-fluid' %>
+    <%= file_size_div(@image_watermark.size,@image_watermark.width) %>
+    <h6>Dimensions: Width <%= @image_watermark.width %>px, Height <%= @image_watermark.height %>px</h6>
+    <h6>Source: <%= @image_watermark.parent.preview_type.capitalize %></h6>
+<% else %>
+    <%= image_tag "/image_previews/#{@image_watermark.image_preview.preview_type}_#{@image_watermark.image.id}.#{@image_watermark.file_extention}?#{rand(10000000)}", class: 'img-fluid' %>
+<% end %>
+    <div id="watermark_images">
+<% @site.watermarks.each do |wm| %>
+      <div class="card" style="width: 18rem;">
+  <% if wm.watermark_type == 'composite' %>
+        <img class="card-img-top" src="<%= url_for(wm.image.variant(resize: '200x200')) %>" alt="Watermark image">
+  <% else %>
+        <h3><%= wm.text %></h3>
+  <% end %>
+        <div class="card-body">
+          <h5 class="card-title"><%= wm.name %></h5>
+          <a id="<%= wm.id %>" href="#" class="btn btn-primary wm-image">Select</a>
+        </div>
+      </div>
+<% end %>
+    </div>
+    <%= form_for([:admin, @image_watermark],:html => {:role => 'form', :class => "formFor"}) do |f| %>
+        <%= f.hidden_field :parent_id %>
+        <%= f.hidden_field :source_file %>
+        <%= f.hidden_field :content_type %>
+        <%= f.hidden_field :size %>
+        <%= f.hidden_field :preview_type %>
+        <%= f.hidden_field :watermark_id %>
+      <%= button_tag(type: 'submit', class:"btn  btn-outline-secondary btn-med") do %>
+        <icon class="icon-water"></icon>
+         Watermark it!
+      <% end %>
+      <%= link_to(raw('<button type="button" class="btn  btn-outline-secondary btn-med btn-right">
+        <i class="icon-cancel"></i>
+          Cancel</button>'), admin_image_preview_path(@image_watermark.image)) %>
+    <% end %>
+  </div>
+  <div class="col-md-3">
+    <%= operations_menu(@image_watermark,[@image_watermark.image]) %>
+  </div>
+</div>
+
+<script>
+  $('body').on('click', '.wm-image', function(e) {
+    let wm_id = e.target.id;
+    alert(wm_id);
+    $("#image_watermark_watermark_id").value() = wm_id;
+  });
+
+
+</script>
+
+
+
+
+
+

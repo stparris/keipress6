@@ -5,11 +5,22 @@ class Admin::ImageBatchUploadsController < AdminController
     @message = ""
     @image_batch_upload = ImageBatchUpload.new(image_batch_upload_params)
     files = params[:image_batch_upload][:upload_images]
+
     seq = @image_batch.naming_method == 'use_filename' ? nil : @image_batch.naming_sequence
+
+
     files.each do |upload_file|
-      begin
+      logger.info "============================ #{Time.now} File Upload #{upload_file.original_filename}\n #{upload_file.inspect}"
+      logger.info " #{seq ? "#{@image_batch.naming_prefix} #{seq}" : upload_file.original_filename.sub(/\.\S+$/,'')}"
+      # begin
+        image_name = upload_file.original_filename.sub(/\.\S+$/,'')
+        if @image_batch.naming_method != 'use_filename'
+          image_name = "#{@image_batch.naming_prefix} #{@image_batch.naming_sequence}"
+          @image_batch.naming_sequence += 1
+          @image_batch.save
+        end
         image = Image.where(
-          name: seq ? "#{@image_batch.naming_prefix} #{seq}" : upload_file.original_filename.sub(/\.\S+$/,''),
+          name: image_name,
           caption: @image_batch.caption,
           copyright_year: @image_batch.copyright_year,
           copyright_by: @image_batch.copyright_by,
@@ -27,6 +38,7 @@ class Admin::ImageBatchUploadsController < AdminController
         end
         image_preview.save!
         if @image_batch.quality > 0
+          logger.info "============================ #{Time.now} Optimize image #{upload_file.original_filename}\n #{upload_file.inspect}"
           image_optimize = ImageOptimization.where(
             image_id: image.id,
             parent_id: image_preview.id,
@@ -42,6 +54,7 @@ class Admin::ImageBatchUploadsController < AdminController
           image_optimize.save
         end
         if image_optimize && @image_batch.publish
+          logger.info "============================ #{Time.now} Publish image #{upload_file.original_filename}\n #{upload_file.inspect}"
           image_publish = ImagePublish.find(image_optimize.id)
           image_publish.publish
         end
@@ -51,10 +64,10 @@ class Admin::ImageBatchUploadsController < AdminController
         if @image_batch.category
           CategoriesImage.where(image_id: image.id, category_id: @image_batch.category_id).first_or_create
         end
-      rescue ImagePreview::ImageTooBigError, ImagePreview::ImageInvalidTypeError => e
-        @message += "Error: #{e.message} "
-        FileUtils.rm file_name if File.exists?(file_name)
-      end
+      # rescue ImagePreview::ImageTooBigError, ImagePreview::ImageInvalidTypeError => e
+      #   @message += "Error: #{e.message} "
+      #   FileUtils.rm file_name if File.exists?(file_name)
+      # end
     end
     respond_to do |format|
       format.html {redirect_to admin_image_batch_url(@image_batch)}

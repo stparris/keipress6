@@ -1,0 +1,27 @@
+<div class="form-group">
+  <%= f.label :text %>
+  <%= f.text_field :text, :class => "form-control" %>
+</div>
+<div class="form-group">
+  <%= f.label :font %>
+  <%= f.select :font, watermark_fonts, {prompt: 'Please select'}, :class => "form-control" %>
+</div>
+<div class="form-group">
+  <%= f.label :color %> (R,G,B values)
+  <%= f.text_field :color, :class => "form-control", placeholder: '255,255,255' %>
+</div>
+<div class="form-group">
+  <%= f.label :opacity %>
+  <%= f.select :opacity, {'Low'=>'low','Medium'=>'medium','Default'=>'default','High'=>'high','None'=>'none'}, {prompt: 'Please select'}, :class => "form-control" %>
+</div>
+<div class="form-group">
+  <%= f.label :rotate %>
+  <%= f.select :rotate, {'None'=>'none','Left'=>'left','right'=>'right'}, {prompt: 'Please select'}, :class => "form-control" %>
+</div>
+
+<div class="form-group">
+  <%= f.label :size %>
+  <%= f.select :size, {'Large'=>'large','Medium'=>'medium','Small'=>'small','X-Small'=>'x-small','XX-Small'=>'xx-small'}, {prompt: 'Please select'}, :class => "form-control" %>
+</div>
+
+

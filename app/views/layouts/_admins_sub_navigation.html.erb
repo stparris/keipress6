@@ -95,6 +95,8 @@ if content_subs.include?(controller_name)
 end
 
 if media_subs.include?(controller_name)
+	watermarks = sub_nav('watermarks')
+	watermarks['active'] if controller_name == 'watermarks'
 	images = sub_nav('images')
 	images['active'] = 'active' if controller_name =~ /images|image_previews|image_crops|image_watermarks|image_optimizations/
 	image_batches = sub_nav('image_batches')
@@ -107,6 +109,7 @@ if media_subs.include?(controller_name)
 	# songs['active'] = 'active' if controller_name =~ /song/
 	videos = sub_nav('media')
 	videos['active'] = 'active' if controller_name =~ /media/
+	sub_navs << watermarks
 	sub_navs << images
 	sub_navs << image_batches
 	sub_navs << image_groups

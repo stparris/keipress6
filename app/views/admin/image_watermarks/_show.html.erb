@@ -1,0 +1,13 @@
+<h4>Watermarked Image</h4>
+<%= image_tag "/image_previews/watermark_#{@image_watermark.image.id}.#{@image_watermark.file_extention}?#{rand(10000000)}", class: 'img-fluid' %>
+<%= file_size_div(@image_watermark.size,@image_watermark.width) %>
+<h6>Dimensions: Width <%= @image_watermark.width %>px, Height <%= @image_watermark.height %>px</h6>
+<h6>Quality: <%= @image_watermark.quality %></h6>
+<h6>Source: <%= @image_watermark.parent.preview_type.capitalize %></h6>
+<div class="image-buttons">
+  <%= link_to edit_admin_image_watermark_path(@image_watermark) do %>
+    <button type="button" class="btn btn-outline-secondary btn-sm">
+      <icon class="icon-ok"></icon> Watermark Again
+    </button>
+  <% end %>
+</div>

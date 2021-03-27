@@ -16,11 +16,11 @@ class Admin::ImageOptimizationsController < AdminController
   def update
     respond_to do |format|
        begin
-          flash[:success] = 'Image optimized.'
-          @image_optimization.update(image_optimization_params)
-          @image_optimization.optimize
-          @image_optimization.save
-          format.html { redirect_to admin_image_preview_url(@image_optimization.image) }
+        flash[:success] = 'Image optimized.'
+        @image_optimization.update(image_optimization_params)
+        @image_optimization.optimize
+        @image_optimization.save
+        format.html { redirect_to admin_image_preview_url(@image_optimization.image) }
       rescue Exception => e
         flash[:danger] = "Oops! Something went wrong: #{e.message}"
         format.html { render :edit }

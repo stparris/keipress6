@@ -10,6 +10,11 @@ class ImagePreview < ApplicationRecord
   validate :image_validation
 
   before_validation :set_file_info
+  before_destroy :purge_preview
+
+  def purge_preview
+    FileUtils.rm Dir.glob("#{Rails.root}/public/image_previews/*_#{self.image.id}.*")
+  end
 
   def file_extention
     return case self.content_type

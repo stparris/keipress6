@@ -75,6 +75,9 @@
         <button type="button" id="done" class="btn btn-outline-secondary btn-med">
           <i class="icon-cancel"></i> Done
         </button>
+        <%= link_to(raw('<button type="button" class="btn  btn-outline-secondary btn-med btn-right">
+        <i class="icon-cancel"></i>
+          Cancel</button>'), admin_image_preview_path(@image_crop.image)) %>
         <% end %>
       <% end %>
     </div>

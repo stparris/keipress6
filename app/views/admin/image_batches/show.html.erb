@@ -10,6 +10,9 @@
     &nbsp;&nbsp;<%= link_to admin_image_batch_path(@image_batch), method: :delete, data: { confirm: "Delete image batch?" } do %>
       <button type="submit" class="btn btn-danger"><i class="icon-trash"></i> Delete</button>
     <% end %>
+    &nbsp;&nbsp;<%= link_to admin_image_batch_path(@image_batch,delete_all: true), method: :delete, data: { confirm: "Delete image batch and its images?" } do %>
+      <button type="submit" class="btn btn-danger"><i class="icon-trash"></i> Delete Batch and its Images</button>
+    <% end %>
   </div>
   <div class="col-md-3">
     <%= operations_menu(@image_batch,[]) %>

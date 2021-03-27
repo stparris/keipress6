@@ -38,7 +38,8 @@ class Admin::SiteTagsController < AdminController
 
     respond_to do |format|
       if @site_tag.save
-        format.html { redirect_to @site_tag, notice: 'Site tag was successfully created.' }
+        flash[:success] = 'Site tag was successfully created.'
+        format.html { redirect_to admin_site_url(@site) }
         format.json { render :show, status: :created, location: @site_tag }
       else
         format.html { render :new }
@@ -52,7 +53,8 @@ class Admin::SiteTagsController < AdminController
   def update
     respond_to do |format|
       if @site_tag.update(site_tag_params)
-        format.html { redirect_to @site_tag, notice: 'Site tag was successfully updated.' }
+        flash[:success] = 'Site tag was successfully updated.'
+        format.html { redirect_to admin_site_url(@site) }
         format.json { render :show, status: :ok, location: @site_tag }
       else
         format.html { render :edit }
@@ -66,7 +68,8 @@ class Admin::SiteTagsController < AdminController
   def destroy
     @site_tag.destroy
     respond_to do |format|
-      format.html { redirect_to site_tags_url, notice: 'Site tag was successfully destroyed.' }
+      flash[:success] = 'Site tag was successfully removed.'
+      format.html { redirect_to admin_site_url(@site) }
       format.json { head :no_content }
     end
   end

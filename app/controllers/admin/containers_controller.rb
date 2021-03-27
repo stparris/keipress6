@@ -7,7 +7,7 @@ class Admin::ContainersController < AdminController
   # GET /Containers
   # GET /Containers.json
   def index
-        @containers = Container.where(site_id: @site.id).order('name asc')
+    @containers = Container.where(site_id: @site.id).order('name asc')
   end
 
   # GET /Containers/1
@@ -36,14 +36,14 @@ class Admin::ContainersController < AdminController
     respond_to do |format|
       if @container.save
         flash[:success] = 'Container was successfully created.'
-        format.html do 
+        format.html do
           if @page
             ContainersPage.create(container_id: @container.id,page_id: @page.id)
             redirect_to admin_page_url(@page)
           else
             redirect_to admin_container_url(@container)
           end
-        end      
+        end
         format.json { render :show, status: :created, location: @container }
       else
         format.html { render :new }
@@ -91,7 +91,7 @@ class Admin::ContainersController < AdminController
 
     def set_new
       @container = Container.new
-      @container.container_type = params[:container_type].present? ? params[:container_type] : nil      
+      @container.container_type = params[:container_type].present? ? params[:container_type] : nil
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
@@ -108,6 +108,6 @@ class Admin::ContainersController < AdminController
         :container_fluid,
         :container_css,
         :css_classes)
-    end	
+    end
 
 end

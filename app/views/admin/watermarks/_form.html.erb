@@ -1,0 +1,47 @@
+<% if @watermark.errors.any? %>
+<div id="error_explanation">
+  <div class="alert alert-danger">
+    <%= pluralize(@watermark.errors.count, "error") %> prohibited this page from being saved:
+  </div>
+  <ul>
+  <% @watermark.errors.full_messages.each do |msg| %>
+    <li><%= msg %></li>
+  <% end %>
+  </ul>
+</div>
+<% end %>
+<%= f.hidden_field :site_id, value: @site.id %>
+<div class="form-group">
+  <%= f.label :name %>
+  <%= f.text_field :name, :class => "form-control" %>
+</div>
+
+<% if @watermark.watermark_type == 'composite' %>
+<%= render partial: 'form_composite', locals: {f:f} %>
+<%= render partial: 'form_other', locals: {f:f} %>
+<% elsif @watermark.watermark_type == 'text' || @watermark.watermark_type == 'replicate' %>
+<div class="form-group">
+  <%= f.label :watermark_type %>
+  <%= f.text_field :watermark_type, :class => "form-control", style: "pointer-events: none;background-color:#f2f2f2;" %>
+</div>
+<%= render partial: 'form_text', locals: {f:f} %>
+<%= render partial: 'form_other', locals: {f:f} %>
+<% else %>
+<div class="form-group">
+  <%= f.label :watermark_type %>
+  <%= f.select :watermark_type, {'Overlay Image'=>'composite','Text'=>'text','Repeat text'=>'repeat'}, {prompt: 'Please select'}, :class => "form-control" %>
+</div>
+<div id="form_composite" style="display:none;">
+  <%= render partial: 'form_composite', locals: {f:f} %>
+</div>
+<div id="form_text" style="display:none;">
+  <%= render partial: 'form_text', locals: {f:f} %>
+</div>
+<div id="form_other" style="display:none;">
+  <%= render partial: 'form_other', locals: {f:f} %>
+</div>
+<% end %>
+
+
+
+

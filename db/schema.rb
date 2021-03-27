@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_27_153858) do
+ActiveRecord::Schema.define(version: 2021_03_25_000020) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -84,13 +84,6 @@ ActiveRecord::Schema.define(version: 2020_05_27_153858) do
     t.bigint "site_id"
     t.index ["admin_id"], name: "index_admins_sites_on_admin_id"
     t.index ["site_id"], name: "index_admins_sites_on_site_id"
-  end
-
-  create_table "authors_contents", id: false, force: :cascade do |t|
-    t.bigint "admin_id"
-    t.bigint "content_id"
-    t.index ["admin_id"], name: "index_authors_contents_on_admin_id"
-    t.index ["content_id"], name: "index_authors_contents_on_content_id"
   end
 
   create_table "booking_transactions", force: :cascade do |t|
@@ -178,6 +171,7 @@ ActiveRecord::Schema.define(version: 2020_05_27_153858) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "with_copyrights", default: false
+    t.string "carousel_type"
     t.index ["site_id"], name: "index_carousels_on_site_id"
   end
 
@@ -254,11 +248,19 @@ ActiveRecord::Schema.define(version: 2020_05_27_153858) do
     t.index ["page_id"], name: "index_containers_pages_on_page_id"
   end
 
+  create_table "content_admins", force: :cascade do |t|
+    t.bigint "admin_id"
+    t.bigint "content_id"
+    t.integer "position"
+    t.index ["admin_id"], name: "index_content_admins_on_admin_id"
+    t.index ["content_id"], name: "index_content_admins_on_content_id"
+  end
+
   create_table "content_items", force: :cascade do |t|
     t.string "name"
     t.string "type", null: false
     t.string "css_classes"
-    t.bigint "content_id"
+    t.bigint "content_id", null: false
     t.string "content_type", null: false
     t.bigint "image_id"
     t.bigint "carousel_id"
@@ -303,6 +305,8 @@ ActiveRecord::Schema.define(version: 2020_05_27_153858) do
     t.bigint "admin_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "content_url"
+    t.bigint "page_id"
     t.index ["admin_id"], name: "index_contents_on_admin_id"
     t.index ["site_id"], name: "index_contents_on_site_id"
   end
@@ -413,12 +417,14 @@ ActiveRecord::Schema.define(version: 2020_05_27_153858) do
     t.boolean "publish", default: false, null: false
     t.bigint "image_group_id"
     t.bigint "category_id"
+    t.bigint "watermark_id"
     t.bigint "site_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["category_id"], name: "index_image_batches_on_category_id"
     t.index ["image_group_id"], name: "index_image_batches_on_image_group_id"
     t.index ["site_id"], name: "index_image_batches_on_site_id"
+    t.index ["watermark_id"], name: "index_image_batches_on_watermark_id"
   end
 
   create_table "image_group_items", force: :cascade do |t|
@@ -451,6 +457,7 @@ ActiveRecord::Schema.define(version: 2020_05_27_153858) do
 
   create_table "image_previews", force: :cascade do |t|
     t.bigint "image_id"
+    t.bigint "watermark_id"
     t.integer "parent_id", default: 0
     t.string "preview_type"
     t.string "source_file"
@@ -462,6 +469,7 @@ ActiveRecord::Schema.define(version: 2020_05_27_153858) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["image_id"], name: "index_image_previews_on_image_id"
+    t.index ["watermark_id"], name: "index_image_previews_on_watermark_id"
   end
 
   create_table "images", force: :cascade do |t|
@@ -735,6 +743,7 @@ ActiveRecord::Schema.define(version: 2020_05_27_153858) do
     t.bigint "carousel_id"
     t.bigint "list_group_id"
     t.integer "position"
+    t.bigint "placeholder_flag"
     t.index ["carousel_id"], name: "index_row_columns_on_carousel_id"
     t.index ["category_id"], name: "index_row_columns_on_category_id"
     t.index ["container_row_id"], name: "index_row_columns_on_container_row_id"
@@ -744,6 +753,7 @@ ActiveRecord::Schema.define(version: 2020_05_27_153858) do
     t.index ["id", "content_id"], name: "row_columns_id_content_id_idx", unique: true, where: "(content_id IS NOT NULL)"
     t.index ["id", "image_group_id"], name: "row_columns_id_image_group_id_idx", unique: true, where: "(image_group_id IS NOT NULL)"
     t.index ["id", "list_group_id"], name: "row_columns_id_list_group_id_idx", unique: true, where: "(list_group_id IS NOT NULL)"
+    t.index ["id", "placeholder_flag"], name: "row_columns_id_placeholder_flag_idx", unique: true, where: "(placeholder_flag IS NOT NULL)"
     t.index ["image_group_id"], name: "index_row_columns_on_image_group_id"
     t.index ["list_group_id"], name: "index_row_columns_on_list_group_id"
   end
@@ -760,9 +770,10 @@ ActiveRecord::Schema.define(version: 2020_05_27_153858) do
     t.bigint "site_id"
     t.string "name"
     t.string "tag_type"
-    t.string "value"
+    t.text "value"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "position"
     t.index ["site_id"], name: "index_site_tags_on_site_id"
   end
 
@@ -879,13 +890,30 @@ ActiveRecord::Schema.define(version: 2020_05_27_153858) do
     t.index ["site_id"], name: "index_users_on_site_id"
   end
 
+  create_table "watermarks", force: :cascade do |t|
+    t.string "name"
+    t.bigint "image_id"
+    t.string "watermark_type"
+    t.string "text"
+    t.string "font"
+    t.string "color", default: "255,255,255"
+    t.string "opacity"
+    t.string "rotate"
+    t.string "margin"
+    t.string "orientation"
+    t.string "size"
+    t.bigint "site_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["image_id"], name: "index_watermarks_on_image_id"
+    t.index ["site_id"], name: "index_watermarks_on_site_id"
+  end
+
   add_foreign_key "admin_addresses", "admins", on_delete: :cascade
   add_foreign_key "admin_addresses", "countries", on_delete: :nullify
   add_foreign_key "admin_addresses", "states", on_delete: :nullify
   add_foreign_key "admins_sites", "admins", on_delete: :cascade
   add_foreign_key "admins_sites", "sites", on_delete: :cascade
-  add_foreign_key "authors_contents", "admins", on_delete: :cascade
-  add_foreign_key "authors_contents", "contents", on_delete: :cascade
   add_foreign_key "booking_transactions", "bookings", on_delete: :cascade
   add_foreign_key "booking_transactions", "payment_types", on_delete: :nullify
   add_foreign_key "booking_transactions", "user_addresses", column: "billing_address_id", on_delete: :nullify
@@ -916,6 +944,8 @@ ActiveRecord::Schema.define(version: 2020_05_27_153858) do
   add_foreign_key "containers", "sites", on_delete: :cascade
   add_foreign_key "containers_pages", "containers", on_delete: :cascade
   add_foreign_key "containers_pages", "pages", on_delete: :cascade
+  add_foreign_key "content_admins", "admins", on_delete: :cascade
+  add_foreign_key "content_admins", "contents", on_delete: :cascade
   add_foreign_key "content_items", "admins", on_delete: :nullify
   add_foreign_key "content_items", "carousels", on_delete: :nullify
   add_foreign_key "content_items", "contents", on_delete: :cascade
@@ -925,6 +955,7 @@ ActiveRecord::Schema.define(version: 2020_05_27_153858) do
   add_foreign_key "content_items", "list_groups", on_delete: :nullify
   add_foreign_key "content_items", "media", on_delete: :nullify
   add_foreign_key "contents", "admins", on_delete: :nullify
+  add_foreign_key "contents", "pages", name: "pages.id", on_delete: :nullify
   add_foreign_key "contents", "sites", on_delete: :cascade
   add_foreign_key "domains", "sites", on_delete: :cascade
   add_foreign_key "dropdown_items", "categories", on_delete: :cascade
@@ -939,11 +970,13 @@ ActiveRecord::Schema.define(version: 2020_05_27_153858) do
   add_foreign_key "image_batches", "categories", on_delete: :nullify
   add_foreign_key "image_batches", "image_groups", on_delete: :nullify
   add_foreign_key "image_batches", "sites", on_delete: :cascade
+  add_foreign_key "image_batches", "watermarks", on_delete: :nullify
   add_foreign_key "image_group_items", "image_groups", on_delete: :cascade
   add_foreign_key "image_group_items", "images", on_delete: :cascade
   add_foreign_key "image_groups", "images", on_delete: :nullify
   add_foreign_key "image_groups", "sites", on_delete: :cascade
   add_foreign_key "image_previews", "images", on_delete: :cascade
+  add_foreign_key "image_previews", "watermarks", on_delete: :nullify
   add_foreign_key "images", "sites", on_delete: :cascade
   add_foreign_key "link_texts", "sites", on_delete: :cascade
   add_foreign_key "list_group_items", "categories", on_delete: :cascade
@@ -997,4 +1030,6 @@ ActiveRecord::Schema.define(version: 2020_05_27_153858) do
   add_foreign_key "user_addresses", "states", on_delete: :nullify
   add_foreign_key "user_addresses", "users", on_delete: :cascade
   add_foreign_key "users", "sites", on_delete: :cascade
+  add_foreign_key "watermarks", "images", on_delete: :nullify
+  add_foreign_key "watermarks", "sites", on_delete: :cascade
 end

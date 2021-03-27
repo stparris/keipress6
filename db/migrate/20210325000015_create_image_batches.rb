@@ -13,12 +13,14 @@ class CreateImageBatches < ActiveRecord::Migration[6.0]
       t.boolean :publish, default: false, null: false
       t.references :image_group
       t.references :category
+      t.references :watermark
       t.references :site, index: true
       t.timestamps null: false
     end
     add_foreign_key :image_batches, :sites, on_delete: :cascade
     add_foreign_key :image_batches, :image_groups, on_delete: :nullify
     add_foreign_key :image_batches, :categories, on_delete: :nullify
+    add_foreign_key :image_batches, :watermarks, on_delete: :nullify
   end
 end
 

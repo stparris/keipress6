@@ -1,97 +1,76 @@
 class Admin::ImageWatermarksController < AdminController
-  before_action :set_image_watermark, only: [:show, :edit, :update, :destroy]
+  before_action :set_new, only: [:new]
+  before_action :set_image_watermark, only: [:edit, :update]
 
   layout 'admins'
 
-  # GET /image_watermarks
-  # GET /image_watermarks.json
-  def index
-    @image_watermarks = ImageWatermark.all
-  end
-
-  # GET /image_watermarks/1
-  # GET /image_watermarks/1.json
-  def show
-  end
+  require 'fileutils'
 
   # GET /image_watermarks/new
   def new
-    @image_watermark = ImageWatermark.new
   end
 
   # GET /image_watermarks/1/edit
   def edit
   end
 
-  # POST /image_watermarks
-  # POST /image_watermarks.json
-  def create
-    @image_watermark = ImageWatermark.new(image_watermark_params)
-
-    respond_to do |format|
-      if @image_watermark.save
-        format.html { redirect_to @image_watermark, notice: 'Image watermark was successfully created.' }
-        format.json { render :show, status: :created, location: @image_watermark }
-      else
-        format.html { render :new }
-        format.json { render json: @image_watermark.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
   # PATCH/PUT /image_watermarks/1
   # PATCH/PUT /image_watermarks/1.json
   def update
-
-    filename = @image_watermark.image.filename
-    content_type = @image_watermark.image.content_type
-    File.open("#{Rails.root}/tmp/#{filename}", "wb") do |f|
-      f.write(params[:image][:blob].read)
-    end  
-
-    MiniMagick::Tool::Magick.new do |magick|
-      magick << "#{Rails.root}/tmp/#{filename}"
-      magick.resize("100x100")
-      magick.negate
-      magick << "#{Rails.root}/tmp/test_#{filename}"
-    end
-
-=begin
-    @image_watermark.image.purge
-    @image_watermark.image.attach(io: File.open("#{Rails.root}/tmp/#{filename}"), filename: "#{filename}", content_type: "#{content_type}") 
-    @image_watermark.save
-    FileUtils.rm("#{Rails.root}/tmp/#{filename}")
-=end
-
     respond_to do |format|
-      if @image_watermark.update(image_watermark_params)
-        format.html { redirect_to @image_watermark, notice: 'Image watermark was successfully updated.' }
-        format.json { render :show, status: :ok, location: @image_watermark }
-      else
+      begin
+        flash[:success] = 'Image optimized.'
+        @image_watermark.update(image_watermark_params)
+        @image_watermark.make_watermark
+        @image_watermark.save
+        format.html { redirect_to admin_image_preview_url(@image_watermark.image) }
+      rescue Exception => e
+        flash[:danger] = "Oops! Something went wrong: #{e.message}"
         format.html { render :edit }
-        format.json { render json: @image_watermark.errors, status: :unprocessable_entity }
       end
     end
-  end
 
-  # DELETE /image_watermarks/1
-  # DELETE /image_watermarks/1.json
-  def destroy
-    @image_watermark.destroy
-    respond_to do |format|
-      format.html { redirect_to image_watermarks_url, notice: 'Image watermark was successfully deleted.' }
-      format.json { head :no_content }
-    end
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
+    def set_new
+      parent = ImagePreview.find(params[:parent_id])
+      # file_name = "#{Rails.root}/public/image_previews/#{parent.preview_type}_#{parent.image_id}.#{parent.file_extention}"
+      # watermark_file = "#{Rails.root}/public/image_previews/watermark_#{parent.image_id}.#{parent.file_extention}"
+      # FileUtils.cp file_name, watermark_file
+      @image_watermark = ImageWatermark.where(
+        image_id: parent.image_id,
+        preview_type: 'watermark').first_or_create!
+      @image_watermark.parent_id = parent.id
+      @image_watermark.source_file = parent.source_file
+      @image_watermark.content_type = parent.content_type
+      @image_watermark.size = parent.size
+      @image_watermark.max_width = parent.get_max_width
+      # @image_watermark.save
+      # @image_url = "/image_previews/watermark_#{parent.image_id}.#{parent.file_extention}"
+      # @image_preview = ImagePreview.find_by(image_id: parent.image_id, preview_type: 'original')
+      # @image_crop = ImagePreview.find_by(image_id: parent.image_id, preview_type: 'crop')
+    end
+
     def set_image_watermark
       @image_watermark = ImageWatermark.find(params[:id])
+      # @image_url = "/image_previews/watermark_#{@image_watermark.image_id}.#{@image_watermark.file_extention}"
+      # @image_watermark.max_width = @image_watermark.get_max_width
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def image_watermark_params
-      params.require(:image).permit(:site_id,:name,:caption,:copyright,:description)
+      params.require(:image_watermark).permit(
+        :max_width,
+        :parent_id,
+        :watermark_id,
+        :source_file,
+        :content_type,
+        :size,
+        :preview_type,
+        :quality)
     end
+
+
 end

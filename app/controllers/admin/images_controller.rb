@@ -7,7 +7,7 @@ class Admin::ImagesController < AdminController
   # GET /images
   # GET /images.json
   def index
-    @images = Image.all
+    @images = Image.where(site_id: @site.id)
   end
 
   # GET /images/1

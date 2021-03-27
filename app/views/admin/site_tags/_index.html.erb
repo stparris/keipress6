@@ -1,0 +1,35 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="page-header">
+      <h2>Site Tags</h2>
+    </div>
+    <table class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th>Position</th>
+          <th>Name</th>
+          <th>Tag Type</th>
+          <th>Value</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="site_tags" data-sort-items-url="<%= sort_admin_site_tags_url %>">
+<% @site.site_tags.order('position asc').each do |site_tag| %>
+        <tr class="site_tags" id="site_tag_<%= site_tag.id %>">
+          <td><span class="handle"><i class="icon-up-hand"></i></span></td>
+          <td><%= link_to site_tag.name, edit_admin_site_tag_path(site_tag) %></td>
+          <td><%= link_to site_tag.tag_type, edit_admin_site_tag_path(site_tag) %></td>
+          <td><%= link_to site_tag.value, edit_admin_site_tag_path(site_tag) %></td>
+          <td><%= link_to raw('<i class="icon-pencil"></i>'), edit_admin_site_tag_path(site_tag) %></td>
+          <td><%= link_to raw('<i class="icon-trash"></i>'), admin_site_tag_path(site_tag), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+<% end %>
+        <%= raw('<tr><td colspan="7">No tags defined for this row</td></tr>') unless @site.site_tags.count > 0 %>
+      </tbody>
+    </table>
+    <%= link_to new_admin_site_tag_path(site_id: @site.id) do %>
+      <button type="button" class="btn  btn-outline-secondary btn-med"><i class="icon-plus"></i> New Tag</button>
+    <% end %>
+  </div>
+</div>

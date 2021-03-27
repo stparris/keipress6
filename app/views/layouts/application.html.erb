@@ -11,7 +11,11 @@
   <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
   <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
   <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-
+<% if @site.site_tags.any? %>
+  <% @site.site_tags.order(position: :asc).each do |tag| %>
+  <%= raw(tag.value) %>
+  <% end %>
+<% end %>
 <% if @page && @page.theme %>
 	<link rel="stylesheet" media="all" href="<%= @page.theme.asset_url %>_production.css?<%=Time.now.to_i %>" />
 <% end %>

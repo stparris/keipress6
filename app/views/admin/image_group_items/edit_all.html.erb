@@ -2,13 +2,14 @@
   <div class="col-md-9">
     <h2><%= @image_group.name %> Items</h2>
     <h3>Editor</h3>
+    <p>Note: unpublished items not shown</p>
     <hr/>
     <%= link_to admin_image_group_path(@image_group) do %>
       <button type="button" class="btn  btn-outline-secondary btn-sm"><i class="icon-cancel"></i> Done</button>
     <% end %>
   </div>
   <div class="col-md-3">
-    <%= operations_menu(@image_group,[]) %>
+    <%= operations_menu(@image_group,[@image_group]) %>
   </div>
 </div>
 <div class="row">
@@ -25,6 +26,7 @@
       <tbody>
 <% @image_group.image_group_items.each do |item| %>
         <tr id="item_<%= item.id %>">
+          <% next unless item.image.image.attached? %>
           <%= form_for([:admin, item], remote: true) do |f| %>
           <td>
             <%= image_tag url_for(item.image.image.variant(resize: "100x100")), style: 'max-width: 100px;' %>
