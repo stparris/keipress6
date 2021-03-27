@@ -14,6 +14,7 @@
     "codemirror": "^5.50.2",
     "cropper": "^4.1.0",
     "data-confirm-modal": "^1.6.2",
+    "datatables.net": "^1.10.22",
     "datatables.net-bs4": "^1.10.20",
     "datatables.net-buttons": "^1.6.1",
     "datatables.net-responsive": "^2.2.3",
